@@ -1,6 +1,5 @@
 package org.xszb.interlace_spellweaves.entity.spells.gust;
 
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.AbstractConeProjectile;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
@@ -68,6 +67,7 @@ public class DamageGustCollider extends AbstractConeProjectile {
         }
     }
 
+
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         var entity = getOwner();
@@ -101,6 +101,12 @@ public class DamageGustCollider extends AbstractConeProjectile {
             Vec3 vec31 = (new Vec3(x, y, z)).normalize().scale(pStrength);
             target.setDeltaMovement(vec3.x / 2.0D - vec31.x, target.onGround() ? Math.min(0.4D, vec3.y / 2.0D + pStrength) : vec3.y, vec3.z / 2.0D - vec31.z);
         }
+    }
+
+    @Override
+    protected void defineSynchedData() {
+
+        super.defineSynchedData();
     }
 
     @Override

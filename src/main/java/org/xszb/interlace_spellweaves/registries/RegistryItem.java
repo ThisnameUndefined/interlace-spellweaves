@@ -1,14 +1,10 @@
 package org.xszb.interlace_spellweaves.registries;
 
-import com.google.common.collect.ImmutableMultimap;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.item.UniqueSpellBook;
-import io.redspace.ironsspellbooks.item.armor.PumpkinArmorItem;
+import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
@@ -20,12 +16,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
-import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
 import org.xszb.interlace_spellweaves.item.HighEvokerSpellBook;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 
 import java.util.Collection;
-import java.util.UUID;
 
 public class RegistryItem {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, InterlaceSpellWeaves.MODID);
@@ -56,15 +50,11 @@ public class RegistryItem {
 
     public static final RegistryObject<Item> HIGH_EVOKER_SPELL_BOOK = ITEMS.register("high_evoker_spell_book", HighEvokerSpellBook::new);
 
-    public static final RegistryObject<Item> FORSAKEN_BOOK = ITEMS.register("forsaken_grimoire", () -> new UniqueSpellBook(SpellRarity.UNCOMMON,
+    public static final RegistryObject<Item> FORSAKEN_BOOK = ITEMS.register("forsaken_grimoire", () -> new UniqueSpellBook(
             new SpellDataRegistryHolder[]{
                     new SpellDataRegistryHolder(RegistrySpell.TP, 1)},
-            0,
-            () -> {
-                ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-                builder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier(UUID.fromString("0fc57b4e-8977-f985-d063-0c8c5c5b7b9c"), "Weapon modifier", 100, AttributeModifier.Operation.ADDITION));
-                return builder.build();
-            })
+            0).withSpellbookAttributes(new AttributeContainer[]{new AttributeContainer(AttributeRegistry.MAX_MANA, (double)100.0F, AttributeModifier.Operation.ADDITION)})
+
     );
 
 

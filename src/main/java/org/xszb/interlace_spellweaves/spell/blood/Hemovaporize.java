@@ -3,7 +3,10 @@ package org.xszb.interlace_spellweaves.spell.blood;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
-import io.redspace.ironsspellbooks.api.spells.*;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
+import io.redspace.ironsspellbooks.api.spells.CastType;
+import io.redspace.ironsspellbooks.api.spells.SpellAnimations;
+import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
@@ -27,13 +30,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.api.spells.AbstractMixSpell;
-import org.xszb.interlace_spellweaves.config.Config;
+import org.xszb.interlace_spellweaves.config.MainConfig;
 import org.xszb.interlace_spellweaves.util.EntityUtil;
 
 import java.util.List;
 import java.util.Optional;
 
-@AutoSpellConfig
 public class Hemovaporize extends AbstractMixSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "hemovaporize");
 
@@ -116,7 +118,7 @@ public class Hemovaporize extends AbstractMixSpell {
     public void boilBlood(int spellLevel, LivingEntity entity, @Nullable MagicData playerMagicData, Entity target, LivingEntity tar) {
         ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(tar.getType());
         if (id != null) {
-            if (Config.hemovaporize_resistance.contains(id.toString())) return;
+            if (MainConfig.hemovaporize_resistance.contains(id.toString())) return;
         }
 
         if (playerMagicData != null && (playerMagicData.getCastDurationRemaining() + 1) % 20 == 0){

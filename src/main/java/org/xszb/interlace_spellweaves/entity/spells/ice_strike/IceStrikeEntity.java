@@ -1,7 +1,6 @@
 package org.xszb.interlace_spellweaves.entity.spells.ice_strike;
 
 import io.redspace.ironsspellbooks.entity.spells.AoeEntity;
-import io.redspace.ironsspellbooks.entity.spells.flame_strike.FlameStrike;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -18,7 +17,7 @@ import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import java.util.Optional;
 
 public class IceStrikeEntity extends AoeEntity {
-    private static final EntityDataAccessor<Boolean> DATA_MIRRORED = SynchedEntityData.defineId(FlameStrike.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_MIRRORED = SynchedEntityData.defineId(IceStrikeEntity.class, EntityDataSerializers.BOOLEAN);
 
 
     public IceStrikeEntity(EntityType<? extends Projectile> pEntityType, Level pLevel) {

@@ -1,15 +1,14 @@
 package org.xszb.interlace_spellweaves.entity.spells.stake;
 
-import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import io.redspace.ironsspellbooks.entity.spells.root.RootEntity;
+import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import io.redspace.ironsspellbooks.util.ModTags;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -22,6 +21,7 @@ import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import org.xszb.interlace_spellweaves.registries.RegistrySpell;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class StakeEntity extends AbstractMagicProjectile {
     protected int durability;
@@ -50,15 +50,10 @@ public class StakeEntity extends AbstractMagicProjectile {
     }
 
     @Override
-    public Optional<SoundEvent> getImpactSound() {
-        return Optional.empty();
+    public Optional<Supplier<SoundEvent>> getImpactSound() {
+        return Optional.of(SoundRegistry.ROOT_EMERGE);
     }
 
-    @Override
-    protected void doImpactSound(SoundEvent sound) {
-        level().playSound(null, getX(), getY(), getZ(), sound, SoundSource.NEUTRAL, 2, 1.2f + Utils.random.nextFloat() * .2f);
-
-    }
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
@@ -107,5 +102,11 @@ public class StakeEntity extends AbstractMagicProjectile {
 
     @Override
     public void trailParticles() {
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+
     }
 }

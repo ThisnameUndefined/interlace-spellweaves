@@ -3,8 +3,6 @@ package org.xszb.interlace_spellweaves.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
-import io.redspace.ironsspellbooks.player.ClientMagicData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -18,9 +16,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
-import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
+
+import static org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem.hasFullSet;
 
 @OnlyIn(Dist.CLIENT)
 public class EnergySwirlLayer {
@@ -28,17 +25,15 @@ public class EnergySwirlLayer {
         public static ModelLayerLocation ENERGY_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(IronsSpellbooks.MODID, "energy_layer"), "main");
         private final HumanoidModel<Player> model;
         private final ResourceLocation TEXTURE;
-        private final Long shouldRenderFlag;
 
-        public Vanilla(RenderLayerParent pRenderer, ResourceLocation texture, Long shouldRenderFlag) {
+        public Vanilla(RenderLayerParent pRenderer, ResourceLocation texture) {
             super(pRenderer);
             this.model = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ENERGY_LAYER));
             this.TEXTURE = texture;
-            this.shouldRenderFlag = shouldRenderFlag;
         }
 
         public void render(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, Player pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-            if (EnergySwirlLayer.shouldRender(pLivingEntity, shouldRenderFlag)) {
+            if (EnergySwirlLayer.shouldRender(pLivingEntity)) {
                 pMatrixStack.pushPose();
                 float scale = 1.1F;
                 pMatrixStack.scale(scale, 1, scale);
@@ -69,7 +64,10 @@ public class EnergySwirlLayer {
         return RenderType.energySwirl(texture, f * 0.02F % 1.0F, f * 0.01F % 1.0F);
     }
 
-    private static boolean shouldRender(LivingEntity entity, Long shouldRenderFlag) {
-        return ClientMagicData.getSyncedSpellData(entity).hasEffect(shouldRenderFlag);
+    private static boolean shouldRender(LivingEntity entity) {
+        if (entity instanceof Player player) {
+            return hasFullSet(player);
+        }
+        return false;
     }
 }

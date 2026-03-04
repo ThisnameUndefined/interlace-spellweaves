@@ -14,7 +14,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -22,12 +21,12 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class noGravityMagicArrow extends AbstractMagicProjectile {
     protected static final int EXPIRE_TIME = 6 * 20;
@@ -127,7 +126,7 @@ public class noGravityMagicArrow extends AbstractMagicProjectile {
     }
 
     @Override
-    public Optional<SoundEvent> getImpactSound() {
+    public Optional<Supplier<SoundEvent>> getImpactSound() {
         return Optional.empty();
     }
 

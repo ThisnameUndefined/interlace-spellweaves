@@ -1,6 +1,6 @@
 package org.xszb.interlace_spellweaves.entity.spells.firework_warning;
 
-import io.redspace.ironsspellbooks.api.spells.AutoSpellConfig;
+
 import io.redspace.ironsspellbooks.entity.spells.AoeEntity;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.protocol.Packet;
@@ -25,7 +25,6 @@ import java.util.Optional;
 
 import static org.xszb.interlace_spellweaves.util.Firework.randomFireworkRocket;
 
-@AutoSpellConfig
 public class FireworkWarnEntity extends AoeEntity implements GeoEntity {
 
     public FireworkWarnEntity(EntityType<? extends Projectile> pEntityType, Level pLevel) {
@@ -46,6 +45,12 @@ public class FireworkWarnEntity extends AoeEntity implements GeoEntity {
     }
 
     public final int waitTime = 40;
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+
+    }
 
     @Override
     public void tick() {

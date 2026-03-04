@@ -1,7 +1,6 @@
 package org.xszb.interlace_spellweaves.entity.armor.nameless;
 
 import io.redspace.ironsspellbooks.entity.armor.GenericCustomArmorRenderer;
-import io.redspace.ironsspellbooks.item.armor.PumpkinArmorItem;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.EquipmentSlot;

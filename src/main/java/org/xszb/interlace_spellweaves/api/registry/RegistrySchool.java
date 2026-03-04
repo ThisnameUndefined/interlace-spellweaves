@@ -5,7 +5,6 @@ import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -33,7 +32,7 @@ public class RegistrySchool {
             Component.translatable("school.iss_csw.fusion").withStyle(ChatFormatting.GOLD),
             null,
             null,
-            LazyOptional.of(SoundRegistry.EVOCATION_CAST::get),
-            null
+            SoundRegistry.EVOCATION_CAST,
+            null,false,false
     ));
 }

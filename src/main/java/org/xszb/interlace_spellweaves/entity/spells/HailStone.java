@@ -6,10 +6,9 @@ import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.registries.EntityRegistry;
+import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +20,7 @@ import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizar
 import org.xszb.interlace_spellweaves.registries.RegistrySpell;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class HailStone extends AbstractMagicProjectile {
 
@@ -62,14 +62,10 @@ public class HailStone extends AbstractMagicProjectile {
         return 1.85f;
     }
 
-    @Override
-    protected void doImpactSound(SoundEvent sound) {
-        level().playSound(null, getX(), getY(), getZ(), sound, SoundSource.NEUTRAL, .8f, 1.35f + Utils.random.nextFloat() * .3f);
-    }
 
     @Override
-    public Optional<SoundEvent> getImpactSound() {
-        return Optional.of(SoundEvents.GENERIC_EXPLODE);
+    public Optional<Supplier<SoundEvent>> getImpactSound() {
+        return Optional.of(SoundRegistry.ICE_IMPACT);
     }
 
     @Override
@@ -91,5 +87,11 @@ public class HailStone extends AbstractMagicProjectile {
             }
             this.discard();
         }
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+
     }
 }

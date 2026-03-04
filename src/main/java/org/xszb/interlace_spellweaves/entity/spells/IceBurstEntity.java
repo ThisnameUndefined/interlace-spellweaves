@@ -1,6 +1,5 @@
 package org.xszb.interlace_spellweaves.entity.spells;
 
-import io.redspace.ironsspellbooks.api.spells.AutoSpellConfig;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
@@ -23,7 +22,6 @@ import org.xszb.interlace_spellweaves.registries.RegistrySpell;
 
 import java.util.Optional;
 
-@AutoSpellConfig
 public class IceBurstEntity extends AoeEntity {
 
     public IceBurstEntity(EntityType<? extends Projectile> pEntityType, Level pLevel) {
@@ -44,6 +42,12 @@ public class IceBurstEntity extends AoeEntity {
     }
 
     public final int waitTime = 20;
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+
+    }
 
     @Override
     public void tick() {

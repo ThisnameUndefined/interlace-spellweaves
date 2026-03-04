@@ -1,5 +1,6 @@
 package org.xszb.interlace_spellweaves.entity.mobs.polorbear;
 
+import io.redspace.ironsspellbooks.capabilities.magic.SummonManager;
 import io.redspace.ironsspellbooks.entity.mobs.SummonedPolarBear;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -29,7 +30,7 @@ public class RideablePolarBear extends SummonedPolarBear implements PlayerRideab
 
     public RideablePolarBear(Level pLevel, LivingEntity owner) {
         this(RegistryEntity.SUMMONED_POLAR_BEAR.get(), pLevel);
-        setSummoner(owner);
+        SummonManager.setOwner(this, owner);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

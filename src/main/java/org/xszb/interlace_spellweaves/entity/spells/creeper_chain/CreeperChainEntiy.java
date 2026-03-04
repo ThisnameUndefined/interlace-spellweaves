@@ -4,10 +4,11 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.mobs.AntiMagicSusceptible;
-import io.redspace.ironsspellbooks.registries.EntityRegistry;
-import io.redspace.ironsspellbooks.spells.evocation.ChainCreeperSpell;
+import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,37 +22,35 @@ import net.minecraftforge.network.NetworkHooks;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import static io.redspace.ironsspellbooks.spells.evocation.ChainCreeperSpell.summonCreeperRing;
 
-public class CreeperChainEntiy  extends WitherSkull implements AntiMagicSusceptible {
-    public CreeperChainEntiy(EntityType<? extends WitherSkull> pEntityType, Level pLevel) {
+public class CreeperChainEntiy  extends AbstractMagicProjectile {
+    public CreeperChainEntiy(EntityType<? extends CreeperChainEntiy> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     protected float damage;
+    protected float speed;
 
     public CreeperChainEntiy(LivingEntity shooter, Level level, float speed, float damage) {
-        this(RegistryEntity.CREEPER_HEAD_PROJECTILE.get(), level);
-        setOwner(shooter);
-
-        Vec3 power = shooter.getLookAngle().normalize().scale(speed);
-
-        this.xPower = power.x;
-        this.yPower = power.y;
-        this.zPower = power.z;
-        setDeltaMovement(xPower, yPower, zPower);
+        super((EntityType) RegistryEntity.CREEPER_HEAD_PROJECTILE.get(), level);
+        this.setOwner(shooter);
+        this.speed = speed;
         this.damage = damage;
+        this.explosionRadius = 5.0F;
+        this.shoot(shooter.getLookAngle());
     }
 
-    public CreeperChainEntiy(LivingEntity shooter, Level level, Vec3 power, float damage) {
+    public CreeperChainEntiy(LivingEntity shooter, Level level, Vec3 speed, float damage) {
         this(RegistryEntity.CREEPER_HEAD_PROJECTILE.get(), level);
-        setOwner(shooter);
-
-        this.xPower = power.x;
-        this.yPower = power.y;
-        this.zPower = power.z;
-        setDeltaMovement(xPower, yPower, zPower);
+        this.setOwner(shooter);
         this.damage = damage;
+        this.explosionRadius = 5.0F;
+        this.speed = (float)speed.length();
+        this.shoot(speed);
     }
 
     @Override
@@ -65,8 +64,6 @@ public class CreeperChainEntiy  extends WitherSkull implements AntiMagicSuscepti
             if (hitresult.getType() != HitResult.Type.MISS) {
                 onHit(hitresult);
             }
-        } else {
-            this.level().addParticle(this.getTrailParticle(), position().x, position().y + 0.25D, position().z, 0.0D, 0.0D, 0.0D);
         }
         ProjectileUtil.rotateTowardsMovement(this, 1);
         setPos(position().add(getDeltaMovement()));
@@ -113,6 +110,22 @@ public class CreeperChainEntiy  extends WitherSkull implements AntiMagicSuscepti
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    public void trailParticles() {
+        Vec3 vec3 = this.getBoundingBox().getCenter();
+        this.level().addParticle(ParticleTypes.SMOKE, vec3.x, vec3.y, vec3.z, (double)0.0F, (double)0.0F, (double)0.0F);
+    }
+
+    public void impactParticles(double x, double y, double z) {
+    }
+
+    public float getSpeed() {
+        return this.speed;
+    }
+
+    public Optional<Supplier<SoundEvent>> getImpactSound() {
+        return Optional.empty();
     }
 
     @Override

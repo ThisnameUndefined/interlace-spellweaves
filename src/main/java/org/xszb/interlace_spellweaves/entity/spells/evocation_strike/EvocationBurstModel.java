@@ -2,7 +2,6 @@ package org.xszb.interlace_spellweaves.entity.spells.evocation_strike;
 
 import net.minecraft.resources.ResourceLocation;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
-import org.xszb.interlace_spellweaves.entity.spells.firework_warning.FireworkWarnEntity;
 import software.bernie.geckolib.model.GeoModel;
 
 public class EvocationBurstModel extends GeoModel<EvocationBurstEntity> {

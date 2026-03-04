@@ -1,7 +1,6 @@
 package org.xszb.interlace_spellweaves.api.registry;
 
 
-import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.api.attribute.MagicRangedAttribute;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;

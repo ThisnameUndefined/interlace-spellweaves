@@ -1,10 +1,9 @@
 package org.xszb.interlace_spellweaves.setup;
 
-import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
-import io.redspace.ironsspellbooks.entity.spells.creeper_head.CreeperHeadRenderer;
+import io.redspace.ironsspellbooks.IronsSpellbooks;
+import io.redspace.ironsspellbooks.entity.spells.skull_projectile.SkullProjectileRenderer;
 import io.redspace.ironsspellbooks.item.SpellBook;
-import io.redspace.ironsspellbooks.render.*;
-import net.minecraft.client.Minecraft;
+import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -14,12 +13,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
-import org.xszb.interlace_spellweaves.api.magic.SyncedEffectData;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsRenderer;
 import org.xszb.interlace_spellweaves.entity.mobs.frostbone.FrostboneRenderer;
 import org.xszb.interlace_spellweaves.entity.mobs.polorbear.RideablePolarBearRenderer;
@@ -34,14 +31,9 @@ import org.xszb.interlace_spellweaves.entity.spells.stake.StakeRenderer;
 import org.xszb.interlace_spellweaves.registries.RegistryBlock;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryItem;
-import org.xszb.interlace_spellweaves.registries.RegistryParticle;
 import org.xszb.interlace_spellweaves.render.EnergySwirlLayer;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
-import java.util.Map;
-
-import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.CHARGE_TEXTURE;
-import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.EVASION_TEXTURE;
 import static org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsRenderer.SHIELD_TEXTURE;
 
 @Mod.EventBusSubscriber(modid = InterlaceSpellWeaves.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -61,7 +53,7 @@ public class ClientSetup {
         event.registerEntityRenderer(RegistryEntity.GUST_COLLIDER.get(), DamageGustRenderer::new);
         event.registerEntityRenderer(RegistryEntity.FIREWORK_BURST.get(), FireworkWarnRenderer::new);
         event.registerEntityRenderer(RegistryEntity.EVOCATION_BURST.get(), EvocationBurstRenderer::new);
-        event.registerEntityRenderer(RegistryEntity.CREEPER_HEAD_PROJECTILE.get(), CreeperHeadRenderer::new);
+        event.registerEntityRenderer((EntityType) RegistryEntity.CREEPER_HEAD_PROJECTILE.get(), (context) -> new SkullProjectileRenderer(context, IronsSpellbooks.id("textures/entity/creeper_head.png")));
         event.registerEntityRenderer(RegistryEntity.SUMMON_NAMELESS.get(), NoopRenderer::new);
 
 
@@ -99,7 +91,7 @@ public class ClientSetup {
     private static void addLayerToPlayerSkin(EntityRenderersEvent.AddLayers event, String skinName) {
         EntityRenderer<? extends Player> render = event.getSkin(skinName);
         if (render instanceof LivingEntityRenderer livingRenderer) {
-            livingRenderer.addLayer(new EnergySwirlLayer.Vanilla(livingRenderer, SHIELD_TEXTURE, SyncedEffectData.NAMELESS_SET_SHIELD));
+            livingRenderer.addLayer(new EnergySwirlLayer.Vanilla(livingRenderer, SHIELD_TEXTURE));
         }
     }
 

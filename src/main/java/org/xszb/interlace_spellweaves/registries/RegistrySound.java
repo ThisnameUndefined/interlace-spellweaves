@@ -1,6 +1,5 @@
 package org.xszb.interlace_spellweaves.registries;
 
-import io.redspace.ironsspellbooks.IronsSpellbooks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;

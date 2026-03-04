@@ -4,10 +4,7 @@ import io.redspace.ironsspellbooks.api.events.ModifySpellLevelEvent;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.network.ClientboundSyncMana;
-import io.redspace.ironsspellbooks.setup.Messages;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -25,11 +22,10 @@ import net.minecraftforge.fml.common.Mod;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.api.magic.IMagicDataExtension;
 import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
-import org.xszb.interlace_spellweaves.config.Config;
-import org.xszb.interlace_spellweaves.dimension.PocketDimSavedData;
+import org.xszb.interlace_spellweaves.config.MainConfig;
 import org.xszb.interlace_spellweaves.dimension.PocketDimGenerator;
+import org.xszb.interlace_spellweaves.dimension.PocketDimSavedData;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
-import org.xszb.interlace_spellweaves.mixin.MagicDataMixin;
 import org.xszb.interlace_spellweaves.registries.RegistryEffect;
 
 import static org.xszb.interlace_spellweaves.dimension.PocketDimGenerator.POCKET_DIM;
@@ -43,7 +39,7 @@ public class ServerEvents {
         LivingEntity ent = event.getEntity();
         MobEffect spellEffect = RegistryEffect.SPELL_EMPOWERMENT.get();
         if (ent != null) {
-            if (ent.hasEffect(spellEffect) && !Config.no_spell_empowerment.contains(event.getSpell().getSpellId())){
+            if (ent.hasEffect(spellEffect) && !MainConfig.no_spell_empowerment.contains(event.getSpell().getSpellId())){
                 event.addLevels(ent.getEffect(spellEffect).getAmplifier() + 1);
             }
             int num = (int) Math.floor(ent.getAttributeValue(RegistryAttribute.EX_SPELL_LEVEL.get()));
@@ -57,7 +53,7 @@ public class ServerEvents {
     public static void onSpellCast(SpellOnCastEvent event) {
         LivingEntity ent = event.getEntity();
         MobEffect spellEffect = RegistryEffect.SPELL_EMPOWERMENT.get();
-        if (ent != null && ent.hasEffect(spellEffect) && !Config.no_spell_empowerment.contains(event.getSpellId())) {
+        if (ent != null && ent.hasEffect(spellEffect) && !MainConfig.no_spell_empowerment.contains(event.getSpellId())) {
             ent.removeEffect(spellEffect);
         }
     }
@@ -91,8 +87,6 @@ public class ServerEvents {
 
                 float manaToRecover = damageAmount * 25.0f;
                 magicData.setMana(Math.min(magicData.getMana() + manaToRecover, (float)player.getAttributeValue(AttributeRegistry.MAX_MANA.get())));
-                Messages.sendToPlayer(new ClientboundSyncMana(magicData), player);
-
                 event.setCanceled(true);
             }
         }

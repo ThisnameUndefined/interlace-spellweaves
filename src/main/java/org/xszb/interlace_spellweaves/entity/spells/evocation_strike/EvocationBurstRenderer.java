@@ -9,8 +9,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
-import org.xszb.interlace_spellweaves.entity.spells.firework_warning.FireworkWarnEntity;
-import org.xszb.interlace_spellweaves.entity.spells.firework_warning.FireworkWarnModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.object.Color;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;

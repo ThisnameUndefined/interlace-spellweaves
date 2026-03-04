@@ -61,7 +61,6 @@ public class RegistryCreativeTab {
                         for (int i = spell.getMinLevel(); i <= spell.getMaxLevel(); i++) {
                             var itemstack = new ItemStack(ItemRegistry.SCROLL.get());
                             var spellList = ISpellContainer.createScrollContainer(spell, i, itemstack);
-                            spellList.save(itemstack);
                             event.accept(itemstack);
                         }
                     });

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
-import io.redspace.ironsspellbooks.entity.spells.magic_arrow.MagicArrowRenderer;
+import io.redspace.ironsspellbooks.render.RenderHelper;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -55,7 +55,7 @@ public class noGravityMagicArrowRenderer extends EntityRenderer<noGravityMagicAr
         Matrix4f poseMatrix = pose.pose();
         Matrix3f normalMatrix = pose.normal();
 
-        VertexConsumer consumer = bufferSource.getBuffer(MagicArrowRenderer.CustomRenderType.magic(getTextureLocation()));
+        VertexConsumer consumer = bufferSource.getBuffer(RenderHelper.CustomerRenderType.magic(getTextureLocation()));
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         poseStack.translate(-2, 0, 0);
 

@@ -2,7 +2,6 @@ package org.xszb.interlace_spellweaves.mixin;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
@@ -11,7 +10,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 
 import static org.xszb.interlace_spellweaves.dimension.PocketDimGenerator.POCKET_DIM;
 

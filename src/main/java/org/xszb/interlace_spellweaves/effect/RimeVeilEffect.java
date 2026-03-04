@@ -1,9 +1,7 @@
 package org.xszb.interlace_spellweaves.effect;
 
-import io.redspace.ironsspellbooks.api.magic.MagicData;
-import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
+import io.redspace.ironsspellbooks.effect.ISyncedMobEffect;
 import io.redspace.ironsspellbooks.effect.MagicMobEffect;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -11,9 +9,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.player.Player;
 
-public class RimeVeilEffect extends MagicMobEffect {
+public class RimeVeilEffect extends MagicMobEffect implements ISyncedMobEffect {
     public RimeVeilEffect(MobEffectCategory pCategory, int pColor) {
         super(pCategory, pColor);
     }
@@ -22,9 +19,6 @@ public class RimeVeilEffect extends MagicMobEffect {
     @Override
     public void addAttributeModifiers(LivingEntity livingEntity, AttributeMap pAttributeMap, int pAmplifier) {
         super.addAttributeModifiers(livingEntity, pAttributeMap, pAmplifier);
-        if (livingEntity instanceof Player || livingEntity instanceof AbstractSpellCastingMob) {
-            MagicData.getPlayerMagicData(livingEntity).getSyncedData().addEffects(SyncedSpellData.TRUE_INVIS);
-        }
 
         var targetingCondition = TargetingConditions.forCombat().ignoreLineOfSight().selector(e -> {
             return (((Mob) e).getTarget() == livingEntity);
@@ -57,8 +51,5 @@ public class RimeVeilEffect extends MagicMobEffect {
     @Override
     public void removeAttributeModifiers(LivingEntity livingEntity, AttributeMap pAttributeMap, int pAmplifier) {
         super.removeAttributeModifiers(livingEntity, pAttributeMap, pAmplifier);
-        if (livingEntity instanceof Player || livingEntity instanceof AbstractSpellCastingMob) {
-            MagicData.getPlayerMagicData(livingEntity).getSyncedData().removeEffects(SyncedSpellData.TRUE_INVIS);
-        }
     }
 }

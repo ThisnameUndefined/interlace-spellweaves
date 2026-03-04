@@ -3,19 +3,15 @@ package org.xszb.interlace_spellweaves.item.armor;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.entity.armor.pumpkin.PumpkinArmorModel;
-import io.redspace.ironsspellbooks.entity.armor.pumpkin.PumpkinArmorRenderer;
 import io.redspace.ironsspellbooks.item.armor.ExtendedArmorItem;
-import io.redspace.ironsspellbooks.item.armor.ExtendedArmorMaterials;
+import io.redspace.ironsspellbooks.item.armor.ImbuableChestplateArmorItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -34,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class NamelessArmorItem extends ExtendedArmorItem {
+public class NamelessArmorItem extends ImbuableChestplateArmorItem {
 
     private static final String UUID_BASE = "cbbec899-66db-831d-962b-56c236793";
     private static final Map<Integer, double[]> SPELL_POWER_MAP = Map.of(

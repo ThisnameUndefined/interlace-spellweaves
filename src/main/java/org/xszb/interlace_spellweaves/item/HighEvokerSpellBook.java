@@ -1,18 +1,12 @@
 package org.xszb.interlace_spellweaves.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import io.redspace.ironsspellbooks.api.item.curios.AffinityData;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.item.UniqueSpellBook;
-import io.redspace.ironsspellbooks.util.MinecraftInstanceHelper;
-import io.redspace.ironsspellbooks.util.TooltipsUtils;
+import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,24 +20,21 @@ import org.xszb.interlace_spellweaves.registries.RegistrySpell;
 import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem.hasFullSet;
 
 public class HighEvokerSpellBook extends UniqueSpellBook {
 
     public HighEvokerSpellBook() {
-        super(SpellRarity.LEGENDARY, SpellDataRegistryHolder.of(
+        super(SpellDataRegistryHolder.of(
                 new SpellDataRegistryHolder(RegistrySpell.BARRAGE_VOLLEY, 10),
                 new SpellDataRegistryHolder(RegistrySpell.GUST_PRO,10),
                 new SpellDataRegistryHolder(RegistrySpell.CREPER_CHAIN,10)
-        ), 7, () -> {
-            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(UUID.fromString("7eefd1c7-4c52-54c7-a2c4-d9231efd3ba6"), "Weapon modifier", .15, AttributeModifier.Operation.MULTIPLY_BASE));
-            builder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier(UUID.fromString("f867fa6f-ce2d-6abc-d4ef-a46c167ae4e8"), "Weapon modifier", 250, AttributeModifier.Operation.ADDITION));
-            builder.put(RegistryAttribute.EX_SPELL_LEVEL.get(), new AttributeModifier(UUID.fromString("1fe76b21-afef-48e5-17c6-1e68394a0b45"), "Weapon modifier", 3, AttributeModifier.Operation.ADDITION));
-
-            return builder.build();
+        ), 7);
+        this.withSpellbookAttributes(new AttributeContainer[]{
+                new AttributeContainer(AttributeRegistry.SPELL_POWER, (double).15F, AttributeModifier.Operation.MULTIPLY_TOTAL),
+                new AttributeContainer(AttributeRegistry.MAX_MANA, (double)200.0F, AttributeModifier.Operation.ADDITION),
+                new AttributeContainer(RegistryAttribute.EX_SPELL_LEVEL, (double)3.0F, AttributeModifier.Operation.ADDITION)
         });
     }
 

@@ -1,7 +1,6 @@
 package org.xszb.interlace_spellweaves.entity.boss.nameless_wizards;
 
 import io.redspace.ironsspellbooks.config.ClientConfigs;
-import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundSource;

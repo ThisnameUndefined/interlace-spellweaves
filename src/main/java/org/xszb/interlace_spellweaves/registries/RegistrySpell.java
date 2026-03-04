@@ -57,7 +57,7 @@ public class RegistrySpell {
 
     public static final RegistryObject<AbstractSpell> RIME_VEIL = registerSpell(new RimeVeil());
 
-    public static final RegistryObject<AbstractSpell> RIDEABLE_POLAORBEAR = registerSpell(new SummonRideablePolarBear());
+//    public static final RegistryObject<AbstractSpell> RIDEABLE_POLAORBEAR = registerSpell(new SummonRideablePolarBear());
 
     public static final RegistryObject<AbstractSpell> PINNING_STAKE = registerSpell(new PinningStake());
 

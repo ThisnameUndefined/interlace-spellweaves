@@ -3,7 +3,6 @@ package org.xszb.interlace_spellweaves.spell.nature;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
-import io.redspace.ironsspellbooks.api.spells.AutoSpellConfig;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
@@ -25,7 +24,6 @@ import org.xszb.interlace_spellweaves.entity.spells.fireflys.FireflysEntity;
 import java.util.List;
 import java.util.Optional;
 
-@AutoSpellConfig
 public class FireflySeeker extends AbstractMixSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "firefly_seeker");
 

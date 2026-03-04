@@ -1,9 +1,11 @@
 package org.xszb.interlace_spellweaves.spell.fusion;
 
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
+import io.redspace.ironsspellbooks.api.config.IronConfigParameters;
+import io.redspace.ironsspellbooks.api.config.SpellConfigManager;
+import io.redspace.ironsspellbooks.api.config.SpellConfigParameter;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.api.spells.AutoSpellConfig;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
@@ -27,7 +29,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-@AutoSpellConfig
 public class SpellEmpowerment extends AbstractMixSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "spell_empowerment");
 
@@ -99,7 +100,7 @@ public class SpellEmpowerment extends AbstractMixSpell {
 
         double entitySpellPowerModifier = 1;
 
-        float configPowerModifier = (float) ServerConfigs.getSpellConfig(this).powerMultiplier();
+        float configPowerModifier = ((Double)SpellConfigManager.getSpellConfigValue(this, IronConfigParameters.POWER_MULTIPLIER)).floatValue();
         if (sourceEntity instanceof LivingEntity livingEntity) {
             entitySpellPowerModifier = (float) livingEntity.getAttributeValue(AttributeRegistry.SPELL_POWER.get()) / 2;
         }

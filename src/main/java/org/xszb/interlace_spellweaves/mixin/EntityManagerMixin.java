@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.xszb.interlace_spellweaves.entity.boss.UnRemoveBossEntity;
-import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
-import org.xszb.interlace_spellweaves.util.EntityUtil;
 
 import static org.xszb.interlace_spellweaves.util.EntityUtil.canDiscard;
 

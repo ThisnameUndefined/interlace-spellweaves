@@ -4,7 +4,6 @@ package org.xszb.interlace_spellweaves.spell.evocation;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
-import io.redspace.ironsspellbooks.api.spells.AutoSpellConfig;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
@@ -37,7 +36,6 @@ import org.xszb.interlace_spellweaves.registries.RegistryItem;
 import java.util.List;
 import java.util.Optional;
 
-@AutoSpellConfig
 public class TotemRite extends AbstractMixSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "totem_rite");
 

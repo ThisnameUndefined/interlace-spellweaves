@@ -1,13 +1,11 @@
 package org.xszb.interlace_spellweaves.entity.spells.evocation_strike;
 
-import io.redspace.ironsspellbooks.api.spells.AutoSpellConfig;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.AoeEntity;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
-import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -16,7 +14,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
@@ -25,13 +22,11 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Optional;
 
-@AutoSpellConfig
 public class EvocationBurstEntity extends AoeEntity implements GeoAnimatable {
 
     public EvocationBurstEntity(EntityType<? extends Projectile> pEntityType, Level pLevel) {
@@ -52,6 +47,11 @@ public class EvocationBurstEntity extends AoeEntity implements GeoAnimatable {
     }
 
     public final int waitTime = 60;
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+    }
 
     @Override
     public void tick() {

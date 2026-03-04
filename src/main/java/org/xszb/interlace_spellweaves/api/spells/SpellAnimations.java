@@ -8,8 +8,8 @@ public class SpellAnimations {
     public static ResourceLocation ANIMATION_RESOURCE = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "animations/casting_animations.json");
 
 
-    public static final AnimationHolder ANIMATION_ICE_SLASH = new AnimationHolder("iss_csw:ice_slash", true);
+    public static final AnimationHolder ANIMATION_ICE_SLASH = new AnimationHolder(ResourceLocation.parse("iss_csw:ice_slash"), true);
 
-    public static final AnimationHolder IN_FOG = new AnimationHolder("iss_csw:in_fog", true);
+    public static final AnimationHolder IN_FOG = new AnimationHolder(ResourceLocation.parse("iss_csw:in_fog"), true);
 
 }

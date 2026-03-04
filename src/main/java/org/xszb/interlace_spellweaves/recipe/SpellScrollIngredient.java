@@ -55,14 +55,12 @@ public class SpellScrollIngredient extends AbstractIngredient {
                 var scrollItem = ItemRegistry.SCROLL.get();
                 ItemStack stack = new ItemStack(scrollItem);
                 ISpellContainer spellContainer = ISpellContainer.createScrollContainer(spell, setlevel, stack);
-                spellContainer.save(stack);
                 stacks.add(stack);
             }else {
                 for (int level = Math.max(1,minlevel == null? 1:minlevel); level <= spell.getMaxLevel(); level++) {
                     var scrollItem = ItemRegistry.SCROLL.get();
                     ItemStack stack = new ItemStack(scrollItem);
                     ISpellContainer spellContainer = ISpellContainer.createScrollContainer(spell, level, stack);
-                    spellContainer.save(stack);
                     stacks.add(stack);
                 }
             }

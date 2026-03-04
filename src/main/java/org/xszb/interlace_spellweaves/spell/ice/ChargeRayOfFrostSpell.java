@@ -3,7 +3,10 @@ package org.xszb.interlace_spellweaves.spell.ice;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
-import io.redspace.ironsspellbooks.api.spells.*;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
+import io.redspace.ironsspellbooks.api.spells.CastType;
+import io.redspace.ironsspellbooks.api.spells.SpellAnimations;
+import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
@@ -28,7 +31,6 @@ import org.xszb.interlace_spellweaves.entity.spells.IceBurstEntity;
 import java.util.List;
 import java.util.Optional;
 
-@AutoSpellConfig
 public class ChargeRayOfFrostSpell extends AbstractMixSpell {
 
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "charge_ray_of_frost");
