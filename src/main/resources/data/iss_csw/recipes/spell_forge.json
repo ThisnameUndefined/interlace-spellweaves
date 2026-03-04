@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "block",
+  "key": {
+    "A": {
+      "item": "irons_spellbooks:arcane_salvage"
+    },
+    "B": {
+      "item": "irons_spellbooks:scroll_forge"
+    },
+    "C": {
+      "item": "irons_spellbooks:arcane_ingot"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " B ",
+    "CCC"
+  ],
+  "result": {
+    "item": "iss_csw:spell_forge"
+  },
+  "show_notification": true
+}

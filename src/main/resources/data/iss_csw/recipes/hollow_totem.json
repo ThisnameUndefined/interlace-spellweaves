@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "A": {
+    "C": {
       "item": "minecraft:clay"
     },
     "B": {
       "item": "minecraft:gold_ingot"
     },
-    "C": {
+    "A": {
       "item": "minecraft:emerald"
     }
   },

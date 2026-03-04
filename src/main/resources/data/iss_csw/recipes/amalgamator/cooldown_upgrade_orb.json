@@ -1,0 +1,20 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "item": "irons_spellbooks:cooldown_upgrade_orb"
+  },
+  "addition1": [
+    {
+      "item": "minecraft:nether_star"
+    }
+  ],
+  "addition2": [
+    {
+      "item": "irons_spellbooks:divine_pearl"
+    }
+  ],
+  "result": {
+    "item": "irons_spellbooks:cooldown_upgrade_orb",
+    "count": 2
+  }
+}

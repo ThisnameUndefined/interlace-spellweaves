@@ -1,0 +1,22 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "item": "minecraft:wither_skeleton_skull"
+  },
+  "addition1": [
+    {
+      "type": "iss_csw:spell_scroll",
+      "item": "irons_spellbooks:scroll",
+      "spell_id": "irons_spellbooks:wither_skull"
+    }
+  ],
+  "addition2": [
+    {
+      "item": "minecraft:bone_block"
+    }
+  ],
+  "result": {
+    "item": "minecraft:wither_skeleton_skull",
+    "count": 2
+  }
+}
