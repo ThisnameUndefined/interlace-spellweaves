@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A":{
+      "item": "irons_spellbooks:evocation_rune"
+    },
+    "B": {
+      "item": "iss_csw:forsaken_grimoire"
+    },
+    "C": {
+      "item": "irons_spellbooks:legendary_ink"
+    },
+    "D": {
+      "item": "iss_csw:rune_weave"
+    }
+  },
+  "pattern": [
+    "CDC",
+    "CBC",
+    "CAC"
+  ],
+  "result": {
+    "item": "iss_csw:high_evoker_spell_book"
+  },
+  "show_notification": true
+}

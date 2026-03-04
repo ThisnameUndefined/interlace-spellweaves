@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "iss_csw:block/spell_forge",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "iss_csw:block/spell_forge"
+    },
+    "facing=south": {
+      "model": "iss_csw:block/spell_forge",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "iss_csw:block/spell_forge",
+      "y": 270
+    }
+  }
+}

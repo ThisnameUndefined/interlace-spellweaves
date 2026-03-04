@@ -1,0 +1,90 @@
+{
+  "spell.iss_csw.charge_ray_of_frost": "Frost Blast",
+  "spell.iss_csw.charge_ray_of_frost.guide": "fire a ray of frost at the target. The impacted area explodes, dealing secondary damage.",
+  "spell.iss_csw.blizzard": "Blizzard",
+  "spell.iss_csw.blizzard.guide": "Target a single area summon a blizzard from above for the duration of the spell",
+  "spell.iss_csw.frostwhirl_slash": "Frostwhirl Slash",
+  "spell.iss_csw.frostwhirl_slash.guide": "Spin unleash a frost-imbued sweeping melee attack. Damage scales with your held weapon's melee damage and enchantments",
+  "spell.iss_csw.rime_veil": "Rime Veil",
+  "spell.iss_csw.rime_veil.guide": "Conjure a dense mist that grants true invisibility. Your first melee attack after breaking invisibility is a guaranteed critical hit",
+  "spell.iss_csw.summon_polar_bear": "summon saddle polar bear",
+  "spell.iss_csw.summon_polar_bear.guide": "Cast to summon an ride on a faster polar bear who will follow, protect, and fight for you, as well as providing a mount, even can jump!",
+  "spell.iss_csw.pinning_stake": "Rooting Stake",
+  "spell.iss_csw.pinning_stake.guide": "Hurl a stake that ensnares the target with magical roots, preventing all non-magical movement. Damage is doubled against targets that cannot be entangled.",
+  "spell.iss_csw.barrage_volley": "Barrage Volley",
+  "spell.iss_csw.barrage_volley.guide": "After a brief charge, continuously and rapidly fires a barrage of magic arrows forward",
+  "spell.iss_csw.hemovaporize": "Hemovaporize",
+  "spell.iss_csw.hemovaporize.guide": "Curses the target, causing their blood to magically vaporize, inflicting continuous life loss.",
+  "spell.iss_csw.totem_rite": "Totem Rite",
+  "spell.iss_csw.totem_rite.guide": "Place a hollow totem at the target location to invoke a ritual circle. Enemies within the area continuously take damage. If it slays a target, an undead totem is successfully created.",
+  "spell.iss_csw.spell_empowerment": "Spell Empowerment",
+  "spell.iss_csw.spell_empowerment.guide": "improve you cast next spell's level",
+  "spell.iss_csw.firefly_seeker": "Firefly Seeker",
+  "spell.iss_csw.firefly_seeker.guide": "Summons a swarm of fireflies that automatically track and attack the targeted enemy, dealing continuous damage.",
+
+  "spell.iss_csw.gust_pro": "Gust·Pro",
+  "spell.iss_csw.gust_pro.guide": "Summons a powerful gust of wind that knocks back and damages entities in front of you. Entities that collide with blocks take additional damage.",
+  "spell.iss_csw.lob_creeper_chain": "Lob Chain Creeper",
+  "spell.iss_csw.lob_creeper_chain.guide": "Lob the head of a creeper forward that explodes in a medium radius around the impact and will conjure a ring of creeper heads that falls to the ground and explodes. The higher the level, the faster the projectile.",
+
+  "spell.iss_csw.tp": "???",
+  "spell.iss_csw.tp.guide": "???",
+
+  "entity.iss_csw.summoned_polar_bear": "Summoned Saddle Polar Bear",
+  "entity.iss_csw.frost_remains": "Frost remains",
+  "entity.iss_csw.nameless_wizard": "Nameless wizard",
+
+  "item.iss_csw.hollow_totem": "Hollow Totem",
+  "item.iss_csw.rune_weave": "Rune-weave",
+  "item.iss_csw.nameless_helmet": "Nameless Hat",
+  "item.iss_csw.nameless_chestplate": "Nameless Coat",
+  "item.iss_csw.nameless_leggings": "Nameless Leggings",
+  "item.iss_csw.nameless_boots": "Nameless Boots",
+
+  "item.iss_csw.nameless_wizards_spawn_egg": "Nameless Wizards Spawn Egg",
+
+  "item.iss_csw.high_evoker_spell_book": "Original Codex of the Evoker",
+  "item.iss_csw.forsaken_grimoire": "Forsaken Grimoire",
+
+  "block.iss_csw.spell_forge": "Spell Forge",
+  "block.iss_csw.altar_of_nameless": "Altar Of Nameless",
+
+  "itemGroup.iss_csw.spellweaves_item_tab":"Interlace SpellWeaves",
+  "itemGroup.iss_csw.spellbook_scrolls_tab":"Interlace SpellWeaves·Spell",
+
+  "school.iss_csw.fusion": "fusion",
+
+  "ui.iss_csw.spell_forge_title": "Spell Forge",
+  "ui.iss_csw.cast_error_totem": "No hollow totem available to cast",
+  "ui.iss_csw.spell_improve": "next spell level add:%d",
+  "ui.iss_csw.altar_cooling": "altar remains silent",
+  "ui.iss_csw.tp": "Teleport to an unknown space",
+
+  "attribute.iss_cws.extra_protect_level":"Extra Protect Level",
+  "attribute.iss_cws.extra_spell_level":"Extra Spell Level",
+
+  "tooltip.iss_cws.nameless_set.name": "Set effect:The Nameless",
+  "tooltip.iss_cws.nameless_set.desc": "Equip all Nameless gear to activate a Mana Shield",
+
+  "tooltip.iss_cws.nameless_helmet_ability.name":"Passive ability:Solidified Mana",
+  "tooltip.iss_cws.nameless_helmet_ability":"Armor-piercing damage is still mitigated by Armor.",
+
+  "tooltip.iss_cws.nameless_chestplate_ability.name":"Passive ability:Nameless Echoes",
+  "tooltip.iss_cws.nameless_chestplate_ability":"Casting a spell has a chance to not trigger its Cooldown.",
+
+  "tooltip.iss_cws.nameless_leggings_ability.name":"Passive ability:Gravitational Divergence",
+  "tooltip.iss_cws.nameless_leggings_ability":"Unaffected by gravity while Sneaking.",
+
+  "tooltip.iss_cws.nameless_boots_ability.name":"Passive ability:Impact Empowerment",
+  "tooltip.iss_cws.nameless_boots_ability":": Converts Fall and Impact damage into Mana restoration.",
+
+  "msg.iss_cws.nameless": "A mysterious force prevents you.",
+
+  "death.attack.iss_csw.blizzard": "%1$s was pierced by %2$s's icicle",
+  "death.attack.iss_csw.totem_rite": "%1$s was made into totem of undying",
+  "death.attack.iss_csw.charge_ray_of_frost": "%1$s was blasted by %2$s's ray of frost",
+  "death.attack.iss_csw.frostwhirl_slash": "%1$s was sliced into two halves by frostwhirl slash",
+  "death.attack.iss_csw.hemovaporize": "%1$s's life essence has withered away.",
+  "death.attack.iss_csw.pinning_stake": "%1$s was impaled by a wooden stake.",
+  "death.attack.iss_csw.gust_pro": "%1$s got scattered by the wind"
+}

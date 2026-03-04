@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iss_csw:rune_weave"
+  },
+  "base": {
+    "item": "irons_spellbooks:archevoker_boots"
+  },
+  "result": {
+    "item": "iss_csw:nameless_boots"
+  },
+  "template": {
+    "item": "irons_spellbooks:evocation_rune"
+  }
+}

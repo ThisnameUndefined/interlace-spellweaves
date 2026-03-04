@@ -1,0 +1,12 @@
+{
+    "entity.nameless_wizard.music.loop": {
+        "sounds": [
+            "iss_csw:nameless_wizards/music/loop"
+        ]
+    },
+    "entity.nameless_wizard.music.intro": {
+        "sounds": [
+            "iss_csw:nameless_wizards/music/intro"
+        ]
+    }
+}

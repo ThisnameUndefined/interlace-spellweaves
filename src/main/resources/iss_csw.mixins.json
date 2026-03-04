@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.xszb.interlace_spellweaves.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "iss_csw.refmap.json",
+  "mixins": [
+    "BlockItemMixin",
+    "ChunkMapAccessor",
+    "EntityAccessor",
+    "EntityInLevelCallbackMixin",
+    "EntityManagerMixin",
+    "EntityMixin",
+    "ExplosionMixin",
+    "LivingEntityAccessor",
+    "LivingEntityMixin",
+    "MagicDataMixin",
+    "MagicManagerMixin",
+    "PlayerMixin",
+    "ServerPlayerGameModeMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

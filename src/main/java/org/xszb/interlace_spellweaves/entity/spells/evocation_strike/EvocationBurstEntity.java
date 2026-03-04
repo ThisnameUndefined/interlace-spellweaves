@@ -1,0 +1,134 @@
+package org.xszb.interlace_spellweaves.entity.spells.evocation_strike;
+
+import io.redspace.ironsspellbooks.api.spells.AutoSpellConfig;
+import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+import io.redspace.ironsspellbooks.damage.DamageSources;
+import io.redspace.ironsspellbooks.entity.spells.AoeEntity;
+import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
+import io.redspace.ironsspellbooks.registries.SoundRegistry;
+import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
+import org.xszb.interlace_spellweaves.registries.RegistryEntity;
+import org.xszb.interlace_spellweaves.registries.RegistrySpell;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.Optional;
+
+@AutoSpellConfig
+public class EvocationBurstEntity extends AoeEntity implements GeoAnimatable {
+
+    public EvocationBurstEntity(EntityType<? extends Projectile> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel);
+        this.setCircular();
+    }
+
+    public EvocationBurstEntity(Level level, LivingEntity owner, float damage, float radius) {
+        this(RegistryEntity.EVOCATION_BURST.get(), level);
+        setOwner(owner);
+        this.setRadius(radius);
+        this.setDamage(damage);
+    }
+    @Override
+    public void applyEffect(LivingEntity target) {
+        // Effect handling is done in tick
+        return;
+    }
+
+    public final int waitTime = 60;
+
+    @Override
+    public void tick() {
+        if (tickCount == waitTime) {
+            this.playSound(SoundRegistry.ELDRITCH_BLAST.get(), getRadius() * 2, Utils.random.nextIntBetweenInclusive(8, 12) * .1f);
+            if (!level().isClientSide) {
+                var center = this.getBoundingBox().getCenter();
+                float explosionRadius = getRadius();
+                var explosionRadiusSqr = explosionRadius * explosionRadius;
+                MagicManager.spawnParticles(level(), new BlastwaveParticleOptions(RegistrySpell.TOTEM_RITE.get().getSchoolType().getTargetingColor(), this.getRadius() * .9f), center.x, center.y, center.z, 1, 0, 0, 0, 0, true);
+                var entities = level().getEntities(this, this.getBoundingBox().inflate(explosionRadius));
+                var losCenter = Utils.moveToRelativeGroundLevel(level(), center, 2);
+                losCenter = Utils.raycastForBlock(level(), losCenter, losCenter.add(0, 3, 0), ClipContext.Fluid.NONE).getLocation().add(losCenter).scale(.5f);
+                for (Entity entity : entities) {
+                    double distanceSqr = entity.distanceToSqr(center);
+                    if (distanceSqr < explosionRadiusSqr && canHitEntity(entity) && Utils.hasLineOfSight(level(), losCenter, entity.getBoundingBox().getCenter(), true)) {
+                        double p = Mth.clamp((1 - distanceSqr / explosionRadiusSqr) + .4f, 0, 1);
+                        float damage = (float) (this.damage * p);
+                        DamageSources.applyDamage(entity, damage, RegistrySpell.TOTEM_RITE.get().getDamageSource(this, getOwner()));
+                        if (getOwner() instanceof NamelessWizardsEntity ent && entity instanceof LivingEntity livingEntity) {
+                            ent.setHealthAttack(40F, livingEntity);
+                        }
+                    }
+                }
+            }
+        } else if (tickCount > waitTime) {
+            discard();
+        }
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pPose) {
+        return EntityDimensions.scalable(this.getRadius() * 2.0F, this.getRadius() * 2.0F);
+    }
+
+    @Override
+    public void ambientParticles() {
+        return;
+    }
+
+    @Override
+    public float getParticleCount() {
+        return 0;
+    }
+
+    @Override
+    public Optional<ParticleOptions> getParticle() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+
+    private final AnimationController controller = new AnimationController(this, "controller", 0, this::animationPredicate);
+
+    private PlayState animationPredicate(software.bernie.geckolib.core.animation.AnimationState event) {
+        var controller = event.getController();
+        return PlayState.STOP;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(controller);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public double getTick(Object object) {
+        return 0;
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:clay"
+    },
+    "B": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "pattern": [
+    " A ",
+    "CBC",
+    " C "
+  ],
+  "result": {
+    "item": "iss_csw:hollow_totem"
+  },
+  "show_notification": true
+}

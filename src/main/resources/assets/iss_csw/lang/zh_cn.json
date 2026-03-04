@@ -1,0 +1,94 @@
+{
+  "spell.iss_csw.charge_ray_of_frost": "寒霜爆破",
+  "spell.iss_csw.charge_ray_of_frost.guide": "蓄力向目标发射寒霜射线,被命中的区域会炸开造成二次伤害",
+  "spell.iss_csw.blizzard": "暴风雪",
+  "spell.iss_csw.blizzard.guide": "选中目标区域，持续召唤暴风雪，伤害并冰封区域内的所有生物。",
+  "spell.iss_csw.frostwhirl_slash": "冰旋斩",
+  "spell.iss_csw.frostwhirl_slash.guide": "旋转一圈后施放附带寒霜的横扫近战攻击，不可被打断。伤害基于手持武器的近战伤害和附魔效果",
+  "spell.iss_csw.rime_veil": "白霜面纱",
+  "spell.iss_csw.rime_veil.guide": "召唤出大量雾气并获得真正的隐身能力,你破隐的近战攻击必定暴击",
+  "spell.iss_csw.summon_polar_bear": "召唤鞍座北极熊",
+  "spell.iss_csw.summon_polar_bear.guide": "召唤并骑乘一只跑的更快的北极熊，它将跟随、保护你，为你战斗，也可以作为坐骑，甚至可以跳",
+  "spell.iss_csw.pinning_stake": "缠根树桩",
+  "spell.iss_csw.pinning_stake.guide": "投出一根木桩，被命中的目标会被树根缠绕，使其无法进行非魔法效果的移动(对无法缠绕的目标伤害翻倍)",
+  "spell.iss_csw.barrage_volley": "连珠齐射",
+  "spell.iss_csw.barrage_volley.guide": "短暂蓄力后持续向前快速发射魔法箭",
+  "spell.iss_csw.hemovaporize": "蒸血术",
+  "spell.iss_csw.hemovaporize.guide": "诅咒目标，令其生命蒸发以流失血量",
+  "spell.iss_csw.totem_rite": "图腾奠仪",
+  "spell.iss_csw.totem_rite.guide": "将空图腾置于目标位置施展法阵，范围内的目标会持续受到伤害，若杀死了目标，则成功制造一枚不死图腾",
+  "spell.iss_csw.spell_empowerment": "法术迸发",
+  "spell.iss_csw.spell_empowerment.guide": "提升下一个释放的法术的等级",
+  "spell.iss_csw.firefly_seeker": "萤火追迹",
+  "spell.iss_csw.firefly_seeker.guide": "召唤一群萤火虫，它们会自动追踪并攻击目标敌人，造成持续伤害。",
+
+  "spell.iss_csw.gust_pro": "呼啸之风·Pro",
+  "spell.iss_csw.gust_pro.guide": "召唤一阵强风击退前方生物并造成伤害，撞到方块会额外受到伤害。",
+  "spell.iss_csw.lob_creeper_chain": "苦力怕连锁迫击炮",
+  "spell.iss_csw.lob_creeper_chain.guide": "向前发射苦力怕的头，撞击后在中等半径范围内爆炸并在在目标生物或方块周围召唤一圈苦力怕的头。等级越高，射速越快。",
+
+  "spell.iss_csw.tp": "???",
+  "spell.iss_csw.tp.guide": "???",
+
+
+  "entity.iss_csw.summoned_polar_bear": "召唤出的鞍座北极熊",
+  "entity.iss_csw.frost_remains": "霜骸",
+  "entity.iss_csw.nameless_wizard": "无名术士",
+
+  "item.iss_csw.hollow_totem": "空图腾",
+  "item.iss_csw.rune_weave": "铭文织物",
+  "item.iss_csw.nameless_helmet": "无名法帽",
+  "item.iss_csw.nameless_chestplate": "无名长袍",
+  "item.iss_csw.nameless_leggings": "无名护腿",
+  "item.iss_csw.nameless_boots": "无名战靴",
+
+
+  "item.iss_csw.nameless_wizards_spawn_egg": "无名术士刷怪蛋",
+
+
+  "item.iss_csw.high_evoker_spell_book": "唤魔原典",
+  "item.iss_csw.forsaken_grimoire": "受遗旧典",
+
+  "block.iss_csw.spell_forge": "奥术交错台",
+  "block.iss_csw.altar_of_nameless": "无名祭坛",
+
+  "itemGroup.iss_csw.spellweaves_item_tab":"交错织法",
+  "itemGroup.iss_csw.spellbook_scrolls_tab":"交错织法·法术",
+
+  "school.iss_csw.fusion": "混合",
+
+  "ui.iss_csw.spell_forge_title": "奥术交错台",
+  "ui.iss_csw.cast_error_totem": "缺少用于施法的空图腾",
+  "ui.iss_csw.spell_improve": "下一个法术等级增加:%d",
+  "ui.iss_csw.altar_cooling": "祭坛没有反应",
+  "ui.iss_csw.tp": "传送到未知空间",
+
+  "attribute.iss_cws.extra_protect_level":"额外保护等级",
+  "attribute.iss_cws.extra_spell_level":"额外法术等级",
+
+  "tooltip.iss_cws.nameless_set.name": "套装效果:无名之人",
+  "tooltip.iss_cws.nameless_set.desc": "同时穿戴所有无名术士系列装备后,开启法术护盾",
+
+  "tooltip.iss_cws.nameless_helmet_ability.name":"被动能力:固态法力",
+  "tooltip.iss_cws.nameless_helmet_ability":"破甲伤害依然受到护甲减免",
+
+  "tooltip.iss_cws.nameless_chestplate_ability.name":"被动能力:无名回响",
+  "tooltip.iss_cws.nameless_chestplate_ability":"施法有概率使其不进入冷却",
+
+  "tooltip.iss_cws.nameless_leggings_ability.name":"被动能力:引力偏离",
+  "tooltip.iss_cws.nameless_leggings_ability":"潜行时, 不受重力影响",
+
+  "tooltip.iss_cws.nameless_boots_ability.name":"被动能力:冲击赋能",
+  "tooltip.iss_cws.nameless_boots_ability":"受到的摔落或冲击伤害改为恢复法力值",
+
+  "msg.iss_cws.nameless": "一股神秘的力量阻止了你",
+
+
+  "death.attack.iss_csw.blizzard": "%1$s被%2$s用冰锥刺穿了身体。",
+  "death.attack.iss_csw.totem_rite": "%1$s被做成了不死图腾",
+  "death.attack.iss_csw.charge_ray_of_frost": "%1$s被%2$s的冰霜射线击中。",
+  "death.attack.iss_csw.frostwhirl_slash": "%1$s被霜旋斩切成了两瓣。",
+  "death.attack.iss_csw.hemovaporize": "%1$s的生命枯竭了。",
+  "death.attack.iss_csw.pinning_stake": "%1$s被木桩穿刺。",
+  "death.attack.iss_csw.gust_pro": "%1$s被吹散了。"
+}

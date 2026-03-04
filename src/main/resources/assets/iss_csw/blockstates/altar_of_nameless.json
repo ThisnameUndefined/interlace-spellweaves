@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "iss_csw:block/altar_of_nameless",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "iss_csw:block/altar_of_nameless"
+    },
+    "facing=south": {
+      "model": "iss_csw:block/altar_of_nameless",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "iss_csw:block/altar_of_nameless",
+      "y": 270
+    }
+  }
+}

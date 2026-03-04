@@ -1,0 +1,41 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "type": "iss_csw:spell_scroll",
+    "item": "irons_spellbooks:scroll",
+    "spell_id": "irons_spellbooks:wololo"
+  },
+  "addition1": [
+    {
+      "type": "iss_csw:spell_scroll",
+      "item": "irons_spellbooks:scroll",
+      "spell_id": "irons_spellbooks:sacrifice",
+      "set_level": 5
+    }
+  ],
+  "addition2": [
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "result": {
+    "type":"forge:nbt",
+    "item": "irons_spellbooks:scroll",
+    "nbt": {
+      "ISB_Spells": {
+        "spellWheel":false,
+        "maxSpells":1,
+        "mustEquip":false,
+        "data":[
+          {
+            "id": "iss_csw:totem_rite",
+            "index":0,
+            "locked": true,
+            "level": 1
+          }
+        ]
+      }
+    },
+    "count": 1
+  }
+}
