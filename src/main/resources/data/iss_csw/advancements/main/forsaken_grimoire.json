@@ -1,0 +1,34 @@
+{
+  "parent": "iss_csw:main/root",
+  "display": {
+    "x": 1.0,
+    "y": 1.0,
+    "icon": {
+      "item": "iss_csw:forsaken_grimoire"
+    },
+    "title": {
+      "translate": "advancements.iss_csw.forsaken_grimoire.title"
+    },
+    "description": {
+      "translate": "advancements.iss_csw.forsaken_grimoire.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_grimoire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "iss_csw:forsaken_grimoire"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

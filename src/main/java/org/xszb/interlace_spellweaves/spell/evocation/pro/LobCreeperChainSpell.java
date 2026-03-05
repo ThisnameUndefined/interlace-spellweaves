@@ -43,7 +43,7 @@ public class LobCreeperChainSpell extends AbstractMixSpell {
 
     public LobCreeperChainSpell() {
         this.manaCostPerLevel = 2;
-        this.baseSpellPower = 12;
+        this.baseSpellPower = 8;
         this.spellPowerPerLevel = 2;
         this.castTime = 0;
         this.baseManaCost = 20;

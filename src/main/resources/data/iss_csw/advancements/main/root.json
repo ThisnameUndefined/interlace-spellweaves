@@ -1,0 +1,20 @@
+{
+  "display": {
+    "x": 0.0,
+    "y": 0.0,
+    "icon": {
+      "item": "iss_csw:rune_weave" 
+    },
+    "title": { "translate": "advancements.iss_csw.root.title" },
+    "description": { "translate": "advancements.iss_csw.root.description" },
+    "background": "minecraft:textures/block/obsidian.png",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "visible": true
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

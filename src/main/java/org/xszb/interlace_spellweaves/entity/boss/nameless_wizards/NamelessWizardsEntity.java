@@ -1,7 +1,6 @@
 package org.xszb.interlace_spellweaves.entity.boss.nameless_wizards;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
-import io.redspace.ironsspellbooks.api.magic.MagicHelper;
 import io.redspace.ironsspellbooks.api.network.IClientEventEntity;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.util.Utils;
@@ -9,8 +8,6 @@ import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.entity.mobs.AntiMagicSusceptible;
-import io.redspace.ironsspellbooks.entity.mobs.dead_king_boss.DeadKingBoss;
-import io.redspace.ironsspellbooks.entity.mobs.dead_king_boss.DeadKingMusicManager;
 import io.redspace.ironsspellbooks.entity.spells.EchoingStrikeEntity;
 import io.redspace.ironsspellbooks.entity.spells.eldritch_blast.EldritchBlastVisualEntity;
 import io.redspace.ironsspellbooks.network.ClientboundEntityEvent;
@@ -49,19 +46,17 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.scores.PlayerTeam;
 import org.jetbrains.annotations.NotNull;
-import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
+import org.xszb.interlace_spellweaves.config.NameLessWizardConfig;
 import org.xszb.interlace_spellweaves.entity.boss.UnRemoveBossEntity;
 import org.xszb.interlace_spellweaves.entity.spells.HailStone;
 import org.xszb.interlace_spellweaves.entity.spells.creeper_chain.CreeperChainEntiy;
@@ -108,10 +103,10 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     private ActType activeSpell = ActType.NONE;
     private double cooldown;
     private ActType preSpell = ActType.NONE;
-    private boolean change_phase_trigger;
     private int shootCoolDown;
     private int overHitCount;
     protected UUID BossIdentity;
+    public static double finalLimit;
 
     private static final EntityDataAccessor<Byte> SPELL = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> PRESPELL = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BYTE);
@@ -132,21 +127,22 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(5,new BlastSpellGoal(this,10));
-        this.goalSelector.addGoal(5,new  WindSpellGoal(this,5));
-        this.goalSelector.addGoal(5,new  ShootSpellGoal(this,10));
-        this.goalSelector.addGoal(5,new VexSpellGoal(this,25));
-        this.goalSelector.addGoal(5,new CreeperSpellGoal(this,10));
-        this.goalSelector.addGoal(5,new MiniShotSpellGoal(this,6));
-        this.goalSelector.addGoal(5,new FireWorkSpellGoal(this,15));
-        this.goalSelector.addGoal(5,new TPSpellGoal(this,5));
-        this.goalSelector.addGoal(5,new StartGeoGoal(this,10));
-        this.goalSelector.addGoal(5,new BreakGeoGoal(this,10));
+
+        this.goalSelector.addGoal(5, new BlastSpellGoal(this, NameLessWizardConfig.blastInt));
+        this.goalSelector.addGoal(5, new ShootSpellGoal(this, NameLessWizardConfig.shootInt));
+        this.goalSelector.addGoal(5, new MiniShotSpellGoal(this, NameLessWizardConfig.miniShotInt));
+        this.goalSelector.addGoal(5, new FireWorkSpellGoal(this, NameLessWizardConfig.fireworkInt));
+        this.goalSelector.addGoal(5, new VexSpellGoal(this, NameLessWizardConfig.vexInt));
+        this.goalSelector.addGoal(5, new CreeperSpellGoal(this, NameLessWizardConfig.creeperInt));
+        this.goalSelector.addGoal(5, new WindSpellGoal(this, NameLessWizardConfig.windInt));
+        this.goalSelector.addGoal(5, new TPSpellGoal(this, NameLessWizardConfig.tpInt));
+        this.goalSelector.addGoal(5, new ComeBackSpellGoal(this, NameLessWizardConfig.comeBackInt));
+        this.goalSelector.addGoal(5, new StartGeoGoal(this, NameLessWizardConfig.startGeoInt));
+        this.goalSelector.addGoal(5, new BreakGeoGoal(this, NameLessWizardConfig.breakGeoInt));
         this.goalSelector.addGoal(5,new CloneSpellGoal(this,0));
         this.goalSelector.addGoal(5,new BreakPhaseGoal(this,0));
         this.goalSelector.addGoal(5,new ChangePhaseGoal(this,0));
         this.goalSelector.addGoal(5,new DeadGoal(this,0));
-        this.goalSelector.addGoal(5,new  ComeBackSpellGoal(this,5));
 
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, NamelessWizardsEntity.class)).setAlertOthers());
         this.targetSelector.addGoal(2, (new NearestAttackableTargetGoal<>(this, Player.class, true)).setUnseenMemoryTicks(300));
@@ -180,12 +176,13 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
 
     public ActType getActType() {
-         return !this.level().isClientSide ? this.activeSpell : ActType.getFromId(this.entityData.get(SPELL));
+        return !this.level().isClientSide ? this.activeSpell : ActType.getFromId(this.entityData.get(SPELL));
     }
 
     private ActType getPreActType() {
         return !this.level().isClientSide ? this.preSpell : ActType.getFromId(this.entityData.get(PRESPELL));
     }
+
 
     protected SoundEvent getSpellSound() {
         return SoundEvents.EVOKER_CAST_SPELL;
@@ -280,7 +277,10 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     //我有三千炼狱，待汝万世轮回
     public void setHealthAttack(float percent,LivingEntity tar){
-        float v = percent + (this.getIsPhase2()?0.5f:0) + (this.getIsAntiCheatMode()?100:0);
+        float multiplier = (float) NameLessWizardConfig.healthAttackMultiplier;
+        float basePercent = percent * multiplier;
+
+        float v = basePercent + (this.getIsPhase2() ? 0.5f : 0) + (this.getIsAntiCheatMode() ? 100 : 0);
         if ((tar instanceof Player pla && pla.isCreative()) || tar instanceof NamelessWizardsEntity){
             return;
         }
@@ -415,6 +415,10 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     public UUID getCustomBossIdentity() {
         return this.BossIdentity;
+    }
+
+    public float getSpellDamage(float baseDamage) {
+        return baseDamage * (float) NameLessWizardConfig.spellPowerMultiplier;
     }
 
     @Override
@@ -556,9 +560,9 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     @Override
     public double getAttributeValue(@NotNull Attribute attribute) {
         if (attribute == Attributes.MAX_HEALTH){
-            return Math.max(160,this.getAttributes().getValue(attribute));
+            return Math.max(finalLimit,super.getAttributeValue(attribute));
         }
-        return this.getAttributes().getValue(attribute);
+        return super.getAttributeValue(attribute);
     }
 
     @Override
@@ -689,7 +693,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     public void IllusionExplode(){
         Vec3 spawn = this.getEyePosition();
-        ExtendedFireworkRocket firework = new ExtendedFireworkRocket(this.level(), randomFireworkRocket(), this, spawn.x, spawn.y, spawn.z, true, 12,5);
+        ExtendedFireworkRocket firework = new ExtendedFireworkRocket(this.level(), randomFireworkRocket(), this, spawn.x, spawn.y, spawn.z, true, this.getSpellDamage(12),5);
         this.level().addFreshEntity(firework);
         firework.shoot(0, 0, 0, 0, 0);
         if (!this.getIsIllusion()) return;
@@ -706,8 +710,10 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         Entity tar = source.getEntity();
         Entity directSource = source.getDirectEntity();
         if (this.distanceTo(tar) > 8) {
+            Vec3 impactPos = directSource != null ? directSource.position() : tar.position();
+            impactPos = this.getBoundingBox().getCenter().add(this.getBoundingBox().getCenter().vectorTo(impactPos).normalize().scale(2));
+
             if (this.level() instanceof ServerLevel serverLevel) {
-                Vec3 impactPos = directSource != null ? directSource.position() : this.position().add(0, 1.0, 0);
 
                 serverLevel.sendParticles(ParticleTypes.SONIC_BOOM,
                         impactPos.x, impactPos.y, impactPos.z,
@@ -723,8 +729,8 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         1.0f, 1.5f);
             }
 
-            if (directSource instanceof net.minecraft.world.entity.projectile.Projectile projectile) {
-                projectile.discard();
+            if (directSource instanceof Projectile projectile) {
+                projectile.setDeltaMovement(this.getBoundingBox().getCenter().vectorTo(impactPos).normalize().scale(9));
             }
             return false;
         }
@@ -844,7 +850,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.FOLLOW_RANGE, 50.0D)
-                .add(Attributes.MAX_HEALTH, 160.0D)
+                .add(Attributes.MAX_HEALTH, 160)
                 .add(Attributes.ARMOR, 7)
                 .add(Attributes.ARMOR_TOUGHNESS, 7)
                 .add(RegistryAttribute.EX_PROTECT_LEVEL.get(), 7)
@@ -1170,7 +1176,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 entity.playSound(SoundRegistry.ELDRITCH_BLAST.get(), 4.0F, 1.0F);
 
                 entity.setHealthAttack(((target.getMaxHealth() - target.getHealth())/target.getMaxHealth()/2f + 0.05f) * 100,target);
-                DamageSources.applyDamage(target, 5, entity.damageSources().indirectMagic(entity,entity));
+                DamageSources.applyDamage(target, entity.getSpellDamage(5), entity.damageSources().indirectMagic(entity,entity));
                 MagicManager.spawnParticles(entity.level(), ParticleHelper.UNSTABLE_ENDER, EndPos.x, EndPos.y, EndPos.z, 50, 0, 0, 0, .3, false);
             }
 
@@ -1225,7 +1231,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 gust.strength = strength;
                 gust.amplifier = 4;
                 gust.setYRot(yaw);
-                gust.setDamage(10);
+                gust.setDamage(entity.getSpellDamage(10));
                 level().addFreshEntity(gust);
                 gust.setDealDamageActive();
                 gust.tick();
@@ -1310,7 +1316,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 }else {
 
 
-                    arrow.setDamage(2);
+                    arrow.setDamage(entity.getSpellDamage(2));
                     arrow.setPos(StarPos);
                     Vec3 forward = entity.getForward().normalize();
                     Vec3 shootVec = StarPos.vectorTo(EndPos);
@@ -1452,7 +1458,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             LivingEntity target = entity.getTarget();
             if (target != null) {
                 target.setPos(entity.getHomePos().getCenter());
-                EchoingStrikeEntity echo = new EchoingStrikeEntity(entity.level(), entity, 35, 6f);
+                EchoingStrikeEntity echo = new EchoingStrikeEntity(entity.level(), entity, entity.getSpellDamage(35), 6f);
                 echo.setPos(entity.getHomePos().getCenter().subtract(0, echo.getBbHeight() * .5f, 0));
                 entity.level().addFreshEntity(echo);
             }
@@ -1508,7 +1514,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
                 float speed = (float) dist / 20.0F;
 
-                float damage = 25.0F;
+                float damage = entity.getSpellDamage(8);
 
                 CreeperChainEntiy head = new CreeperChainEntiy(entity, world, speed, damage);
                 head.setPos(spawnPos.x, spawnPos.y, spawnPos.z);;
@@ -1537,7 +1543,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     }
 
     private void spawnVex(Level world, LivingEntity caster, Vec3 pos,LivingEntity target) {
-        RushVexEntity vex = new RushVexEntity(world, caster, 5);
+        RushVexEntity vex = new RushVexEntity(world, caster, this.getSpellDamage(7));
         vex.setPos(pos.x, pos.y, pos.z);
         vex.setTarget(target);
         world.addFreshEntity(vex);
@@ -1569,7 +1575,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 Level level = entity.level();
                 Vec3 Pos = target.position();
 
-                FireworkWarnEntity ent1 = new FireworkWarnEntity(level,entity,10,2);
+                FireworkWarnEntity ent1 = new FireworkWarnEntity(level,entity,entity.getSpellDamage(10),2);
                 ent1.setPos(Pos);
                 level.addFreshEntity(ent1);
 
@@ -1814,21 +1820,21 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                     var entities = level().getEntities(target,new AABB(target.blockPosition()).inflate(1));
                     for (Entity entity1 : entities) {
                         double distance = entity1.distanceToSqr(EndPos);
-                        if (distance <= 1 && !(entity1 instanceof NamelessWizardsEntity)) {
+                        if (distance <= 2 && !(entity1 instanceof NamelessWizardsEntity)) {
                             if (entity1 instanceof LivingEntity entity2) {
-                                entity.setHealthAttack(0.5f,entity2);
+                                entity.setHealthAttack(1f,entity2);
                             }
-                            DamageSources.applyDamage(entity1, 5, RegistrySpell.BLIZZARD.get().getDamageSource(arrow, entity));
+                            DamageSources.applyDamage(entity1, entity.getSpellDamage(5), RegistrySpell.BLIZZARD.get().getDamageSource(arrow, entity));
                         }
                     }
                     Vec3 eyepos = target.getEyePosition();
                     arrow.impactParticles(eyepos.x,entity.getEyeHeight(),eyepos.z);
                     arrow.discard();
                 } else {
-                    arrow.setDamage(5);
+                    arrow.setDamage(entity.getSpellDamage(5));
                     arrow.setPos(StarPos.x, StarPos.y, StarPos.z);
                     arrow.shoot(finalDir.x, finalDir.y, finalDir.z, 1.5F, 0.0F);
-                    arrow.setExplosionRadius(1f);
+                    arrow.setExplosionRadius(1.5f);
 
                     entity.level().addFreshEntity(arrow);
                     entity.playSound(SoundRegistry.ICE_CAST.get(), 4.0F, 1.0F);
@@ -2067,7 +2073,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             if (this.spellTick % 20 == 0 && entity.getTarget() != null) {
 
                 Vec3 Pos = entity.getTarget().position();
-                FireworkWarnEntity ent1 = new FireworkWarnEntity(level,entity,10,2);
+                FireworkWarnEntity ent1 = new FireworkWarnEntity(level,entity,entity.getSpellDamage(10),2);
                 ent1.setPos(Pos);
                 level.addFreshEntity(ent1);
             }
@@ -2093,7 +2099,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         int rnd = RANDOM.nextInt(positions.size());
                         Vec3 targetPos = positions.get(rnd).getCenter();
                         target.setPos(targetPos);
-                        EchoingStrikeEntity echo = new EchoingStrikeEntity(entity.level(), entity, 35, 6f);
+                        EchoingStrikeEntity echo = new EchoingStrikeEntity(entity.level(), entity, entity.getSpellDamage(35), 6f);
                         echo.setPos(targetPos.subtract(0, echo.getBbHeight() * .5f, 0));
                         entity.level().addFreshEntity(echo);
                     }
@@ -2123,7 +2129,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         for (int i = 0; i < tentacles; i++) {
                             Vec3 random = new Vec3(Utils.getRandomScaled(2), 0, Utils.getRandomScaled(2));
                             Vec3 spawn = entity.position().add(new Vec3(0, 0, 1.3 * (r + 1)).yRot(((6.281f / tentacles) * i))).add(random);
-                            FireworkWarnEntity ent = new FireworkWarnEntity(level,entity,20,2);
+                            FireworkWarnEntity ent = new FireworkWarnEntity(level,entity,entity.getSpellDamage(20),2);
                             ent.setPos(spawn);
                             level.addFreshEntity(ent);
                         }
@@ -2147,7 +2153,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             }
 
             if (this.spellTick == 30) {
-                EvocationBurstEntity echo = new EvocationBurstEntity(entity.level(), entity, 20, 13f);
+                EvocationBurstEntity echo = new EvocationBurstEntity(entity.level(), entity, entity.getSpellDamage(20), 13f);
                 echo.setPos(start.subtract(0, echo.getBbHeight() * .5f, 0));
                 level.addFreshEntity(echo);
             }

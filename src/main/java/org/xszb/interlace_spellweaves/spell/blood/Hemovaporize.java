@@ -27,7 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.api.spells.AbstractMixSpell;
-import org.xszb.interlace_spellweaves.config.Config;
+import org.xszb.interlace_spellweaves.config.MainConfig;
 import org.xszb.interlace_spellweaves.util.EntityUtil;
 
 import java.util.List;
@@ -116,7 +116,7 @@ public class Hemovaporize extends AbstractMixSpell {
     public void boilBlood(int spellLevel, LivingEntity entity, @Nullable MagicData playerMagicData, Entity target, LivingEntity tar) {
         ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(tar.getType());
         if (id != null) {
-            if (Config.hemovaporize_resistance.contains(id.toString())) return;
+            if (MainConfig.hemovaporize_resistance.contains(id.toString())) return;
         }
 
         if (playerMagicData != null && (playerMagicData.getCastDurationRemaining() + 1) % 20 == 0){

@@ -53,24 +53,24 @@ public class SpellForgeRecipeCategory implements IRecipeCategory<SpellMixRecipe>
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SpellMixRecipe recipe, IFocusGroup iFocusGroup) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 25, 2)
+        builder.addSlot(RecipeIngredientRole.INPUT, 26, 2)
                 .addIngredients(recipe.mainspell);
 
         List<ItemStack> addition1Items = Arrays.stream(recipe.addition1)
                 .flatMap(ingredient -> Arrays.stream(ingredient.getItems()))
                 .collect(Collectors.toList());
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 2, 2)
+        builder.addSlot(RecipeIngredientRole.INPUT, 3, 2)
                 .addItemStacks(addition1Items);
 
         List<ItemStack> addition2Items = Arrays.stream(recipe.addition2)
                 .flatMap(ingredient -> Arrays.stream(ingredient.getItems()))
                 .collect(Collectors.toList());
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 48, 2)
+        builder.addSlot(RecipeIngredientRole.INPUT, 49, 2)
                 .addItemStacks(addition2Items);
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 25, 31)
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 26, 31)
                 .addItemStack(recipe.getResultItem(RegistryAccess.EMPTY));
     }
 

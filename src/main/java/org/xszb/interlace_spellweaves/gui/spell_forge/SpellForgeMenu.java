@@ -1,6 +1,10 @@
 package org.xszb.interlace_spellweaves.gui.spell_forge;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,6 +15,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.recipe.SpellMixRecipe;
 import org.xszb.interlace_spellweaves.registries.RegistryBlock;
 import org.xszb.interlace_spellweaves.registries.RegistryMenu;
@@ -18,6 +23,7 @@ import org.xszb.interlace_spellweaves.registries.RegistryRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class SpellForgeMenu extends ItemCombinerMenu {
@@ -38,6 +44,18 @@ public class SpellForgeMenu extends ItemCombinerMenu {
 
     @Override
     protected void onTake(Player player, ItemStack resultStack) {
+
+        if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            Advancement advancement = Objects.requireNonNull(serverPlayer.getServer()).getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID,"main/mix_spell"));
+            if (advancement != null) {
+                AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+                if (!progress.isDone()) {
+                    for (String criteria : progress.getRemainingCriteria()) {
+                        serverPlayer.getAdvancements().award(advancement, criteria);
+                    }
+                }
+            }
+        }
 
         this.inputSlots.getItem(0).shrink(1);
         this.inputSlots.getItem(1).shrink(1);

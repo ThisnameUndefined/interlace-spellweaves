@@ -16,11 +16,11 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
 import org.xszb.interlace_spellweaves.api.registry.RegistrySchool;
-import org.xszb.interlace_spellweaves.config.Config;
+import org.xszb.interlace_spellweaves.config.MainConfig;
+import org.xszb.interlace_spellweaves.config.NameLessWizardConfig;
 import org.xszb.interlace_spellweaves.gui.spell_forge.SpellForgeScreen;
 import org.xszb.interlace_spellweaves.recipe.SpellScrollIngredient;
 import org.xszb.interlace_spellweaves.registries.*;
-import org.xszb.interlace_spellweaves.setup.ClientSetup;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(InterlaceSpellWeaves.MODID)
@@ -34,9 +34,11 @@ public class InterlaceSpellWeaves {
     public InterlaceSpellWeaves() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        String configFolder = InterlaceSpellWeaves.MODID + "/";
 
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MainConfig.SPEC,configFolder + "common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NameLessWizardConfig.SPEC,configFolder + "nameless_wizard.toml");
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         RegistryAttribute.register(modEventBus);
         RegistrySound.register(modEventBus);

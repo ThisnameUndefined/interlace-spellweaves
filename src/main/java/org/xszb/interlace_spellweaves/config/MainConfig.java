@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = InterlaceSpellWeaves.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Config {
+public class MainConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> HEMOVAPORIZE_RESISTANCE = BUILDER
