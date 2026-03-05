@@ -16,7 +16,10 @@ import org.xszb.interlace_spellweaves.spell.evocation.TotemRite;
 import org.xszb.interlace_spellweaves.spell.evocation.pro.GustProSpell;
 import org.xszb.interlace_spellweaves.spell.evocation.pro.LobCreeperChainSpell;
 import org.xszb.interlace_spellweaves.spell.fusion.SpellEmpowerment;
-import org.xszb.interlace_spellweaves.spell.ice.*;
+import org.xszb.interlace_spellweaves.spell.ice.Blizzard;
+import org.xszb.interlace_spellweaves.spell.ice.ChargeRayOfFrostSpell;
+import org.xszb.interlace_spellweaves.spell.ice.FrostwhirlSlash;
+import org.xszb.interlace_spellweaves.spell.ice.RimeVeil;
 import org.xszb.interlace_spellweaves.spell.nature.FireflySeeker;
 import org.xszb.interlace_spellweaves.spell.nature.PinningStake;
 

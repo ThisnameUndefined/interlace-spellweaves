@@ -3,7 +3,6 @@ package org.xszb.interlace_spellweaves.item.armor;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.item.armor.ExtendedArmorItem;
 import io.redspace.ironsspellbooks.item.armor.ImbuableChestplateArmorItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
