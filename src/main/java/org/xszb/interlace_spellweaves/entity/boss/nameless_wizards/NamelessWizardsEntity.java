@@ -46,6 +46,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -102,7 +103,6 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     private ActType activeSpell = ActType.NONE;
     private double cooldown;
     private ActType preSpell = ActType.NONE;
-    private boolean change_phase_trigger;
     private int shootCoolDown;
     private int overHitCount;
     protected UUID BossIdentity;
@@ -277,7 +277,10 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     //我有三千炼狱，待汝万世轮回
     public void setHealthAttack(float percent,LivingEntity tar){
-        float v = percent + (this.getIsPhase2()?0.5f:0) + (this.getIsAntiCheatMode()?100:0);
+        float multiplier = (float) NameLessWizardConfig.healthAttackMultiplier;
+        float basePercent = percent * multiplier;
+
+        float v = basePercent + (this.getIsPhase2() ? 0.5f : 0) + (this.getIsAntiCheatMode() ? 100 : 0);
         if ((tar instanceof Player pla && pla.isCreative()) || tar instanceof NamelessWizardsEntity){
             return;
         }
@@ -707,9 +710,10 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         Entity tar = source.getEntity();
         Entity directSource = source.getDirectEntity();
         if (this.distanceTo(tar) > 8) {
+            Vec3 impactPos = directSource != null ? directSource.position() : tar.position();
+            impactPos = this.getBoundingBox().getCenter().add(this.getBoundingBox().getCenter().vectorTo(impactPos).normalize().scale(2));
+
             if (this.level() instanceof ServerLevel serverLevel) {
-                Vec3 impactPos = directSource != null ? directSource.position() : tar.position();
-                impactPos = this.getBoundingBox().getCenter().add(this.getBoundingBox().getCenter().vectorTo(impactPos).normalize().scale(2));
 
                 serverLevel.sendParticles(ParticleTypes.SONIC_BOOM,
                         impactPos.x, impactPos.y, impactPos.z,
@@ -725,8 +729,8 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         1.0f, 1.5f);
             }
 
-            if (directSource instanceof net.minecraft.world.entity.projectile.Projectile projectile) {
-                projectile.discard();
+            if (directSource instanceof Projectile projectile) {
+                projectile.setDeltaMovement(this.getBoundingBox().getCenter().vectorTo(impactPos).normalize().scale(9));
             }
             return false;
         }
@@ -1816,7 +1820,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                     var entities = level().getEntities(target,new AABB(target.blockPosition()).inflate(1));
                     for (Entity entity1 : entities) {
                         double distance = entity1.distanceToSqr(EndPos);
-                        if (distance <= 1 && !(entity1 instanceof NamelessWizardsEntity)) {
+                        if (distance <= 2 && !(entity1 instanceof NamelessWizardsEntity)) {
                             if (entity1 instanceof LivingEntity entity2) {
                                 entity.setHealthAttack(1f,entity2);
                             }
@@ -1830,7 +1834,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                     arrow.setDamage(entity.getSpellDamage(5));
                     arrow.setPos(StarPos.x, StarPos.y, StarPos.z);
                     arrow.shoot(finalDir.x, finalDir.y, finalDir.z, 1.5F, 0.0F);
-                    arrow.setExplosionRadius(1f);
+                    arrow.setExplosionRadius(1.5f);
 
                     entity.level().addFreshEntity(arrow);
                     entity.playSound(SoundRegistry.ICE_CAST.get(), 4.0F, 1.0F);

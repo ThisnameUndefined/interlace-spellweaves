@@ -4,7 +4,10 @@ import io.redspace.ironsspellbooks.api.events.ModifySpellLevelEvent;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -13,6 +16,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.level.LevelEvent;
@@ -29,6 +34,7 @@ import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 import org.xszb.interlace_spellweaves.registries.RegistryEffect;
 
 import static org.xszb.interlace_spellweaves.dimension.PocketDimGenerator.POCKET_DIM;
+import static org.xszb.interlace_spellweaves.dimension.PocketDimGenerator.POCKET_DIMENSION;
 import static org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem.hasFullSet;
 
 @Mod.EventBusSubscriber(modid = InterlaceSpellWeaves.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -99,6 +105,38 @@ public class ServerEvents {
             if (magicData instanceof IMagicDataExtension extension) {
                 boolean isFull = hasFullSet(player);
                 extension.arcane_nemeses$setWearingFullNamelessSet(isFull);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            ResourceKey<Level> currentDim = player.level().dimension();
+            if (currentDim.equals(POCKET_DIMENSION)) {
+                event.setCanceled(true);
+
+                player.setHealth(player.getMaxHealth());
+                player.getFoodData().setFoodLevel(20);
+                player.removeAllEffects();
+                player.setDeltaMovement(0, 0, 0);
+
+                BlockPos spawnPos = player.getRespawnPosition();
+                ServerLevel respawnLevel = player.server.getLevel(player.getRespawnDimension());
+
+                if (spawnPos == null || respawnLevel == null) {
+                    respawnLevel = player.server.overworld();
+                    spawnPos = respawnLevel.getSharedSpawnPos();
+                }
+
+                player.teleportTo(respawnLevel, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, player.getYRot(), player.getXRot());
+
+                player.displayClientMessage(
+                        Component.translatable("ui.iss_cws.nameless")
+                                .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC),
+                        true
+                );
+
             }
         }
     }

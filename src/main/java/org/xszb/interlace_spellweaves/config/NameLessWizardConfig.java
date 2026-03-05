@@ -11,21 +11,16 @@ import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizar
 public class NameLessWizardConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    // 定义具体的配置项
     public static final ForgeConfigSpec.DoubleValue MAX_HEALTH;
     public static final ForgeConfigSpec.DoubleValue SPELL_POWER_MULTIPLIER;
-    // --- 攻击型法术延迟 ---
+    public static final ForgeConfigSpec.DoubleValue HEALTH_ATTACK_MULTIPLIER;
     public static ForgeConfigSpec.IntValue BLAST_INTERVAL;
     public static ForgeConfigSpec.IntValue SHOOT_INTERVAL;
     public static ForgeConfigSpec.IntValue MINI_SHOT_INTERVAL;
     public static ForgeConfigSpec.IntValue FIREWORK_INTERVAL;
-
-    // --- 召唤与控制型延迟 ---
     public static ForgeConfigSpec.IntValue VEX_INTERVAL;
     public static ForgeConfigSpec.IntValue CREEPER_INTERVAL;
     public static ForgeConfigSpec.IntValue WIND_INTERVAL;
-
-    // --- 位移与特殊逻辑延迟 ---
     public static ForgeConfigSpec.IntValue TP_INTERVAL;
     public static ForgeConfigSpec.IntValue COME_BACK_INTERVAL;
     public static ForgeConfigSpec.IntValue START_GEO_INTERVAL;
@@ -42,7 +37,12 @@ public class NameLessWizardConfig {
                 .comment("Multiplier for Nameless Wizard's spell damage. Default: 1.0")
                 .defineInRange("spell_power_multiplier", 1.0, 0.0, 10.0);
 
-        BUILDER.comment("Settings for Nameless Wizard AI Goals (Intervals in Ticks, 20 ticks = 1s)").push("Spell Intervals");
+        HEALTH_ATTACK_MULTIPLIER = BUILDER
+                .comment("Multiplier for Nameless Wizard's health-based attack (percent damage). Default: 1.0")
+                .defineInRange("health_attack_multiplier", 1.0, 0.0, 100.0);
+
+        BUILDER.comment("Settings for Nameless Wizard AI Goals (Intervals in Ticks, 20 ticks = 1s)")
+                .push("Nameless Wizard Spell Cooldowns");
 
         BLAST_INTERVAL = BUILDER.defineInRange("blast_spell_interval", 10, 1, 2000);
         SHOOT_INTERVAL = BUILDER.defineInRange("shoot_spell_interval", 10, 1, 2000);
@@ -63,6 +63,7 @@ public class NameLessWizardConfig {
 
     public static double maxHealth;
     public static double spellPowerMultiplier;
+    public static double healthAttackMultiplier;
     public static int blastInt, shootInt, miniShotInt, fireworkInt;
     public static int vexInt, creeperInt, windInt;
     public static int tpInt, comeBackInt, startGeoInt, breakGeoInt;
@@ -83,7 +84,7 @@ public class NameLessWizardConfig {
             comeBackInt = COME_BACK_INTERVAL.get();
             startGeoInt = START_GEO_INTERVAL.get();
             breakGeoInt = BREAK_GEO_INTERVAL.get();
-
+            healthAttackMultiplier = HEALTH_ATTACK_MULTIPLIER.get();
             NamelessWizardsEntity.finalLimit = maxHealth;
         }
     }

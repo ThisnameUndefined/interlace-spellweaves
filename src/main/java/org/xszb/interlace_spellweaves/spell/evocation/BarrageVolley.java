@@ -107,9 +107,7 @@ public class BarrageVolley extends AbstractMixSpell {
     }
 
     private float getDamage(int spellLevel, LivingEntity caster) {
-        float baseDamage = getSpellPower(spellLevel, caster) * 0.25f + (float) Math.min(spellLevel, 10) / 2;
-        float bonus = spellLevel > 10 ? (float) (spellLevel - 10) / 10f : 0f;
-        return baseDamage + bonus;
+        return getSpellPower(spellLevel, caster) * 0.25f + (float) Math.min(spellLevel, 10) / 2;
     }
 
     public void shootBlazeFireball(Level world, int spellLevel, LivingEntity entity) {

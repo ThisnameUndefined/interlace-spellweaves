@@ -30,6 +30,10 @@
   "spell.iss_csw.tp": "???",
   "spell.iss_csw.tp.guide": "???",
 
+  "effect.iss_csw.rime_veil": "白霜面纱",
+  "effect.iss_csw.rime_veil.description": "期间隐身，下次攻击必定暴击",
+  "effect.iss_csw.spell_improve": "法术迸发",
+  "effect.iss_csw.spell_improve.description": "提升下一次释放的部分法术强度",
 
   "entity.iss_csw.summoned_polar_bear": "召唤出的鞍座北极熊",
   "entity.iss_csw.frost_remains": "霜骸",
@@ -47,7 +51,7 @@
 
 
   "item.iss_csw.high_evoker_spell_book": "唤魔原典",
-  "item.iss_csw.forsaken_grimoire": "受遗旧典",
+    "item.iss_csw.forsaken_grimoire": "受遗旧典",
 
   "block.iss_csw.spell_forge": "奥术交错台",
   "block.iss_csw.altar_of_nameless": "无名祭坛",
@@ -62,6 +66,7 @@
   "ui.iss_csw.spell_improve": "下一个法术等级增加:%d",
   "ui.iss_csw.altar_cooling": "祭坛没有反应",
   "ui.iss_csw.tp": "传送到未知空间",
+  "ui.iss_cws.nameless": "你被传送了回去",
 
   "attribute.iss_cws.extra_protect_level":"额外保护等级",
   "attribute.iss_cws.extra_spell_level":"额外法术等级",
@@ -90,5 +95,16 @@
   "death.attack.iss_csw.frostwhirl_slash": "%1$s被霜旋斩切成了两瓣。",
   "death.attack.iss_csw.hemovaporize": "%1$s的生命枯竭了。",
   "death.attack.iss_csw.pinning_stake": "%1$s被木桩穿刺。",
-  "death.attack.iss_csw.gust_pro": "%1$s被吹散了。"
+  "death.attack.iss_csw.gust_pro": "%1$s被吹散了。",
+
+  "advancements.iss_csw.root.title": "交错织法",
+  "advancements.iss_csw.root.description": "法术之间的交织，从此开始",
+  "advancements.iss_csw.spell_forge.title": "魔力缝合",
+  "advancements.iss_csw.spell_forge.description": "合成奥术交错台",
+  "advancements.iss_csw.forsaken_grimoire.title": "尘封的真理",
+  "advancements.iss_csw.forsaken_grimoire.description": "合成受遗旧典",
+  "advancements.iss_csw.enter_wizard_dimension.title": "界外缝隙",
+  "advancements.iss_csw.enter_wizard_dimension.description": "前往未知的口袋维度",
+  "advancements.iss_csw.mix_spell.title": "鸡尾酒!",
+  "advancements.iss_csw.mix_spell.description": "进行一次混合"
 }

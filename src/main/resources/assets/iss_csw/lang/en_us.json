@@ -30,6 +30,11 @@
   "spell.iss_csw.tp": "???",
   "spell.iss_csw.tp.guide": "???",
 
+  "effect.iss_csw.rime_veil": "Rime Veil",
+  "effect.iss_csw.rime_veil.description": "Conjure a dense mist that grants true invisibility. Your first melee attack after breaking invisibility is a guaranteed critical hit",
+  "effect.iss_csw.spell_improve": "Spell Empowerment",
+  "effect.iss_csw.spell_improve.description": "improve you cast next spell's level",
+
   "entity.iss_csw.summoned_polar_bear": "Summoned Saddle Polar Bear",
   "entity.iss_csw.frost_remains": "Frost remains",
   "entity.iss_csw.nameless_wizard": "Nameless wizard",
@@ -59,6 +64,7 @@
   "ui.iss_csw.spell_improve": "next spell level add:%d",
   "ui.iss_csw.altar_cooling": "altar remains silent",
   "ui.iss_csw.tp": "Teleport to an unknown space",
+  "ui.iss_cws.nameless": "You have been teleported back",
 
   "attribute.iss_cws.extra_protect_level":"Extra Protect Level",
   "attribute.iss_cws.extra_spell_level":"Extra Spell Level",
@@ -86,5 +92,16 @@
   "death.attack.iss_csw.frostwhirl_slash": "%1$s was sliced into two halves by frostwhirl slash",
   "death.attack.iss_csw.hemovaporize": "%1$s's life essence has withered away.",
   "death.attack.iss_csw.pinning_stake": "%1$s was impaled by a wooden stake.",
-  "death.attack.iss_csw.gust_pro": "%1$s got scattered by the wind"
+  "death.attack.iss_csw.gust_pro": "%1$s got scattered by the wind",
+
+  "advancements.iss_csw.root.title": "Interlace SpellWeaves",
+  "advancements.iss_csw.root.description": "Where the threads of magic intertwine",
+  "advancements.iss_csw.spell_forge.title": "Spell Stitch",
+  "advancements.iss_csw.spell_forge.description": "Craft Spell Amalgamator",
+  "advancements.iss_csw.forsaken_grimoire.title": "Dusty Truths",
+  "advancements.iss_csw.forsaken_grimoire.description": "Craft the Forsaken Grimoire.",
+  "advancements.iss_csw.enter_wizard_dimension.title": "The Outer Void",
+  "advancements.iss_csw.enter_wizard_dimension.description": "Infiltrate the unknown Pocket Dimension",
+  "advancements.iss_csw.mix_spell.title": "Cocktail!",
+  "advancements.iss_csw.mix_spell.description": "Perform a mix"
 }

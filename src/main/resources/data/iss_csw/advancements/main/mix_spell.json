@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "irons_spellbooks:scroll"
+    },
+    "title": {
+      "translate": "advancements.iss_csw.mix_spell.title"
+    },
+    "description": {
+      "translate": "advancements.iss_csw.mix_spell.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "iss_csw:main/craft_spell_forge",
+  "criteria": {
+    "get_scroll": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
