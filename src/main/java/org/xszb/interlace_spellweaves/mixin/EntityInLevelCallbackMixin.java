@@ -1,12 +1,9 @@
 package org.xszb.interlace_spellweaves.mixin;
 
 
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,8 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.xszb.interlace_spellweaves.entity.boss.UnRemoveBossEntity;
-import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
-import org.xszb.interlace_spellweaves.util.EntityUtil;
 
 import static org.xszb.interlace_spellweaves.util.EntityUtil.canDiscard;
 

@@ -30,8 +30,8 @@ import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.api.magic.IMagicDataExtension;
 import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
 import org.xszb.interlace_spellweaves.config.MainConfig;
-import org.xszb.interlace_spellweaves.dimension.PocketDimSavedData;
 import org.xszb.interlace_spellweaves.dimension.PocketDimGenerator;
+import org.xszb.interlace_spellweaves.dimension.PocketDimSavedData;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 import org.xszb.interlace_spellweaves.registries.RegistryEffect;
 

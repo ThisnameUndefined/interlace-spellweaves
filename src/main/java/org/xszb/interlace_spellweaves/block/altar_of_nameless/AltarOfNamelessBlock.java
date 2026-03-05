@@ -1,7 +1,5 @@
 package org.xszb.interlace_spellweaves.block.altar_of_nameless;
 
-import io.redspace.ironsspellbooks.api.util.CameraShakeData;
-import io.redspace.ironsspellbooks.api.util.CameraShakeManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,13 +18,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
-import org.xszb.interlace_spellweaves.block.altar_of_nameless.AltarOfNamelessEntity;
-import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.entity.utils.SummonNamelessWizards;
 import org.xszb.interlace_spellweaves.registries.RegistryBlock;
-import org.xszb.interlace_spellweaves.registries.RegistryEntity;
-import org.xszb.interlace_spellweaves.registries.RegistryItem;
 
 import javax.annotation.Nullable;
 

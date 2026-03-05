@@ -1,17 +1,11 @@
 package org.xszb.interlace_spellweaves.entity.boss;
 
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.entity.EntityInLevelCallback;
-import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
-import org.xszb.interlace_spellweaves.mixin.EntityAccessor;
-import org.xszb.interlace_spellweaves.util.EntityUtil;
 
 public class UnRemoveBossEntity extends BossEntity {
     protected UnRemoveBossEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {

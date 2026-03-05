@@ -1,20 +1,16 @@
 package org.xszb.interlace_spellweaves.setup;
 
-import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
 import io.redspace.ironsspellbooks.entity.spells.creeper_head.CreeperHeadRenderer;
 import io.redspace.ironsspellbooks.item.SpellBook;
-import io.redspace.ironsspellbooks.render.*;
-import net.minecraft.client.Minecraft;
+import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -34,14 +30,9 @@ import org.xszb.interlace_spellweaves.entity.spells.stake.StakeRenderer;
 import org.xszb.interlace_spellweaves.registries.RegistryBlock;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryItem;
-import org.xszb.interlace_spellweaves.registries.RegistryParticle;
 import org.xszb.interlace_spellweaves.render.EnergySwirlLayer;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
-import java.util.Map;
-
-import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.CHARGE_TEXTURE;
-import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.EVASION_TEXTURE;
 import static org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsRenderer.SHIELD_TEXTURE;
 
 @Mod.EventBusSubscriber(modid = InterlaceSpellWeaves.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

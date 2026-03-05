@@ -1,7 +1,6 @@
 package org.xszb.interlace_spellweaves.entity.armor.nameless;
 
 import io.redspace.ironsspellbooks.IronsSpellbooks;
-import io.redspace.ironsspellbooks.item.armor.PumpkinArmorItem;
 import net.minecraft.resources.ResourceLocation;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
