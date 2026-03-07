@@ -10,6 +10,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
+import org.xszb.interlace_spellweaves.util.ModTags;
 
 import static io.redspace.ironsspellbooks.api.registry.SchoolRegistry.SCHOOL_REGISTRY_KEY;
 
@@ -29,7 +30,7 @@ public class RegistrySchool {
 
     public static final RegistryObject<SchoolType> FUSION = registerSchool(new SchoolType(
             FUSION_RESOURCE,
-            null,
+            ModTags.FUSION_FOCUS,
             Component.translatable("school.iss_csw.fusion").withStyle(ChatFormatting.GOLD),
             null,
             null,
