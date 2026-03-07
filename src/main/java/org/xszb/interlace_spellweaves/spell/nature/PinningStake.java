@@ -44,7 +44,7 @@ public class PinningStake extends AbstractMixSpell {
 
     public PinningStake() {
         this.manaCostPerLevel = 2;
-        this.baseSpellPower = 5;
+        this.baseSpellPower = 2;
         this.spellPowerPerLevel = 5;
         this.castTime = 0;
         this.baseManaCost = 10;

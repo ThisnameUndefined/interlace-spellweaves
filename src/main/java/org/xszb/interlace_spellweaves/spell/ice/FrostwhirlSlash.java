@@ -75,7 +75,7 @@ public class FrostwhirlSlash extends AbstractMixSpell {
     public FrostwhirlSlash() {
         this.manaCostPerLevel = 6;
         this.baseSpellPower = 8;
-        this.spellPowerPerLevel = 4;
+        this.spellPowerPerLevel = 3;
         this.castTime = 7;
         this.baseManaCost = 30;
     }

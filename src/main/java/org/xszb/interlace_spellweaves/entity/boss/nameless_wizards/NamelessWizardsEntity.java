@@ -510,11 +510,19 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         super.aiStep();
         Map<MobEffect, MobEffectInstance> eff = ((LivingEntityAccessor)this).getEffects();
         if (!eff.isEmpty()) {
-            eff.forEach((key, value) -> {
-                if (!MobEffectRegistry.MOB_EFFECT_DEFERRED_REGISTER.getEntries().stream().anyMatch(mobEffectRegistryObject->mobEffectRegistryObject.get().equals(value.getEffect()))){
-                    getActiveEffectsMap().remove(key);
+            Iterator<Map.Entry<MobEffect, MobEffectInstance>> iterator = eff.entrySet().iterator();
+
+            while (iterator.hasNext()) {
+                Map.Entry<MobEffect, MobEffectInstance> entry = iterator.next();
+                MobEffect effect = entry.getKey();
+                boolean isNotAllowed = MobEffectRegistry.MOB_EFFECT_DEFERRED_REGISTER.getEntries()
+                        .stream()
+                        .noneMatch(reg -> reg.get().equals(effect));
+                if (isNotAllowed) {
+                    iterator.remove();
+                    this.onEffectRemoved(entry.getValue());
                 }
-            });
+            }
         }
     }
 
@@ -1819,12 +1827,12 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 if (StarPos.distanceTo(EndPos) < 1.5f) {
                     var entities = level().getEntities(target,new AABB(target.blockPosition()).inflate(1));
                     for (Entity entity1 : entities) {
-                        double distance = entity1.distanceToSqr(EndPos);
-                        if (distance <= 2 && !(entity1 instanceof NamelessWizardsEntity)) {
+                        double distanceToSurface = entity1.getBoundingBox().distanceToSqr(EndPos);
+                        if ((distanceToSurface <= 3.0 || entity1 == target) && !(entity1 instanceof NamelessWizardsEntity)) {
                             if (entity1 instanceof LivingEntity entity2) {
-                                entity.setHealthAttack(1f,entity2);
+                                entity.setHealthAttack(1f, entity2);
+                                DamageSources.applyDamage(entity1, entity.getSpellDamage(5),RegistrySpell.BLIZZARD.get().getDamageSource(arrow, entity));
                             }
-                            DamageSources.applyDamage(entity1, entity.getSpellDamage(5), RegistrySpell.BLIZZARD.get().getDamageSource(arrow, entity));
                         }
                     }
                     Vec3 eyepos = target.getEyePosition();
