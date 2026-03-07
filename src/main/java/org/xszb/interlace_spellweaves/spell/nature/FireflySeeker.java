@@ -41,8 +41,8 @@ public class FireflySeeker extends AbstractMixSpell {
 
     public FireflySeeker() {
         this.manaCostPerLevel = 2;
-        this.baseSpellPower = 5;
-        this.spellPowerPerLevel = 3;
+        this.baseSpellPower = 3;
+        this.spellPowerPerLevel = 2;
         this.castTime = 30;
         this.baseManaCost = 15;
     }

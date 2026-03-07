@@ -59,7 +59,7 @@ public class TotemRite extends AbstractMixSpell {
     public TotemRite() {
         this.manaCostPerLevel = 2;
         this.baseSpellPower = 5;
-        this.spellPowerPerLevel = 3;
+        this.spellPowerPerLevel = 2;
         this.castTime = 20;
         this.baseManaCost = 15;
     }

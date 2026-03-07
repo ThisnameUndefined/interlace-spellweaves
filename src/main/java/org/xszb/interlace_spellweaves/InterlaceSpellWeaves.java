@@ -39,6 +39,7 @@ public class InterlaceSpellWeaves {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MainConfig.SPEC,configFolder + "common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,NameLessWizardConfig.SPEC,configFolder + "nameless_wizard.toml");
 
+        RegistryEnchantments.register(modEventBus);
         RegistryAttribute.register(modEventBus);
         RegistrySound.register(modEventBus);
         RegistryParticle.register(modEventBus);

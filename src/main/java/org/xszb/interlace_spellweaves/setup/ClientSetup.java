@@ -28,6 +28,7 @@ import org.xszb.interlace_spellweaves.entity.spells.rite_entity.TotemRiteRendere
 import org.xszb.interlace_spellweaves.entity.spells.rushvex.RushVexRenderer;
 import org.xszb.interlace_spellweaves.entity.spells.small_magic_arrow.noGravityMagicArrowRenderer;
 import org.xszb.interlace_spellweaves.entity.spells.stake.StakeRenderer;
+import org.xszb.interlace_spellweaves.entity.spells.tracking_arrow.TrackMagicArrowRenderer;
 import org.xszb.interlace_spellweaves.registries.RegistryBlock;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryItem;
@@ -55,6 +56,7 @@ public class ClientSetup {
         event.registerEntityRenderer(RegistryEntity.EVOCATION_BURST.get(), EvocationBurstRenderer::new);
         event.registerEntityRenderer((EntityType) RegistryEntity.CREEPER_HEAD_PROJECTILE.get(), (context) -> new SkullProjectileRenderer(context, IronsSpellbooks.id("textures/entity/creeper_head.png")));
         event.registerEntityRenderer(RegistryEntity.SUMMON_NAMELESS.get(), NoopRenderer::new);
+        event.registerEntityRenderer(RegistryEntity.TRACK_MAGIC_ARROW.get(), TrackMagicArrowRenderer::new);
 
 
 

@@ -74,7 +74,7 @@ public class ExtendedFireworkRocket extends FireworkRocketEntity implements Anti
                     for (MobEffect effect : effectsToApply) {
                         MobEffectInstance current = eff.get(effect);
                         int newAmplifier = (current == null) ? 0 : Math.min(current.getAmplifier() + 1, 9);
-                        MobEffectInstance updated = new MobEffectInstance(effect, 250, newAmplifier);
+                        MobEffectInstance updated = new MobEffectInstance(effect, 100 * (newAmplifier + 1), newAmplifier);
                         eff.put(effect, updated);
                         ((LivingEntityAccessor)livingentity).onEffectUpdated(updated, true, null);
                     }

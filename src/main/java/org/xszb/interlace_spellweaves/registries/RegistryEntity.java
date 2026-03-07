@@ -24,6 +24,7 @@ import org.xszb.interlace_spellweaves.entity.spells.rite_entity.TotemRiteEntity;
 import org.xszb.interlace_spellweaves.entity.spells.rushvex.RushVexEntity;
 import org.xszb.interlace_spellweaves.entity.spells.small_magic_arrow.noGravityMagicArrow;
 import org.xszb.interlace_spellweaves.entity.spells.stake.StakeEntity;
+import org.xszb.interlace_spellweaves.entity.spells.tracking_arrow.TrackMagicArrow;
 import org.xszb.interlace_spellweaves.entity.utils.SummonNamelessWizards;
 
 public class RegistryEntity {
@@ -85,6 +86,13 @@ public class RegistryEntity {
                     .sized(.5f, .5f)
                     .clientTrackingRange(64)
                     .build(ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "small_magic_arrow").toString()));
+
+    public static final RegistryObject<EntityType<TrackMagicArrow>> TRACK_MAGIC_ARROW =
+            ENTITIES.register("track_magic_arrow", () -> EntityType.Builder.<TrackMagicArrow>of(TrackMagicArrow::new, MobCategory.MISC)
+                    .sized(.5f, .5f)
+                    .clientTrackingRange(64)
+                    .build(ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "track_magic_arrow").toString()));
+
 
     public static final RegistryObject<EntityType<TotemRiteEntity>> TOTEM_RITE =
             ENTITIES.register("totem_rite", () -> EntityType.Builder.<TotemRiteEntity>of(TotemRiteEntity::new, MobCategory.MISC)

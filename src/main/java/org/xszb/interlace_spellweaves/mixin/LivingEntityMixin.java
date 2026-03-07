@@ -88,22 +88,43 @@ public abstract class LivingEntityMixin {
     private void nameless$shieldDamageReduction(float newHealth, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (newHealth == 0) return;
+        float originalNewHealth = newHealth;
         float oldHealth = entity.getHealth();
+        if (oldHealth < newHealth && entity.getAttributeValue(RegistryAttribute.HEAL_MUL.get()) != 1){
+            double value = newHealth - oldHealth;
+            value = value * entity.getAttributeValue(RegistryAttribute.HEAL_MUL.get());
+            newHealth = (float) (oldHealth + value);
+        }
+        //甲来!
         if (entity instanceof Player && newHealth < oldHealth) {
             MagicData magicData = MagicData.getPlayerMagicData(entity);
             if (magicData instanceof IMagicDataExtension ext && ext.arcane_nemeses$isWearingFullNamelessSet()) {
                 float damage = oldHealth - newHealth;
                 float reducedDamage = Math.max(Math.min(1,damage),damage - entity.getArmorValue() / 4f);
-                float finalHealth = Math.min(oldHealth - reducedDamage, oldHealth);
-                entity.getEntityData().set(HEALTH_KEY, Mth.clamp(finalHealth, 0.0F, entity.getMaxHealth()));
+                newHealth = Math.min(oldHealth - reducedDamage, oldHealth);
                 if (!entity.level().isClientSide) {
                     Vec3 location = entity.getEyePosition();
                     MagicManager.spawnParticles(entity.level(), ParticleTypes.ELECTRIC_SPARK, location.x, location.y, location.z, 30, .4, .4, .4, .5, false);
                     entity.level().playSound(null, location.x, location.y, location.z, SoundRegistry.FORCE_IMPACT.get(), SoundSource.NEUTRAL, .8f, 1f);
                 }
-                ci.cancel();
             }
+        }
 
+        if (originalNewHealth != newHealth) {
+            newHealth = Mth.clamp(newHealth, 0.0F, entity.getMaxHealth());
+            entity.getEntityData().set(HEALTH_KEY, newHealth);
+            ci.cancel();
+        }
+    }
+
+
+    //叠甲,过!
+    @Inject(method = "getArmorValue" , at = {@At("RETURN")}, cancellable = true)
+    private void newArmor(CallbackInfoReturnable<Integer> cir){
+        LivingEntity entity = (LivingEntity) (Object) this;
+        double reduceArmor = entity.getAttributeValue(RegistryAttribute.REDUCE_ARMOR.get());
+        if (reduceArmor != 0) {
+            cir.setReturnValue(Math.max((int) (cir.getReturnValue() + reduceArmor),0));
         }
     }
 }

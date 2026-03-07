@@ -103,7 +103,7 @@ public class SpellEmpowerment extends AbstractMixSpell {
             entitySpellPowerModifier = (float) livingEntity.getAttributeValue(AttributeRegistry.SPELL_POWER.get()) / 2;
         }
 
-        return (float) ((baseSpellPower + spellPowerPerLevel * (spellLevel - 1)) * entitySpellPowerModifier *  configPowerModifier);
+        return (float) ((baseSpellPower + spellPowerPerLevel * (spellLevel )) * entitySpellPowerModifier *  configPowerModifier);
     }
 
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "irons_spellbooks:item/shriving_stone",
+    "layer1": "iss_csw:item/shriving_stone_swir"
+  }
+}

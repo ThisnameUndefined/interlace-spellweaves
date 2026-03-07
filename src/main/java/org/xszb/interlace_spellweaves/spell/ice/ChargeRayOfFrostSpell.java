@@ -59,8 +59,8 @@ public class ChargeRayOfFrostSpell extends AbstractMixSpell {
 
     public ChargeRayOfFrostSpell() {
         this.manaCostPerLevel = 8;
-        this.baseSpellPower = 8;
-        this.spellPowerPerLevel = 1;
+        this.baseSpellPower = 2;
+        this.spellPowerPerLevel = 2;
         this.castTime = 60;
         this.baseManaCost = 30;
     }

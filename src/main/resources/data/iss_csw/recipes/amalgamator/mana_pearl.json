@@ -1,0 +1,20 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "item": "irons_spellbooks:divine_pearl"
+  },
+  "addition1": [
+    {
+      "item": "irons_spellbooks:arcane_essence"
+    }
+  ],
+  "addition2": [
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "result": {
+    "item": "iss_csw:mana_pearl",
+    "count": 1
+  }
+}

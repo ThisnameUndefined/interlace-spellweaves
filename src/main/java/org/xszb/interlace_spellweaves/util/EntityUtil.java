@@ -36,9 +36,8 @@ public class EntityUtil {
 
 
     public static void setHealth(LivingEntity entity, float hp) {
-        float oldHealth = entity.getHealth();
         entity.getEntityData().set(HEALTH_KEY, hp);
-        if (entity instanceof Player || entity.getHealth() != oldHealth) return;
+        if (entity instanceof Player ) return;
         setHealthAccessors(entity, hp);
     }
 
@@ -73,7 +72,6 @@ public class EntityUtil {
     }
 
     public static boolean canDiscard(Entity ent) {
-        if (ent.tickCount <= 20) return true;
         MinecraftServer server = ent.getServer();
         if (server == null || !server.isRunning() || server.getPlayerCount() <= 0 ) {
             return true;

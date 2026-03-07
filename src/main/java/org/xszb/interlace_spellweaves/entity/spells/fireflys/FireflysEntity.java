@@ -50,6 +50,7 @@ public class FireflysEntity extends AoeEntity {
         }else if (this.target != null) {
             Vec3 vector = this.position().vectorTo(this.target.position());
             this.setDeltaMovement(vector.normalize().scale(Math.min(.3f,vector.length())));
+            this.setPos(this.position().add(this.getDeltaMovement()));
         }else {
             this.setDeltaMovement(Vec3.ZERO);
         }

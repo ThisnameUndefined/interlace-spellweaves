@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
@@ -77,7 +78,7 @@ public class HailStone extends AbstractMagicProjectile {
             var entities = level().getEntities(this, this.getBoundingBox().inflate(explosionRadius));
             for (Entity entity : entities) {
                 double distance = entity.distanceToSqr(hitResult.getLocation());
-                if (distance < explosionRadius * explosionRadius && canHitEntity(entity)) {
+                if ((distance < explosionRadius * explosionRadius || (hitResult instanceof EntityHitResult result && entity == result.getEntity())) && canHitEntity(entity)) {
                     if (this.getOwner() instanceof NamelessWizardsEntity ent && entity instanceof LivingEntity entity1){
                         ent.setHealthAttack(0.5f,entity1);
                     }

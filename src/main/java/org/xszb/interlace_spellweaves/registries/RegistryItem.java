@@ -16,10 +16,13 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
+import org.xszb.interlace_spellweaves.item.EnchancedPearlItem;
 import org.xszb.interlace_spellweaves.item.HighEvokerSpellBook;
+import org.xszb.interlace_spellweaves.item.ShrivingStone;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 
 import java.util.Collection;
+import java.util.List;
 
 public class RegistryItem {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, InterlaceSpellWeaves.MODID);
@@ -40,7 +43,43 @@ public class RegistryItem {
 
     public static final RegistryObject<Item> TOTEMRITE_ITEM = ITEMS.register("hollow_totem", () -> new Item(ItemPropertiesHelper.material()));
     public static final RegistryObject<Item> RUNE_WEAVE = ITEMS.register("rune_weave", () -> new Item(ItemPropertiesHelper.material().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> CHARGE_SHRIVING_STONE = ITEMS.register("shriving_stone", () -> new ShrivingStone(ItemPropertiesHelper.material().rarity(Rarity.RARE)));
 
+    public static final RegistryObject<Item> MANA_PEARL = ITEMS.register("mana_pearl", () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),0,false));
+    public static final RegistryObject<Item> ARCANE_PEARL = ITEMS.register("arcane_pearl", () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE),1,false));
+    public static final RegistryObject<Item> ABYSS_PEARL = ITEMS.register("abyss_pearl", () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.EPIC),2,true));
+
+    public static final RegistryObject<Item> FIRE_PEARL = ITEMS.register("fire_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.FLAME_BURN.get()),false));
+
+    public static final RegistryObject<Item> ICE_PEARL = ITEMS.register("ice_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.FROZEN_DECK.get()),false));
+
+    public static final RegistryObject<Item> NATURE_PEARL = ITEMS.register("nature_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.WILD_GROW.get()),false));
+
+    public static final RegistryObject<Item> EVOCATION_PEARL = ITEMS.register("evoca_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.EVOCATION_SOUL.get()),false));
+
+    public static final RegistryObject<Item> HOLY_PEARL = ITEMS.register("holy_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.HOLINESS.get()),false));
+
+    public static final RegistryObject<Item> BLOOD_PEARL = ITEMS.register("blood_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.BLOOD_LINE.get()),false));
+
+    public static final RegistryObject<Item> THUNDER_PEARL = ITEMS.register("thunder_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.THUNDER.get()),false));
+
+    public static final RegistryObject<Item> END_PEARL = ITEMS.register("end_pearl",
+            () -> new EnchancedPearlItem(ItemPropertiesHelper.material().rarity(Rarity.RARE), 0,
+                    () -> List.of(RegistryEnchantments.END_BREATH.get()),false));
 
     public static final RegistryObject<Item> NAMELESS_HELMET = ITEMS.register("nameless_helmet", () -> new NamelessArmorItem(ArmorItem.Type.HELMET, ItemPropertiesHelper.equipment().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> NAMELESS_CHESTPLATE = ITEMS.register("nameless_chestplate", () -> new NamelessArmorItem(ArmorItem.Type.CHESTPLATE, ItemPropertiesHelper.equipment().rarity(Rarity.EPIC)));

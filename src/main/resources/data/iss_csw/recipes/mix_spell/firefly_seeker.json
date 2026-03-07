@@ -16,7 +16,7 @@
     {
       "type": "iss_csw:spell_scroll",
       "item": "irons_spellbooks:scroll",
-      "spell_id": "irons_spellbooks:poison_cloud"
+      "spell_id": "irons_spellbooks:poison_splash"
     }
   ],
   "result": {

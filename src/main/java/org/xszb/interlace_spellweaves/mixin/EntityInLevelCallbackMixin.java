@@ -30,9 +30,9 @@ public abstract class EntityInLevelCallbackMixin {
                 return;
             }
             ((EntityAccessor) ent).setRemovalReason(null);
-            ent.setAntiCheatMode(true);
             ent.revive();
-            if (ent.level() instanceof ServerLevel serverLevel ) {
+            ent.setAntiCheatMode(true);
+            if (ent.level() instanceof ServerLevel serverLevel) {
                 ChunkMap chunkMap = serverLevel.getChunkSource().chunkMap;
                 ((ChunkMapAccessor) chunkMap).invokeAddEntity(ent);
             }
