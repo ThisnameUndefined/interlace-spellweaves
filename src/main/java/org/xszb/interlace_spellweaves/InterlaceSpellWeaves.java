@@ -41,6 +41,7 @@ public class InterlaceSpellWeaves {
 
 
         RegistryAttribute.register(modEventBus);
+        RegistryEnchantments.register(modEventBus);
         RegistrySound.register(modEventBus);
         RegistryParticle.register(modEventBus);
         RegistrySchool.register(modEventBus);

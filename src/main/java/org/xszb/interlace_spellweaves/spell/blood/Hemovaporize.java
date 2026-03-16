@@ -59,7 +59,8 @@ public class Hemovaporize extends AbstractMixSpell {
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getDamage(spellLevel, caster), 2)),
+        return List.of(Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getDamage(spellLevel, caster) * 20, 2)),
+                Component.translatable("ui.iss_csw.lose_health", Utils.stringTruncation(getDamage(spellLevel, caster), 2)),
                 Component.translatable("ui.irons_spellbooks.distance", Utils.stringTruncation(getRange(spellLevel), 1)));
     }
 
@@ -115,16 +116,22 @@ public class Hemovaporize extends AbstractMixSpell {
 
     public void boilBlood(int spellLevel, LivingEntity entity, @Nullable MagicData playerMagicData, Entity target, LivingEntity tar) {
         ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(tar.getType());
+        boolean isBlackListed = false;
         if (id != null) {
-            if (MainConfig.hemovaporize_resistance.contains(id.toString())) return;
+            if (MainConfig.hemovaporize_resistance.contains(id.toString())) isBlackListed = true;
         }
 
-        if (playerMagicData != null && (playerMagicData.getCastDurationRemaining() + 1) % 20 == 0){
-            DamageSources.applyDamage(target, getDamage(spellLevel, entity), getDamageSource(entity));
+        if (playerMagicData != null  && (playerMagicData.getCastDurationRemaining() + 1) % 20 == 0 ){
+            DamageSources.applyDamage(target, getDamage(spellLevel, entity) * 20, getDamageSource(entity));
         }else {
-            EntityUtil.setHealth(tar,Math.max(tar.getHealth() - getDamage(spellLevel, entity),0));
-            if (tar.isDeadOrDying()){
-                tar.die(getDamageSource(entity,entity));
+            if (!isBlackListed){
+
+                EntityUtil.setHealth(tar,Math.max(tar.getHealth() - getDamage(spellLevel, entity),0));
+                if (tar.isDeadOrDying()){
+                    tar.die(getDamageSource(entity,entity));
+                }
+            }else {
+                DamageSources.applyDamage(target, getDamage(spellLevel, entity), getDamageSource(entity));
             }
         }
     }
@@ -134,7 +141,7 @@ public class Hemovaporize extends AbstractMixSpell {
     }
 
     private float getDamage(int spellLevel, LivingEntity caster) {
-        return Math.max(1, getSpellPower(spellLevel, caster)/3 - 1);
+        return Math.max(0.1f, getSpellPower(spellLevel, caster) * 0.05f);
     }
 
     @Override

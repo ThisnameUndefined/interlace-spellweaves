@@ -1,0 +1,20 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "item": "iss_csw:arcane_pearl"
+  },
+  "addition1": [
+    {
+      "item": "irons_spellbooks:ancient_knowledge_fragment"
+    }
+  ],
+  "addition2": [
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+  "result": {
+    "item": "iss_csw:abyss_pearl",
+    "count": 1
+  }
+}

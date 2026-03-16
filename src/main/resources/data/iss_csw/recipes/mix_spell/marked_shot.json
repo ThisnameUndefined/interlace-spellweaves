@@ -1,0 +1,42 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "type": "iss_csw:spell_scroll",
+    "item": "irons_spellbooks:scroll",
+    "spell_id": "irons_spellbooks:arrow_volley"
+  },
+  "addition1": [
+    {
+      "type": "iss_csw:spell_scroll",
+      "item": "irons_spellbooks:scroll",
+      "spell_id": "irons_spellbooks:flaming_barrage"
+    }
+  ],
+  "addition2": [
+    {
+      "type": "l2library:enchantment",
+      "enchantment": "minecraft:infinity",
+      "min_level": 1
+    }
+  ],
+  "result": {
+    "type":"forge:nbt",
+    "item": "irons_spellbooks:scroll",
+    "nbt": {
+      "ISB_Spells": {
+        "spellWheel":false,
+        "maxSpells":1,
+        "mustEquip":false,
+        "data":[
+          {
+            "id": "iss_csw:marked_shot",
+            "index":0,
+            "locked": true,
+            "level": 1
+          }
+        ]
+      }
+    },
+    "count": 1
+  }
+}

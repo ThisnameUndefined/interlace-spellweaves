@@ -145,4 +145,9 @@ public class NamelessArmorItem extends ExtendedArmorItem {
                 ).orElse(false);
 
     }
+
+    @Override
+    public boolean isEnchantable(ItemStack p_41456_) {
+        return this.getMaxStackSize(p_41456_) == 1 ;
+    }
 }

@@ -41,6 +41,20 @@ public class RegistryCreativeTab {
                 entries.accept(RegistryItem.NAMELESS_SPAWN_EGG.get());
 
                 entries.accept(RegistryItem.TOTEMRITE_ITEM.get());
+                entries.accept(RegistryItem.MANA_PEARL.get());
+                entries.accept(RegistryItem.ARCANE_PEARL.get());
+                entries.accept(RegistryItem.ABYSS_PEARL.get());
+
+                entries.accept(RegistryItem.FIRE_PEARL.get());
+                entries.accept(RegistryItem.ICE_PEARL.get());
+                entries.accept(RegistryItem.NATURE_PEARL.get());
+                entries.accept(RegistryItem.EVOCATION_PEARL.get());
+                entries.accept(RegistryItem.HOLY_PEARL.get());
+                entries.accept(RegistryItem.BLOOD_PEARL.get());
+                entries.accept(RegistryItem.THUNDER_PEARL.get());
+                entries.accept(RegistryItem.END_PEARL.get());
+
+                entries.accept(RegistryItem.CHARGE_SHRIVING_STONE.get());
             })
             .icon(() -> new ItemStack(RegistryItem.SPELL_FORGE_BLOCK.get()))
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)

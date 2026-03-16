@@ -17,6 +17,8 @@ import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
+import static org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsRenderer.RED_SHIELD_TEXTURE;
+
 public class BookEnergySwirLayer {
     public static final ResourceLocation EVOKE_TEXTURE = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "textures/entity/swir_layer/evoke.png");
 
@@ -68,6 +70,7 @@ public class BookEnergySwirLayer {
 
     public static class Shield extends GeoRenderLayer<AbstractSpellCastingMob> {
         private final ResourceLocation TEXTURE/* = ResourceLocation.fromNamespaceAndPath(IronsSpellbooks.MODID, "textures/entity/evasion.png")*/;
+        private final ResourceLocation TEXTURE2 = RED_SHIELD_TEXTURE;
 
         public Shield(GeoEntityRenderer<AbstractSpellCastingMob> entityRendererIn, ResourceLocation texture) {
             super(entityRendererIn);
@@ -78,7 +81,9 @@ public class BookEnergySwirLayer {
         public void render(PoseStack poseStack, AbstractSpellCastingMob animatable, BakedGeoModel bakedModel, RenderType renderType2, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
             if (animatable instanceof NamelessWizardsEntity ent && ent.getDamagecooldown() > 0) {
                 float f = (float) animatable.tickCount + partialTick;
-                var renderType = BookEnergySwirLayer.getRenderType(TEXTURE, f);
+                ResourceLocation texture = TEXTURE;
+                if (ent.getIsPhase2()) texture = TEXTURE2;
+                var renderType = BookEnergySwirLayer.getRenderType(texture, f);
                 VertexConsumer vertexconsumer = bufferSource.getBuffer(renderType);
                 poseStack.pushPose();
                 bakedModel.getBone("body").ifPresent((rootBone) -> {

@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "iss_csw:arcane_pearl",
+    "iss_csw:mana_pearl",
+    "iss_csw:fire_pearl",
+    "iss_csw:ice_pearl",
+    "iss_csw:nature_pearl",
+    "iss_csw:evoca_pearl",
+    "iss_csw:holy_pearl",
+    "iss_csw:blood_pearl",
+    "iss_csw:thunder_pearl",
+    "iss_csw:end_pearl",
+    "iss_csw:abyss_pearl"
+  ]
+}

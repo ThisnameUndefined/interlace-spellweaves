@@ -11,6 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.spell.blood.Hemovaporize;
 import org.xszb.interlace_spellweaves.spell.evocation.BarrageVolley;
+import org.xszb.interlace_spellweaves.spell.evocation.MarkedShot;
 import org.xszb.interlace_spellweaves.spell.evocation.NameLessTeleport;
 import org.xszb.interlace_spellweaves.spell.evocation.TotemRite;
 import org.xszb.interlace_spellweaves.spell.evocation.pro.GustProSpell;
@@ -76,6 +77,8 @@ public class RegistrySpell {
     public static final RegistryObject<AbstractSpell> CREPER_CHAIN = registerSpell(new LobCreeperChainSpell());
 
     public static final RegistryObject<AbstractSpell> TP = registerSpell(new NameLessTeleport());
+
+    public static final RegistryObject<AbstractSpell> MARK_SHOT = registerSpell(new MarkedShot());
 
 
 

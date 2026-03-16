@@ -29,14 +29,17 @@ public abstract class EntityInLevelCallbackMixin {
             if (canDiscard(ent)){
                 return;
             }
+            ent.revive();
             ((EntityAccessor) ent).setRemovalReason(null);
             ent.setAntiCheatMode(true);
-            ent.revive();
-            if (ent.level() instanceof ServerLevel serverLevel ) {
-                ChunkMap chunkMap = serverLevel.getChunkSource().chunkMap;
-                ((ChunkMapAccessor) chunkMap).invokeAddEntity(ent);
-            }
 
+            if (ent.level() instanceof ServerLevel serverLevel) {
+                ent.setPos(ent.position());
+
+                ChunkMap chunkMap = serverLevel.getChunkSource().chunkMap;
+                ChunkMapAccessor cmAccessor = (ChunkMapAccessor) chunkMap;
+                cmAccessor.invokeAddEntity(ent);
+            }
             ci.cancel();
         }
     }

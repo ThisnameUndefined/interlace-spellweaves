@@ -23,7 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -54,9 +53,13 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.Scoreboard;
 import org.jetbrains.annotations.NotNull;
+import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
 import org.xszb.interlace_spellweaves.config.NameLessWizardConfig;
+import org.xszb.interlace_spellweaves.entity.boss.ExtendedServerBossEvent;
 import org.xszb.interlace_spellweaves.entity.boss.UnRemoveBossEntity;
 import org.xszb.interlace_spellweaves.entity.spells.HailStone;
 import org.xszb.interlace_spellweaves.entity.spells.creeper_chain.CreeperChainEntiy;
@@ -71,6 +74,7 @@ import org.xszb.interlace_spellweaves.mixin.LivingEntityAccessor;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryItem;
 import org.xszb.interlace_spellweaves.registries.RegistrySpell;
+import org.xszb.interlace_spellweaves.util.BossbarManager;
 import org.xszb.interlace_spellweaves.util.EntityUtil;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -95,9 +99,14 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     private static final EntityDataAccessor<Boolean> IS_ILLUSION = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_PHASE_2 = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BOOLEAN);
 
+    private static final BossbarManager.BossbarSprite BOSSBAR_SPRITE = new BossbarManager.BossbarSprite(InterlaceSpellWeaves.id("boss_bars/nameless_bossbar1"), 210, 29, 17, -8);
+
+    private static final BossbarManager.BossbarSprite BOSSBAR_SPRITE2 = new BossbarManager.BossbarSprite(InterlaceSpellWeaves.id("boss_bars/nameless_bossbar2"), 210, 29, 17, -8);
+
 
 
     private static final EntityDataAccessor<Float> DATA_EXISTENCE = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.FLOAT);
+    private static final int[] NUMBERS = {3, 8, 11,15};
 
 
     private ActType activeSpell = ActType.NONE;
@@ -119,6 +128,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         this.BossIdentity = UUID.randomUUID();
         this.setPersistenceRequired();
         this.refreshDimensions();
+        this.createBossEvent();
     }
 
     public NamelessWizardsEntity(Level pLevel) {
@@ -162,6 +172,16 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         this.entityData.define(IS_ILLUSION, false);
         this.entityData.define(IS_PHASE_2, false);
         this.entityData.define(DATA_EXISTENCE,0f);;
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+        if (this.level().isClientSide && IS_PHASE_2.equals(key)) {
+            if (this.getIsPhase2()) {
+                BossbarManager.startTracking(this.uuid, BOSSBAR_SPRITE2);
+            }
+        }
     }
 
     public void setActType(ActType ActType) {
@@ -220,7 +240,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         this.entityData.set(DATA_WHITETIME, num);
     }
 
-    protected ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.NOTCHED_20);
+    private ExtendedServerBossEvent bossEvent;
 
     public int getAlphaPercent() {
         return this.entityData.get(DATA_ALPHAPERCENT);
@@ -245,9 +265,12 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     public void setAntiCheatMode (boolean cheatMode){
         if (!this.getIsAntiCheatMode() && cheatMode){
             this.setExistence(0);
-            this.setPreActType(ActType.PHASE);
         }
         super.setAntiCheatMode(cheatMode);
+    }
+
+    protected void createBossEvent() {
+        this.bossEvent = (ExtendedServerBossEvent)(new ExtendedServerBossEvent(this.getUUID(), this.getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.PROGRESS)).setCreateWorldFog(true);
     }
 
     private void changeBody(NamelessWizardsEntity ent){
@@ -261,13 +284,13 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     protected float getExistence (){ return this.getIsAntiCheatMode()?0:this.entityData.get(DATA_EXISTENCE);}
 
-    protected float getExistenceHealth(){ return this.getMaxHealth() - getExistence();}
+    protected float getExistencePercent(){ return this.getMaxHealth() - getExistence();}
 
     protected void setExistence(float existence){
         if (Float.isNaN(existence)){
             return;
         }
-        this.entityData.set(DATA_EXISTENCE, Math.min(existence,this.getMaxHealth()));
+        this.entityData.set(DATA_EXISTENCE, Mth.clamp(existence,0,this.getMaxHealth()));
     }
 
 
@@ -286,6 +309,28 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         }
         int addition = tar instanceof Player? 0:1;
         EntityUtil.setHealth(tar,Math.max(tar.getHealth() - addition - Math.max(tar.getMaxHealth() * v/100,0.2f),0));
+        if (tar.isDeadOrDying()){
+            Vec3 spawn = tar.getEyePosition();
+            ExtendedFireworkRocket firework = new ExtendedFireworkRocket(this.level(), randomFireworkRocket(), this, spawn.x, spawn.y, spawn.z, true, 12,5);
+            this.level().addFreshEntity(firework);
+            firework.shoot(0, 0, 0, 0, 0);
+            tar.die(SpellRegistry.FIRECRACKER_SPELL.get().getDamageSource(this, this));
+
+        }
+        if (this.getIsAntiCheatMode() && !tar.isDeadOrDying() && !(tar instanceof Player)){
+            EntityAccessor entityAccessor = (EntityAccessor)tar;
+            entityAccessor.setRemovalReason(RemovalReason.KILLED);
+            entityAccessor.getLevelCallback().onRemove(RemovalReason.KILLED);
+        }
+    }
+
+    public void setHealthNumAttack(float num,LivingEntity tar){
+        float multiplier = (float) NameLessWizardConfig.healthAttackMultiplier;
+        float baseNum = num * multiplier;
+        if ((tar instanceof Player pla && pla.isCreative()) || tar instanceof NamelessWizardsEntity){
+            return;
+        }
+        EntityUtil.setHealth(tar,Math.max(tar.getHealth() - baseNum,0));
         if (tar.isDeadOrDying()){
             Vec3 spawn = tar.getEyePosition();
             ExtendedFireworkRocket firework = new ExtendedFireworkRocket(this.level(), randomFireworkRocket(), this, spawn.x, spawn.y, spawn.z, true, 12,5);
@@ -418,6 +463,8 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     }
 
     public float getSpellDamage(float baseDamage) {
+        if (this.getIsPhase2()) baseDamage += 3;
+        if (!this.getIsIllusion()) baseDamage *= 1.2f;
         return baseDamage * (float) NameLessWizardConfig.spellPowerMultiplier;
     }
 
@@ -495,13 +542,70 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             this.setPreActType(cancelCastAnimation);
             cancelCastAnimation = null;
         }
-        if (!this.getIsIllusion() && !this.getIsPhase2() && this.getExistenceHealth() < this.getMaxHealth() / 3 && (this.cancelCastAnimation != ActType.BREAK2 && this.getActType() != ActType.BREAK2 && this.getPreActType() != ActType.BREAK2)  && (this.cancelCastAnimation != ActType.PHASE && this.getActType() != ActType.PHASE && this.getPreActType() != ActType.PHASE)) {
-            this.cancelCastAnimation = ActType.BREAK2;
-        }
+        if (!this.getIsAntiCheatMode()){
 
-        if (!this.getIsIllusion() && this.getIsPhase2() && this.getExistenceHealth() <= 0 && (this.cancelCastAnimation != ActType.DEAD && this.getActType() != ActType.DEAD && this.getPreActType() != ActType.DEAD)) {
-            this.cancelCastAnimation = ActType.DEAD;
-            this.getAllIllusion().forEach(NamelessWizardsEntity::IllusionExplode);
+            if (!this.getIsIllusion() && !this.getIsPhase2() && this.getExistencePercent() < this.getMaxHealth() / 3 && (this.cancelCastAnimation != ActType.BREAK2 && this.getActType() != ActType.BREAK2 && this.getPreActType() != ActType.BREAK2)  && (this.cancelCastAnimation != ActType.PHASE && this.getActType() != ActType.PHASE && this.getPreActType() != ActType.PHASE)) {
+                this.cancelCastAnimation = ActType.BREAK2;
+            }
+
+            if (!this.getIsIllusion() && this.getIsPhase2() && this.getExistencePercent() <= 0 && (this.cancelCastAnimation != ActType.DEAD && this.getActType() != ActType.DEAD && this.getPreActType() != ActType.DEAD)) {
+                this.cancelCastAnimation = ActType.DEAD;
+                this.getAllIllusion().forEach(NamelessWizardsEntity::IllusionExplode);
+            }
+        }else {
+            if (!this.level().isClientSide ) {
+
+                Level level = this.level();
+                List<BlockPos> positions = this.getPositionsAroundHome();
+                Vec3 start = this.position().add(0, this.getEyeHeight() * 2, 0);
+
+                if (this.tickCount % 2 == 0) {
+                    for (BlockPos pos : positions) {
+                        Vec3 end = pos.getCenter();
+
+                        EntityUtil.particleLine(start, end, (ServerLevel) level, 10, ParticleTypes.ENCHANT);
+
+
+                    }
+                    if (this.tickCount % 100 == 0) {
+                        for (int r : NUMBERS) {
+                            float tentacles = r * 2;
+                            for (int i = 0; i < tentacles; i++) {
+                                Vec3 random = new Vec3(Utils.getRandomScaled(2), 0, Utils.getRandomScaled(2));
+                                Vec3 spawn = this.position().add(new Vec3(0, 0, 1.3 * (r + 1)).yRot(((6.281f / tentacles) * i))).add(random);
+                                FireworkWarnEntity ent = new FireworkWarnEntity(level, this, this.getSpellDamage(20), 2);
+                                ent.setPos(spawn);
+                                level.addFreshEntity(ent);
+                            }
+                        }
+                        this.playSound(SoundEvents.FIREWORK_ROCKET_LAUNCH, 1.0F, 1.0F);
+                    }
+
+                    if (this.tickCount % 40 == 0) {
+                        float range = 18.0f;
+                        AABB selectionArea = this.getBoundingBox().inflate(range);
+                        List<LivingEntity> targets = this.level().getEntitiesOfClass(LivingEntity.class, selectionArea, (entity) -> entity != this && entity.isAlive() && !entity.isAlliedTo(this) && !(entity instanceof NamelessWizardsEntity));
+                        for (LivingEntity target : targets) {
+                            Vec3 targetPos = target.position();
+                            FireworkWarnEntity firework = new FireworkWarnEntity(this.level(), this, this.getSpellDamage(20), 2);
+                            firework.setPos(targetPos.x, targetPos.y + 0.1, targetPos.z);
+                            this.level().addFreshEntity(firework);
+                        }
+                    }
+                }
+
+
+                if (this.getTarget() != null) {
+                    LivingEntity target = this.getTarget();
+                    if (target.position().distanceTo(this.getHomePos().getCenter()) > 25) {
+                        BlockPos randomPos = positions.get(this.random.nextInt(positions.size()));
+                        target.setPos(randomPos.getCenter());
+                        EchoingStrikeEntity echo = new EchoingStrikeEntity(level, this, this.getSpellDamage(35), 6f);
+                        echo.setPos(target.position().subtract(0, echo.getBbHeight() * 0.5f, 0));
+                        level.addFreshEntity(echo);
+                    }
+                }
+            }
         }
     }
 
@@ -555,6 +659,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                     this.dropAllDeathLoot(damageSource);
                 }
                 this.level().broadcastEntityEvent(this, (byte)3);
+                this.level().broadcastEntityEvent(this, (byte)0);
                 this.IllusionExplode();
             }
         }
@@ -608,7 +713,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 //            }else if (this.tickCount % 40 == 0 || this.getActType() == ActType.PHASE ) {
 //                this.bossEvent.setProgress(this.getExistenceHealth()/this.getMaxHealth());
 //            }
-            }else {this.bossEvent.setProgress(this.getExistenceHealth()/this.getMaxHealth());}
+            }else {this.bossEvent.setProgress(this.getExistencePercent()/this.getMaxHealth());}
         }
     }
 
@@ -661,6 +766,15 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         if (this.getIsIllusion()) return;
         this.bossEvent.removePlayer(pPlayer);
         Messages.sendToPlayer(new ClientboundEntityEvent<NamelessWizardsEntity>(this, STOP_MUSIC), pPlayer);
+    }
+
+    public void load(CompoundTag compound) {
+        super.load(compound);
+        if (this.getIsIllusion()) return;
+        if (!this.level().isClientSide) {
+            this.createBossEvent();
+        }
+
     }
 
     public Component getBossName() {
@@ -768,6 +882,13 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                     this.changeBody(Illusions.get(this.random.nextInt(Illusions.size())));
                 }
             }
+
+            if (this.getIsPhase2()){
+                Entity directEnt = source.getDirectEntity();
+                if (directEnt instanceof LivingEntity livingEntity && damage > this.getArmorValue() * 2) {
+                    this.setHealthNumAttack(Math.min(damage * this.getOverhitCount()/8,livingEntity.getMaxHealth() * 0.3f),livingEntity);
+                }
+            }
         }
         if (this.getActType().resistance == 1 || this.getDamagecooldown() > 0 || this.getWhiteDown() > 0 || source.getEntity() == null || source.getEntity() instanceof NamelessWizardsEntity || this.isInvulnerableTo(source)) {
             return ;
@@ -800,13 +921,15 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             //十万白马尽折蹄
             if (f1 > this.getMaxHealth() * 100000 && !this.getIsIllusion()) this.setAntiCheatMode(true);
             f1 = f1 * (1 - this.getActType().resistance);
+
+            if (!(source instanceof SpellDamageSource)){
+                f1 = f1 * 0.5f;
+            }
+
             if (this.getIsPhase2()){
                 f1 = (float) Math.min(Math.max(0,(f1 - this.getArmorValue())), this.getMaxHealth() * 0.04);
             }else {
                 f1 = (float) Math.min(f1, this.getMaxHealth() * 0.04);
-            }
-            if (!(source instanceof SpellDamageSource)){
-                f1 = f1 * 0.5f;
             }
         }
         if (this.getActType() != ActType.DEAD) this.playSound(SoundEvents.EVOKER_HURT, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
@@ -852,6 +975,12 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         RandomSource randomsource = Utils.random;
         if (!this.getIsPhase2()) this.populateDefaultEquipmentSlots(randomsource, pDifficulty);
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    }
+
+    @Override
+    public LivingEntity getTarget(){
+        if (super.getTarget() instanceof NamelessWizardsEntity) return null;
+        return super.getTarget();
     }
 
 
@@ -912,6 +1041,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             case DEAD -> dead_animation;
             default -> idle_animation;
         };
+        if (this.getIsAntiCheatMode()) animation = phase2_animation;
 
         event.getController().setAnimation(animation);
         return PlayState.CONTINUE;
@@ -934,11 +1064,20 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     public static final byte STOP_MUSIC = 0;
     public static final byte START_MUSIC = 1;
 
-    @Override
     public void handleClientEvent(byte eventId) {
         switch (eventId) {
-            case STOP_MUSIC -> NamelessWizardMusicManager.stop(this);
-            case START_MUSIC -> NamelessWizardMusicManager.createOrResumeInstance(this);
+            case 0 -> {
+                NamelessWizardMusicManager.stop(this);
+                BossbarManager.stopTracking(this.uuid);
+            }
+            case 1 -> {
+                NamelessWizardMusicManager.createOrResumeInstance(this);
+                if (this.getIsPhase2()) BossbarManager.startTracking(this.uuid, BOSSBAR_SPRITE2);
+                else BossbarManager.startTracking(this.uuid, BOSSBAR_SPRITE);
+            }
+            case 2 -> {
+                BossbarManager.startTracking(this.uuid, BOSSBAR_SPRITE2);
+            }
         }
     }
 
@@ -1905,6 +2044,8 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         illusion.setAlphaPercent(100);
                         EntList.add(illusion);
                         serverLevel.addFreshEntityWithPassengers(illusion);
+
+                        copyTeamToEntity(entity, illusion);
                     }
                 }
             }
@@ -1956,6 +2097,16 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         }
     }
 
+    public static void copyTeamToEntity(Entity source, Entity target) {
+        if (source.level().isClientSide) return;
+        Scoreboard scoreboard = source.getCommandSenderWorld().getScoreboard();
+        String sourceName = source.getScoreboardName();
+        PlayerTeam sourceTeam = scoreboard.getPlayersTeam(sourceName);
+        if (sourceTeam != null) {
+            String targetName = target.getScoreboardName();
+            scoreboard.addPlayerToTeam(targetName, sourceTeam);
+        }
+    }
     class BreakPhaseGoal extends GeoActGoal {
 
         private BreakPhaseGoal(NamelessWizardsEntity ent,double globalCoolDown) {
@@ -2055,6 +2206,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         @Override
         protected void castSpell() {
             entity.setIsPhase2(true);
+            entity.level().broadcastEntityEvent(entity, (byte)2);
             ItemStack helmetStack = entity.getItemBySlot(EquipmentSlot.HEAD);
             entity.bossEvent.setName(entity.getBossName());
             if (!helmetStack.isEmpty()) {

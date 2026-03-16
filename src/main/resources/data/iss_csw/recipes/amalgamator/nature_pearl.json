@@ -1,0 +1,20 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "item": "irons_spellbooks:nature_rune"
+  },
+  "addition1": [
+    {
+      "item": "iss_csw:mana_pearl"
+    }
+  ],
+  "addition2": [
+    {
+      "item": "iss_csw:mana_pearl"
+    }
+  ],
+  "result": {
+    "item": "iss_csw:nature_pearl",
+    "count": 1
+  }
+}
