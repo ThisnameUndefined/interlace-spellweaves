@@ -14,7 +14,7 @@
   ],
   "addition2": [
     {
-      "type": "l2library:enchantment",
+      "type": "iss_csw:enchantment",
       "enchantment": "minecraft:infinity",
       "min_level": 1
     }

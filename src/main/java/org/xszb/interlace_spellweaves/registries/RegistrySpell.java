@@ -30,27 +30,12 @@ import java.util.function.Supplier;
 public class RegistrySpell {
 
     private static final DeferredRegister<AbstractSpell> SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, InterlaceSpellWeaves.MODID);
-    public static final Supplier<IForgeRegistry<AbstractSpell>> REGISTRY = SPELLS.makeRegistry(() -> new RegistryBuilder<AbstractSpell>().disableSaving().disableOverrides());
-    private static final NoneSpell noneSpell = new NoneSpell();
-    public static void register(IEventBus eventBus) {
-        SPELLS.register(eventBus);
-    }
 
-    public static NoneSpell none() {
-        return noneSpell;
-    }
 
     private static RegistryObject<AbstractSpell> registerSpell(AbstractSpell spell) {
         return SPELLS.register(spell.getSpellName(), () -> spell);
     }
 
-    public static List<AbstractSpell> getEnabledSpells() {
-        return RegistrySpell.SPELLS.getEntries()
-                .stream()
-                .filter(spell->spell.get().isEnabled())
-                .map(RegistryObject::get)
-                .toList();
-    }
 
 
     public static final RegistryObject<AbstractSpell> CHARGE_RAY_OF_FROST_SPELL = registerSpell(new ChargeRayOfFrostSpell());
@@ -83,7 +68,16 @@ public class RegistrySpell {
 
     public static final RegistryObject<AbstractSpell> MARK_SHOT = registerSpell(new MarkedShot());
 
+    public static List<AbstractSpell> getEnabledSpells() {
+        return RegistrySpell.SPELLS.getEntries()
+                .stream()
+                .filter(spell->spell.get().isEnabled())
+                .map(RegistryObject::get)
+                .toList();
+    }
 
-
+    public static void register(IEventBus eventBus) {
+        SPELLS.register(eventBus);
+    }
 
 }

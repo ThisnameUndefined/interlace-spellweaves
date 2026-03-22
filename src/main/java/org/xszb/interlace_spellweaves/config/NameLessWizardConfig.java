@@ -12,6 +12,7 @@ public class NameLessWizardConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     public static final ForgeConfigSpec.DoubleValue MAX_HEALTH;
+    public static final ForgeConfigSpec.DoubleValue HURTLIMIT;
     public static final ForgeConfigSpec.DoubleValue SPELL_POWER_MULTIPLIER;
     public static final ForgeConfigSpec.DoubleValue HEALTH_ATTACK_MULTIPLIER;
     public static ForgeConfigSpec.IntValue BLAST_INTERVAL;
@@ -32,6 +33,10 @@ public class NameLessWizardConfig {
         MAX_HEALTH = BUILDER
                 .comment("Nameless Wizard's base maximum health. Default: 160.0")
                 .defineInRange("max_health", 160.0, 1.0, 10000.0);
+
+        HURTLIMIT = BUILDER
+                .comment("The maximum damage Nameless Wizard can take in a single hit, as a percentage of its max health. (e.g., 0.04 = 4%)")
+                .defineInRange("hurt_limit", 0.04, 0, 1);
 
         SPELL_POWER_MULTIPLIER = BUILDER
                 .comment("Multiplier for Nameless Wizard's spell damage. Default: 1.0")
@@ -62,6 +67,7 @@ public class NameLessWizardConfig {
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static double maxHealth;
+    public static double hurtLimit;
     public static double spellPowerMultiplier;
     public static double healthAttackMultiplier;
     public static int blastInt, shootInt, miniShotInt, fireworkInt;
@@ -85,7 +91,9 @@ public class NameLessWizardConfig {
             startGeoInt = START_GEO_INTERVAL.get();
             breakGeoInt = BREAK_GEO_INTERVAL.get();
             healthAttackMultiplier = HEALTH_ATTACK_MULTIPLIER.get();
+            hurtLimit = HURTLIMIT.get();
             NamelessWizardsEntity.finalLimit = maxHealth;
+
         }
     }
 }

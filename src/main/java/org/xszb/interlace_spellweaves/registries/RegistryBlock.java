@@ -16,15 +16,17 @@ public class RegistryBlock {
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, InterlaceSpellWeaves.MODID);
 
 
-    public static void register(IEventBus eventBus) {
-        BLOCKS.register(eventBus);
-        BLOCK_ENTITIES.register(eventBus);
-    }
-
     public static final RegistryObject<Block> SPELL_FORGE_BLOCK = BLOCKS.register("spell_forge", SpellForgeBlock::new);
 
     public static final RegistryObject<Block> ALTAR_OF_NAMELESE = BLOCKS.register("altar_of_nameless", AltarOfNamelessBlock::new);
 
 
     public static final RegistryObject<BlockEntityType<AltarOfNamelessEntity>> ALTAR_OF_NAMELESE_TILE = BLOCK_ENTITIES.register("altar_of_nameless", () -> BlockEntityType.Builder.of(AltarOfNamelessEntity::new, ALTAR_OF_NAMELESE.get()).build(null));
+
+
+
+    public static void register(IEventBus eventBus) {
+        BLOCKS.register(eventBus);
+        BLOCK_ENTITIES.register(eventBus);
+    }
 }

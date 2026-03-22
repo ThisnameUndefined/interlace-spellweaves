@@ -30,10 +30,6 @@ import org.xszb.interlace_spellweaves.entity.utils.SummonNamelessWizards;
 public class RegistryEntity {
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, InterlaceSpellWeaves.MODID);
 
-    public static void register(IEventBus eventBus) {
-        ENTITIES.register(eventBus);
-    }
-
     //大抵是生物实体
     public static final RegistryObject<EntityType<FrostboneEntity>> FROSTBONE =
             ENTITIES.register("frost_remains", () -> EntityType.Builder.of(FrostboneEntity::new, MobCategory.MONSTER)
@@ -142,5 +138,10 @@ public class RegistryEntity {
                     .sized(4f, .8f)
                     .clientTrackingRange(64)
                     .build(ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "summon_nameless").toString()));
+
+    public static void register(IEventBus eventBus) {
+        ENTITIES.register(eventBus);
+    }
+
 
 }

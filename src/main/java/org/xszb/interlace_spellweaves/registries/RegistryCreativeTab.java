@@ -62,7 +62,11 @@ public class RegistryCreativeTab {
 
     public static final RegistryObject<CreativeModeTab> SCROLLS_TAB = TABS.register("spellbook_scrolls", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup." + InterlaceSpellWeaves.MODID + ".spellbook_scrolls_tab"))
-            .icon(() -> new ItemStack(ItemRegistry.SCROLL.get()))
+            .icon(() -> {
+                var itemstack = new ItemStack(ItemRegistry.SCROLL.get());
+                ISpellContainer.createScrollContainer(RegistrySpell.SPELL_IMPROVE.get(), 1, itemstack);
+                return itemstack;
+            })
             .withTabsBefore(ITEM_TAB.getKey())
             .build());
 

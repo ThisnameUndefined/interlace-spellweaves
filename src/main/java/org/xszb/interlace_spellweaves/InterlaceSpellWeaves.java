@@ -36,8 +36,11 @@ public class InterlaceSpellWeaves {
 
         String configFolder = InterlaceSpellWeaves.MODID + "/";
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MainConfig.SPEC,configFolder + "common.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,NameLessWizardConfig.SPEC,configFolder + "nameless_wizard.toml");
+
+
+        RegistryBlock.register(modEventBus);
+        RegistryItem.register(modEventBus);
+        RegistryEntity.register(modEventBus);
 
         RegistryEnchantments.register(modEventBus);
         RegistryAttribute.register(modEventBus);
@@ -46,15 +49,16 @@ public class InterlaceSpellWeaves {
         RegistrySchool.register(modEventBus);
         RegistryRecipe.register(modEventBus);
         RegistryMenu.register(modEventBus);
-        RegistryBlock.register(modEventBus);
-        RegistryItem.register(modEventBus);
         RegistryEffect.register(modEventBus);
         RegistrySpell.register(modEventBus);
         RegistryCreativeTab.register(modEventBus);
-        RegistryEntity.register(modEventBus);
 
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::onCommonSetup);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MainConfig.SPEC,configFolder + "common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,NameLessWizardConfig.SPEC,configFolder + "nameless_wizard.toml");
+
 
         MinecraftForge.EVENT_BUS.register(this);
 

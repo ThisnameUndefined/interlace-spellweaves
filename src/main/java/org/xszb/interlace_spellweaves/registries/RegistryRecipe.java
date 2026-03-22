@@ -16,11 +16,6 @@ public class RegistryRecipe {
 
 
 
-    public static void register(IEventBus eventBus){
-        RECIPE_SERIALIZERS.register(eventBus);
-        RECIPE_TYPES.register(eventBus);
-    }
-
     public static final RegistryObject<RecipeType<SpellMixRecipe>> SPELL_MIX_RECIPE = RECIPE_TYPES.register("mix_spell_recipe", () -> new RecipeType<>()
     {
         public String toString() {
@@ -31,6 +26,11 @@ public class RegistryRecipe {
     public static final RegistryObject<RecipeSerializer<SpellMixRecipe>> SPELL_MIX_RECIPE_SERIALIZER =
             RECIPE_SERIALIZERS.register("mix_spell_recipe",
                     SpellMixRecipe.Serializer::new);
+
+    public static void register(IEventBus eventBus){
+        RECIPE_SERIALIZERS.register(eventBus);
+        RECIPE_TYPES.register(eventBus);
+    }
 
 
 }

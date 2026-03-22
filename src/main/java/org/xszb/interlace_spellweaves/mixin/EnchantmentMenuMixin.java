@@ -21,7 +21,6 @@ import java.util.*;
 @Mixin(value = EnchantmentMenu.class, priority = 2000)
 public abstract class EnchantmentMenuMixin {
     @Shadow @Final private Container enchantSlots;
-    @Shadow @Final public int[] costs;
     @Shadow @Final private DataSlot enchantmentSeed;
 
     @Inject(

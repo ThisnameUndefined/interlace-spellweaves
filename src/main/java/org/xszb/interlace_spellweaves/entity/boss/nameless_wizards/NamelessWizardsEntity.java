@@ -927,7 +927,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             if (this.getIsPhase2()){
                 f1 = (float) Math.min(Math.max(0,(f1 - this.getArmorValue())), this.getMaxHealth() * 0.04);
             }else {
-                f1 = (float) Math.min(f1, this.getMaxHealth() * 0.04);
+                f1 = (float) Math.min(f1, this.getMaxHealth() * NameLessWizardConfig.hurtLimit);
             }
         }
         if (this.getActType() != ActType.DEAD) this.playSound(SoundEvents.EVOKER_HURT, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
@@ -1961,29 +1961,19 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 Vec3 finalDir = shootVec.normalize();
 
                 HailStone arrow = new HailStone(entity.level(), entity);
+                arrow.setDamage(entity.getSpellDamage(5));
                 if (StarPos.distanceTo(EndPos) < 1.5f) {
-                    var entities = level().getEntities(target,new AABB(target.blockPosition()).inflate(1));
-                    for (Entity entity1 : entities) {
-                        double distanceToSurface = entity1.getBoundingBox().distanceToSqr(EndPos);
-                        if ((distanceToSurface <= 3.0 || entity1 == target) && !(entity1 instanceof NamelessWizardsEntity)) {
-                            if (entity1 instanceof LivingEntity entity2) {
-                                entity.setHealthAttack(1f, entity2);
-                                DamageSources.applyDamage(entity1, entity.getSpellDamage(5),RegistrySpell.BLIZZARD.get().getDamageSource(arrow, entity));
-                            }
-                        }
-                    }
-                    Vec3 eyepos = target.getEyePosition();
-                    arrow.impactParticles(eyepos.x,entity.getEyeHeight(),eyepos.z);
-                    arrow.discard();
+                    arrow.setPos(EndPos.x, EndPos.y, EndPos.z);
+                    arrow.shoot(finalDir.x, finalDir.y, finalDir.z, 1.5F, 0.0F);
                 } else {
-                    arrow.setDamage(entity.getSpellDamage(5));
                     arrow.setPos(StarPos.x, StarPos.y, StarPos.z);
                     arrow.shoot(finalDir.x, finalDir.y, finalDir.z, 1.5F, 0.0F);
-                    arrow.setExplosionRadius(1.5f);
 
-                    entity.level().addFreshEntity(arrow);
-                    entity.playSound(SoundRegistry.ICE_CAST.get(), 4.0F, 1.0F);
                 }
+                arrow.setExplosionRadius(1.5f);
+
+                entity.level().addFreshEntity(arrow);
+                entity.playSound(SoundRegistry.ICE_CAST.get(), 4.0F, 1.0F);
             }
         }
 
