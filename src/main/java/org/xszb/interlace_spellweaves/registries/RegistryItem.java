@@ -30,9 +30,6 @@ import java.util.UUID;
 public class RegistryItem {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, InterlaceSpellWeaves.MODID);
 
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
-    }
 
     //不中立伏兵
     public static final RegistryObject<ForgeSpawnEggItem> FROSTBONE_SPAWN_EGG = ITEMS.register("frost_bone_spawn_egg", () -> new ForgeSpawnEggItem(RegistryEntity.FROSTBONE, 6842447, 15066584, ItemPropertiesHelper.material().stacksTo(64)));
@@ -108,4 +105,7 @@ public class RegistryItem {
         return ITEMS.getEntries();
     }
 
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
+    }
 }

@@ -28,14 +28,6 @@ public class RegistrySpell {
 
     private static final DeferredRegister<AbstractSpell> SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, InterlaceSpellWeaves.MODID);
     public static final Supplier<IForgeRegistry<AbstractSpell>> REGISTRY = SPELLS.makeRegistry(() -> new RegistryBuilder<AbstractSpell>().disableSaving().disableOverrides());
-    private static final NoneSpell noneSpell = new NoneSpell();
-    public static void register(IEventBus eventBus) {
-        SPELLS.register(eventBus);
-    }
-
-    public static NoneSpell none() {
-        return noneSpell;
-    }
 
     private static RegistryObject<AbstractSpell> registerSpell(AbstractSpell spell) {
         return SPELLS.register(spell.getSpellName(), () -> spell);
@@ -80,7 +72,9 @@ public class RegistrySpell {
 
     public static final RegistryObject<AbstractSpell> MARK_SHOT = registerSpell(new MarkedShot());
 
-
+    public static void register(IEventBus eventBus) {
+        SPELLS.register(eventBus);
+    }
 
 
 }

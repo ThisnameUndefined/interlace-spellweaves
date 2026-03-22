@@ -5,8 +5,10 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "iss_csw.refmap.json",
   "mixins": [
+    "ApothEnchantmentMenuMixin",
     "BlockItemMixin",
     "ChunkMapAccessor",
+    "EnchantmentMenuAccessor",
     "EnchantmentMenuMixin",
     "EntityAccessor",
     "EntityInLevelCallbackMixin",

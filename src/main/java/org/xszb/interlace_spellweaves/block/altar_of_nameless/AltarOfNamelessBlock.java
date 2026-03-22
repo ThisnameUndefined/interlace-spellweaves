@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.entity.utils.SummonNamelessWizards;
 import org.xszb.interlace_spellweaves.registries.RegistryBlock;
 
@@ -47,6 +48,11 @@ public class AltarOfNamelessBlock extends BaseEntityBlock {
             return InteractionResult.FAIL;
         }
         if (!world.isClientSide) {
+            var existingBosses = world.getEntitiesOfClass(NamelessWizardsEntity.class, player.getBoundingBox().inflate(100));
+            if (!existingBosses.isEmpty()) {
+                player.displayClientMessage(Component.translatable("ui.iss_csw.altar_cooling").withStyle(ChatFormatting.GRAY), true);
+                return InteractionResult.FAIL;
+            }
             world.setBlock(pos, state.setValue(LIT, false).setValue(POWERED, false), 3);
             SummonNamelessWizards boss = new SummonNamelessWizards(world,pos.getX(),pos.getY()+1,pos.getZ(),100,player);
             world.addFreshEntity(boss);

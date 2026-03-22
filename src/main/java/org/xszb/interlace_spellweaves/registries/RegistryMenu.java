@@ -14,12 +14,13 @@ import org.xszb.interlace_spellweaves.gui.spell_forge.SpellForgeMenu;
 public class RegistryMenu {
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, InterlaceSpellWeaves.MODID);
 
-    public static void register(IEventBus eventBus){
-        MENUS.register(eventBus);
-    }
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory, String name) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));
     }
 
     public static final RegistryObject<MenuType<SpellForgeMenu>> SPELL_FORGE_MENU = registerMenuType(SpellForgeMenu::new,"spell_forge_menu");
+
+    public static void register(IEventBus eventBus){
+        MENUS.register(eventBus);
+    }
 }
