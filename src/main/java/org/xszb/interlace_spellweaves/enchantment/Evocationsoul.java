@@ -37,11 +37,6 @@ public class Evocationsoul extends Enchantment implements IConflictsEnchantment 
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("29277bc9-5d69-b071-6f0b-6725d04e2747");
 
     @Override

@@ -98,26 +98,26 @@ public class NamelessArmorItem extends ImbuableChestplateArmorItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.iss_cws.nameless_set.name").withStyle(ChatFormatting.GREEN));
-        tooltip.add(Component.translatable("tooltip.iss_cws.nameless_set.desc").withStyle(ChatFormatting.WHITE));
+        tooltip.add(Component.translatable("tooltip.iss_csw.nameless_set.name").withStyle(ChatFormatting.GREEN));
+        tooltip.add(Component.translatable("tooltip.iss_csw.nameless_set.desc").withStyle(ChatFormatting.WHITE));
 
         Type type = this.getType();
         switch (type) {
             case HELMET -> {
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_helmet_ability.name").withStyle(ChatFormatting.GOLD));
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_helmet_ability").withStyle(ChatFormatting.WHITE));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_helmet_ability.name").withStyle(ChatFormatting.GOLD));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_helmet_ability").withStyle(ChatFormatting.WHITE));
             }
             case CHESTPLATE -> {
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_chestplate_ability.name").withStyle(ChatFormatting.GOLD));
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_chestplate_ability").withStyle(ChatFormatting.WHITE));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_chestplate_ability.name").withStyle(ChatFormatting.GOLD));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_chestplate_ability").withStyle(ChatFormatting.WHITE));
             }
             case LEGGINGS -> {
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_leggings_ability.name").withStyle(ChatFormatting.GOLD));
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_leggings_ability").withStyle(ChatFormatting.WHITE));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_leggings_ability.name").withStyle(ChatFormatting.GOLD));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_leggings_ability").withStyle(ChatFormatting.WHITE));
             }
             case BOOTS -> {
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_boots_ability.name").withStyle(ChatFormatting.GOLD));
-                tooltip.add(Component.translatable("tooltip.iss_cws.nameless_boots_ability").withStyle(ChatFormatting.WHITE));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_boots_ability.name").withStyle(ChatFormatting.GOLD));
+                tooltip.add(Component.translatable("tooltip.iss_csw.nameless_boots_ability").withStyle(ChatFormatting.WHITE));
             }
         }
 

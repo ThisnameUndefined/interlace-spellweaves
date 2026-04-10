@@ -19,7 +19,7 @@ import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 import static org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsRenderer.RED_SHIELD_TEXTURE;
 
-public class BookEnergySwirLayer {
+public class NameLessWizardLayer {
     public static final ResourceLocation EVOKE_TEXTURE = ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "textures/entity/swir_layer/evoke.png");
 
     public static class Geo extends GeoRenderLayer<AbstractSpellCastingMob> {
@@ -34,9 +34,9 @@ public class BookEnergySwirLayer {
 
         @Override
         public void render(PoseStack poseStack, AbstractSpellCastingMob animatable, BakedGeoModel bakedModel, RenderType renderType2, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
-            if (BookEnergySwirLayer.shouldRender(animatable,ActType)) {
+            if (NameLessWizardLayer.shouldRender(animatable,ActType)) {
                 float f = (float) animatable.tickCount + partialTick;
-                var renderType = BookEnergySwirLayer.getRenderType(TEXTURE, f);
+                var renderType = NameLessWizardLayer.getRenderType(TEXTURE, f);
                 VertexConsumer vertexconsumer = bufferSource.getBuffer(renderType);
                 poseStack.pushPose();
                 bakedModel.getBone("body").ifPresent((rootBone) -> {
@@ -84,7 +84,7 @@ public class BookEnergySwirLayer {
                 float f = (float) animatable.tickCount + partialTick;
                 ResourceLocation texture = TEXTURE;
                 if (ent.getIsPhase2()) texture = TEXTURE2;
-                var renderType = BookEnergySwirLayer.getRenderType(texture, f);
+                var renderType = NameLessWizardLayer.getRenderType(texture, f);
                 VertexConsumer vertexconsumer = bufferSource.getBuffer(renderType);
                 poseStack.pushPose();
                 bakedModel.getBone("body").ifPresent((rootBone) -> {
@@ -128,7 +128,7 @@ public class BookEnergySwirLayer {
         public void render(PoseStack poseStack, AbstractSpellCastingMob animatable, BakedGeoModel bakedModel, RenderType renderType2, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
             if (animatable instanceof NamelessWizardsEntity ent && ent.getIsPhase2() && !ent.getIsAntiCheatMode() && ent.getActType() != NamelessWizardsEntity.ActType.DEAD) {
                 float f = (float) animatable.tickCount + partialTick;
-                var renderType = BookEnergySwirLayer.getRenderType(TEXTURE, f);
+                var renderType = NameLessWizardLayer.getRenderType(TEXTURE, f);
                 VertexConsumer vertexconsumer = bufferSource.getBuffer(renderType);
                 poseStack.pushPose();
                 bakedModel.getBone("body").ifPresent((rootBone) -> {
@@ -172,7 +172,7 @@ public class BookEnergySwirLayer {
         public void render(PoseStack poseStack, AbstractSpellCastingMob animatable, BakedGeoModel bakedModel, RenderType renderType2, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
             if (animatable instanceof NamelessWizardsEntity ent && ent.getIsAntiCheatMode() && ent.getActType() != NamelessWizardsEntity.ActType.DEAD) {
                 float f = (float) animatable.tickCount + partialTick;
-                var renderType = BookEnergySwirLayer.getRenderType(TEXTURE, f);
+                var renderType = NameLessWizardLayer.getRenderType(TEXTURE, f);
                 VertexConsumer vertexconsumer = bufferSource.getBuffer(renderType);
                 poseStack.pushPose();
                 bakedModel.getBone("body").ifPresent((rootBone) -> {
@@ -262,6 +262,81 @@ public class BookEnergySwirLayer {
             }
         }
 
+    }
+
+    public static class Illusion extends GeoRenderLayer<AbstractSpellCastingMob> {
+        private final ResourceLocation TEXTURE;
+
+        public Illusion(GeoEntityRenderer<AbstractSpellCastingMob> entityRendererIn, ResourceLocation texture) {
+            super(entityRendererIn);
+            this.TEXTURE = texture;
+        }
+
+        @Override
+        public void render(PoseStack poseStack, AbstractSpellCastingMob animatable, BakedGeoModel bakedModel, RenderType renderType2, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+            double distSqr = 0;
+            if (Minecraft.getInstance().player == null) {
+                return;
+            }
+            if (animatable instanceof NamelessWizardsEntity ent && (ent.getWhiteDown() > 0 || ent.getAlphaPercent()  > 0)) {
+                return;
+            }
+
+            if (Minecraft.getInstance().player.isCreative()) return;
+            distSqr = Minecraft.getInstance().player.distanceToSqr(animatable);
+            if (distSqr < 64.0) return;
+
+            float currentDist = (float) Math.sqrt(distSqr);
+
+            float maxRadius = 0.25f;
+            float baseRadius = (float) Math.min((currentDist - 8.0) * 0.03, maxRadius);
+
+            float illusionAlpha = (baseRadius / maxRadius) * 0.25f;
+
+            float gameTime = (animatable.tickCount + partialTick) * 0.1f;
+            RenderType ghostType = RenderType.entityTranslucent(this.TEXTURE);
+            int cloneCount = 4;
+
+            if (illusionAlpha > 0.01f) {
+                setBoneHidden(bakedModel, "book", true);
+
+                for (int i = 0; i < cloneCount; i++) {
+                    poseStack.pushPose();
+
+                    float freqX = 1.0f + i * 0.15f;
+                    float freqZ = 0.8f + i * 0.22f;
+                    float freqY = 1.2f + i * 0.1f;
+
+                    float jitter = (float) Math.sin(gameTime * 5.0f + i) * 0.02f;
+
+                    double offsetX = Math.cos(gameTime * freqX + i) * baseRadius + jitter;
+                    double offsetZ = Math.sin(gameTime * freqZ + i) * baseRadius + jitter;
+                    double offsetY = Math.sin(gameTime * freqY + i) * 0.15D; // Y轴上下漂浮
+
+                    poseStack.translate(offsetX, offsetY, offsetZ);
+
+                    this.getRenderer().actuallyRender(
+                            poseStack, animatable, bakedModel, ghostType, bufferSource, bufferSource.getBuffer(ghostType),
+                            true, partialTick, packedLight, packedOverlay,
+                            1.2f, 0.4f, 0.4f, illusionAlpha
+                    );
+
+                    poseStack.popPose();
+                }
+
+                setBoneHidden(bakedModel, "book", false);
+            }
+        }
+    }
+
+    private static void setBoneHidden(BakedGeoModel model, String boneName, boolean hidden) {
+        model.getBone("body").ifPresent(root -> {
+            root.getChildBones().forEach(bone -> {
+                if (bone.getName().equals(boneName)) {
+                    bone.setHidden(hidden);
+                }
+            });
+        });
     }
 
 

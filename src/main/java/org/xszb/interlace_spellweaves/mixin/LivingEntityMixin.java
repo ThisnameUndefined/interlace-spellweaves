@@ -28,6 +28,8 @@ import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizar
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 import org.xszb.interlace_spellweaves.registries.RegistryEffect;
 
+import static org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem.hasFullSet;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
@@ -96,9 +98,8 @@ public abstract class LivingEntityMixin {
             newHealth = (float) (oldHealth + value);
         }
         //甲来!
-        if (entity instanceof Player && newHealth < oldHealth) {
-            MagicData magicData = MagicData.getPlayerMagicData(entity);
-            if (magicData instanceof IMagicDataExtension ext && ext.arcane_nemeses$isWearingFullNamelessSet()) {
+        if (entity instanceof Player player && newHealth < oldHealth) {
+            if (hasFullSet(player)) {
                 float damage = oldHealth - newHealth;
                 float reducedDamage = Math.max(Math.min(1,damage),damage - entity.getArmorValue() / 4f);
                 newHealth = Math.min(oldHealth - reducedDamage, oldHealth);

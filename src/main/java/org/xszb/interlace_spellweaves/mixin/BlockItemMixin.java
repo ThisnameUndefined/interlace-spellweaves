@@ -23,7 +23,7 @@ public class BlockItemMixin {
 
         if (level.dimension().location().toString().equals(POCKET_DIM)) {
             if (player != null && !player.isCreative()) {
-                player.displayClientMessage(Component.translatable("msg.iss_cws.nameless").withStyle(ChatFormatting.WHITE),true);
+                player.displayClientMessage(Component.translatable("msg.iss_csw.nameless").withStyle(ChatFormatting.WHITE),true);
                 cir.setReturnValue(InteractionResult.FAIL);
             }
         }

@@ -37,11 +37,6 @@ public class Wildgrowth extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("b568a97a-4498-00f9-e30b-37923a1854f4");
 
     @Override

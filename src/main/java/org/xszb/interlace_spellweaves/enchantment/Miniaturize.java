@@ -35,11 +35,6 @@ public class Miniaturize extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("f8f67254-7756-dc2c-4518-f969319021cb");
 
     @Override

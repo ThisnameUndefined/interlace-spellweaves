@@ -17,7 +17,6 @@
     "ExplosionMixin",
     "LivingEntityAccessor",
     "LivingEntityMixin",
-    "MagicDataMixin",
     "MagicManagerMixin",
     "PlayerMixin",
     "ServerPlayerGameModeMixin",

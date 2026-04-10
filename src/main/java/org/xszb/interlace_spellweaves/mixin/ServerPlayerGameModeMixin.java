@@ -24,7 +24,7 @@ public class ServerPlayerGameModeMixin {
     private void nameless$preventBreaking(BlockPos pPos, CallbackInfoReturnable<Boolean> cir) {
         if (isProtectedDimension()) {
             if (!player.isCreative()) {
-                player.displayClientMessage(Component.translatable("msg.iss_cws.nameless").withStyle(ChatFormatting.WHITE),true);
+                player.displayClientMessage(Component.translatable("msg.iss_csw.nameless").withStyle(ChatFormatting.WHITE),true);
                 cir.setReturnValue(false);
             }
         }

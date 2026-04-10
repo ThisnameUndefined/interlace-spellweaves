@@ -41,8 +41,8 @@ public class HighEvokerSpellBook extends UniqueSpellBook {
     @Override
     public void appendHoverText(@NotNull ItemStack itemStack, @Nullable Level level, @NotNull List<Component> lines, @NotNull TooltipFlag flag) {
         super.appendHoverText(itemStack, level, lines, flag);
-        lines.add(Component.translatable("tooltip.iss_cws.nameless_set.name").withStyle(ChatFormatting.GREEN));
-        lines.add(Component.translatable("tooltip.iss_cws.nameless_set.desc").withStyle(ChatFormatting.WHITE));
+        lines.add(Component.translatable("tooltip.iss_csw.nameless_set.name").withStyle(ChatFormatting.GREEN));
+        lines.add(Component.translatable("tooltip.iss_csw.nameless_set.desc").withStyle(ChatFormatting.WHITE));
 
     }
 
@@ -54,27 +54,5 @@ public class HighEvokerSpellBook extends UniqueSpellBook {
         super.initializeSpellContainer(itemStack);
     }
 
-    @Override
-    public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
-        super.onEquip(slotContext, prevStack, stack);
-        if (slotContext.entity() instanceof Player player){
-            MagicData magicData = MagicData.getPlayerMagicData(player);
-            if (magicData instanceof IMagicDataExtension extension) {
-                boolean isFull = hasFullSet(player);
-                extension.arcane_nemeses$setWearingFullNamelessSet(isFull);
-            }
-        }
-    }
 
-    @Override
-    public void onUnequip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
-        super.onUnequip(slotContext, prevStack, stack);
-        if (slotContext.entity() instanceof Player player){
-            MagicData magicData = MagicData.getPlayerMagicData(player);
-            if (magicData instanceof IMagicDataExtension extension) {
-                boolean isFull = hasFullSet(player);
-                extension.arcane_nemeses$setWearingFullNamelessSet(isFull);
-            }
-        }
-    }
 }

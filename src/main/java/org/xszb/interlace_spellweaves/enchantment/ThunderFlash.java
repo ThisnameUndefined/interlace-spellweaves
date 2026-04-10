@@ -37,11 +37,6 @@ public class ThunderFlash extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("714696ec-7afc-04f7-9152-981b6e33c324");
 
     @Override

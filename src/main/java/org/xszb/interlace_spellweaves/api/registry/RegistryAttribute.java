@@ -23,18 +23,18 @@ public class RegistryAttribute {
         ATTRIBUTES.register(eventBus);
     }
 
-    public static final RegistryObject<Attribute> EX_SPELL_LEVEL = ATTRIBUTES.register("extra_spell_level", () -> (new MagicRangedAttribute("attribute.iss_cws.extra_spell_level", 0.0, 0.0D, 1000000.0D).setSyncable(true)));
-    public static final RegistryObject<Attribute> EX_PROTECT_LEVEL = ATTRIBUTES.register("extra_protect_level", () -> (new MagicRangedAttribute("attribute.iss_cws.extra_protect_level", 0.0D, 0.0D, 1000000.0D).setSyncable(true)));
+    public static final RegistryObject<Attribute> EX_SPELL_LEVEL = ATTRIBUTES.register("extra_spell_level", () -> (new MagicRangedAttribute("attribute.iss_csw.extra_spell_level", 0.0, 0.0D, 1000000.0D).setSyncable(true)));
+    public static final RegistryObject<Attribute> EX_PROTECT_LEVEL = ATTRIBUTES.register("extra_protect_level", () -> (new MagicRangedAttribute("attribute.iss_csw.extra_protect_level", 0.0D, 0.0D, 1000000.0D).setSyncable(true)));
     public static final RegistryObject<Attribute> REDUCE_ARMOR = ATTRIBUTES.register("reduce_armor", () ->
-            new RangedAttribute("attribute.iss_cws.reduce_armor", 0.0D, -2048.0D, 2048.0D) {
+            new RangedAttribute("attribute.iss_csw.reduce_armor", 0.0D, -2048.0D, 2048.0D) {
                 @Override
                 public double sanitizeValue(double value) {
                     return Mth.clamp(value, -2048.0D, 2048.0D);
                 }
             }.setSyncable(true)
     );
-    public static final RegistryObject<Attribute> HEAL_MUL = ATTRIBUTES.register("heal_mul", () -> (new MagicRangedAttribute("attribute.iss_cws.heal_mul", 1.0D, 0.0D, 1000000.0D).setSyncable(true)));
-    public static final RegistryObject<Attribute> ARROW_MUL = ATTRIBUTES.register("arrow_mul", () -> (new MagicRangedAttribute("attribute.iss_cws.arrow_mul", 1.0D, 0.0D, 1000000.0D).setSyncable(true)));
+    public static final RegistryObject<Attribute> HEAL_MUL = ATTRIBUTES.register("heal_mul", () -> (new MagicRangedAttribute("attribute.iss_csw.heal_mul", 1.0D, 0.0D, 1000000.0D).setSyncable(true)));
+    public static final RegistryObject<Attribute> ARROW_MUL = ATTRIBUTES.register("arrow_mul", () -> (new MagicRangedAttribute("attribute.iss_csw.arrow_mul", 1.0D, 0.0D, 1000000.0D).setSyncable(true)));
 
 
 

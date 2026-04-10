@@ -37,11 +37,6 @@ public class Holiness extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("e2a5fc51-8806-4eea-d02d-73ed934faa92");
 
     @Override
