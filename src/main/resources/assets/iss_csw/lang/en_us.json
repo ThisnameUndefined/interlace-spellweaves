@@ -23,6 +23,10 @@
   "spell.iss_csw.firefly_seeker.guide": "Summons a swarm of fireflies that automatically track and attack the targeted enemy, dealing continuous damage.",
   "spell.iss_csw.marked_shot": "Marked Shot",
   "spell.iss_csw.marked_shot.guide": "First cast locks onto an enemy. During the duration, firing arrows will launch additional homing magic arrows at the target.",
+  "spell.iss_csw.conjure_refreshment": "Conjure Refreshment",
+  "spell.iss_csw.conjure_refreshment.guide": "Creates a magical cookie whose nutritional value scales with your Spell Power!",
+  "spell.iss_csw.chaos_strike": "Chaos Shooting",
+  "spell.iss_csw.chaos_strike.guide": "Continuously launch random spell projectiles",
 
   "spell.iss_csw.gust_pro": "Gust·Pro",
   "spell.iss_csw.gust_pro.guide": "Summons a powerful gust of wind that knocks back and damages entities in front of you. Entities that collide with blocks take additional damage.",
@@ -47,8 +51,10 @@
   "item.iss_csw.nameless_chestplate": "Nameless Coat",
   "item.iss_csw.nameless_leggings": "Nameless Leggings",
   "item.iss_csw.nameless_boots": "Nameless Boots",
+  "item.iss_csw.magic_cookies": "Arcane Cookies",
 
   "item.iss_csw.nameless_wizards_spawn_egg": "Nameless Wizards Spawn Egg",
+  "item.iss_csw.frost_bone_spawn_egg": "Frost Bone Spawn Egg",
 
   "item.iss_csw.high_evoker_spell_book": "Original Codex of the Evoker",
   "item.iss_csw.forsaken_grimoire": "Forsaken Grimoire",
@@ -66,32 +72,39 @@
   "ui.iss_csw.spell_improve": "next spell level add:%d",
   "ui.iss_csw.altar_cooling": "altar remains silent",
   "ui.iss_csw.tp": "Teleport to an unknown space",
-  "ui.iss_cws.nameless": "You have been teleported back",
+  "ui.iss_csw.nameless": "You have been teleported back",
   "ui.iss_csw.arrow_damage": " + Arrow Damage",
   "ui.iss_csw.lose_health": "%d LoseHp",
+  "ui.iss_csw.nutrition": "Provided Nutrition: %d",
+  "ui.iss_csw.chaos_strike": "Launch random spell projectiles",
 
-  "attribute.iss_cws.extra_protect_level":"Extra Protect Level",
-  "attribute.iss_cws.extra_spell_level":"Extra Spell Level",
-  "attribute.iss_cws.reduce_armor": "Armor Modifier",
-  "attribute.iss_cws.heal_mul": "Healing Multiplier",
-  "attribute.iss_cws.arrow_mul": "Arrow Damage Multiplier",
+  "attribute.iss_csw.extra_protect_level":"Extra Protect Level",
+  "attribute.iss_csw.extra_spell_level":"Extra Spell Level",
+  "attribute.iss_csw.reduce_armor": "Armor Modifier",
+  "attribute.iss_csw.heal_mul": "Healing Multiplier",
+  "attribute.iss_csw.arrow_mul": "Arrow Damage Multiplier",
 
-  "tooltip.iss_cws.nameless_set.name": "Set effect:The Nameless",
-  "tooltip.iss_cws.nameless_set.desc": "Equip all Nameless gear to activate a Mana Shield",
+  "tooltip.iss_csw.nameless_set.name": "Set effect:The Nameless",
+  "tooltip.iss_csw.nameless_set.desc": "Equip all Nameless gear to activate a Mana Shield",
 
-  "tooltip.iss_cws.nameless_helmet_ability.name":"Passive ability:Solidified Mana",
-  "tooltip.iss_cws.nameless_helmet_ability":"Armor-piercing damage is still mitigated by Armor.",
+  "tooltip.iss_csw.nameless_helmet_ability.name":"Passive ability:Solidified Mana",
+  "tooltip.iss_csw.nameless_helmet_ability":"Armor-piercing damage is still mitigated by Armor.",
 
-  "tooltip.iss_cws.nameless_chestplate_ability.name":"Passive ability:Nameless Echoes",
-  "tooltip.iss_cws.nameless_chestplate_ability":"Casting a spell has a chance to not trigger its Cooldown.",
+  "tooltip.iss_csw.nameless_chestplate_ability.name":"Passive ability:Nameless Echoes",
+  "tooltip.iss_csw.nameless_chestplate_ability":"Casting a spell has a chance to not trigger its Cooldown.",
 
-  "tooltip.iss_cws.nameless_leggings_ability.name":"Passive ability:Gravitational Divergence",
-  "tooltip.iss_cws.nameless_leggings_ability":"Unaffected by gravity while Sneaking.",
+  "tooltip.iss_csw.nameless_leggings_ability.name":"Passive ability:Gravitational Divergence",
+  "tooltip.iss_csw.nameless_leggings_ability":"Unaffected by gravity while Sneaking.",
 
-  "tooltip.iss_cws.nameless_boots_ability.name":"Passive ability:Impact Empowerment",
-  "tooltip.iss_cws.nameless_boots_ability":": Converts Fall and Impact damage into Mana restoration.",
+  "tooltip.iss_csw.nameless_boots_ability.name":"Passive ability:Impact Empowerment",
+  "tooltip.iss_csw.nameless_boots_ability":": Converts Fall and Impact damage into Mana restoration.",
 
-  "msg.iss_cws.nameless": "A mysterious force prevents you.",
+  "tooltip.iss_csw.magic_cookies.nutrition": "Nutrition: %s",
+  "tooltip.iss_csw.magic_cookies.saturation": "Saturation: %s",
+  "tooltip.iss_csw.magic_cookies.no_magic": "yet to be infused with magic...",
+
+
+  "msg.iss_csw.nameless": "A mysterious force prevents you.",
 
   "death.attack.iss_csw.blizzard": "%1$s was pierced by %2$s's icicle",
   "death.attack.iss_csw.totem_rite": "%1$s was made into totem of undying",

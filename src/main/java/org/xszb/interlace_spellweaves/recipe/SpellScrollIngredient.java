@@ -129,7 +129,6 @@ public class SpellScrollIngredient extends AbstractIngredient {
             if (buffer.readBoolean()) {
                 minlevel = buffer.readInt();
             }
-
             Integer setlevel = null;
             if (buffer.readBoolean()) {
                 setlevel = buffer.readInt();
@@ -141,6 +140,18 @@ public class SpellScrollIngredient extends AbstractIngredient {
         @Override
         public void write(@Nonnull FriendlyByteBuf buffer, @Nonnull SpellScrollIngredient ingredient) {
             buffer.writeResourceLocation(ingredient.spellId);
+            if (ingredient.minlevel != null) {
+                buffer.writeBoolean(true);
+                buffer.writeInt(ingredient.minlevel);
+            } else {
+                buffer.writeBoolean(false);
+            }
+            if (ingredient.setlevel != null) {
+                buffer.writeBoolean(true);
+                buffer.writeInt(ingredient.setlevel);
+            } else {
+                buffer.writeBoolean(false);
+            }
         }
     }
 }

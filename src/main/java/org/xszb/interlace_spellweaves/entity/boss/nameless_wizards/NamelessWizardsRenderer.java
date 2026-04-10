@@ -5,6 +5,7 @@ import com.mojang.math.Axis;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -16,11 +17,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
-import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.renderlayer.BookEnergySwirLayer;
+import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.renderlayer.NameLessWizardLayer;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.core.object.Color;
 
 import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.EVASION_TEXTURE;
-import static org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.renderlayer.BookEnergySwirLayer.EVOKE_TEXTURE;
+import static org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.renderlayer.NameLessWizardLayer.EVOKE_TEXTURE;
 
 @OnlyIn(Dist.CLIENT)
 public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
@@ -32,23 +34,26 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
 
     public NamelessWizardsRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new NamelessWizardsModel());
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.BLAST));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.SHOOT));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.TP));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.ILLUSION));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.FANG));
 
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.BLAST));
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.SHOOT));
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.TP));
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.ILLUSION));
-
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.WIND));
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.VEX));
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.CREEPER));
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.FIREWORK));
-        addRenderLayer(new BookEnergySwirLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.SHOT_M));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.WIND));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.VEX));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.CREEPER));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.FIREWORK));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.SHOT_M));
 
 
-        addRenderLayer(new BookEnergySwirLayer.Shield(this,SHIELD_TEXTURE));
-        addRenderLayer(new BookEnergySwirLayer.Shield2(this,SHIELD_TEXTURE));
-        addRenderLayer(new BookEnergySwirLayer.Shield3(this,RED_SHIELD_TEXTURE));
-        addRenderLayer(new BookEnergySwirLayer.White(this));
+        addRenderLayer(new NameLessWizardLayer.Shield(this,SHIELD_TEXTURE));
+        addRenderLayer(new NameLessWizardLayer.Shield2(this,SHIELD_TEXTURE));
+        addRenderLayer(new NameLessWizardLayer.Shield3(this,RED_SHIELD_TEXTURE));
+        addRenderLayer(new NameLessWizardLayer.White(this));
+
+        addRenderLayer(new NameLessWizardLayer.Illusion(this,textureLocation2));
+
     }
 
     @Override
@@ -68,20 +73,31 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
 
     @Override
     public Color getRenderColor(AbstractSpellCastingMob animatable, float partialTick, int packedLight) {
+
         if (animatable instanceof NamelessWizardsEntity entity) {
             float alpha = entity.getAlphaPercent() > 0 ? (100 - entity.getAlphaPercent()) / 100f : 1.0f;
-            if (alpha < 1) {
+
+            if (Minecraft.getInstance().player != null && entity.getAlphaPercent() == 0) {
+                double distSqr = Minecraft.getInstance().player.distanceToSqr(animatable);
+                if (distSqr > 64.0 && !Minecraft.getInstance().player.isCreative()) {
+                    float currentDist = (float) Math.sqrt(distSqr);
+                    float fadeFactor = Math.min((currentDist - 8.0f) * 0.085f, 0.85f);
+                    alpha -= fadeFactor;
+                }
+            }
+
+            if (alpha < 1.0f) {
+                alpha = Math.max(0.1f, Math.min(1.0f, alpha));
                 return Color.ofRGBA(1, 1, 1, alpha);
             }
         }
         return Color.WHITE;
     }
-
     @Override
     public void render(AbstractSpellCastingMob entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-        if (entity instanceof NamelessWizardsEntity ent && ent.getActType().handparticle != null) {
 
+        if (entity instanceof NamelessWizardsEntity ent && ent.getActType().handparticle != null) {
             this.getGeoModel().getBone("body").ifPresent((rootBone) -> {
                 rootBone.getChildBones().forEach(bone -> {
                     if (bone.getName().equals("right_arm") || bone.getName().equals("left_arm")) {
@@ -92,7 +108,6 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
                                 double d0 = ent.getRandom().nextGaussian() * 0.07D;
                                 double d1 = ent.getRandom().nextGaussian() * 0.07D;
                                 double d2 = ent.getRandom().nextGaussian() * 0.07D;
-
                                 entity.level().addParticle(ent.getActType().handparticle,true, pos.x ,pos.y ,pos.z,  d0, d1, d2);
                             }
                         });
@@ -100,12 +115,12 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
                 });
             });
         }
-
     }
 
+
+
     @Override
-    protected void applyRotations(AbstractSpellCastingMob animatable, PoseStack poseStack, float ageInTicks, float rotationYaw,
-                                  float partialTick) {
+    protected void applyRotations(AbstractSpellCastingMob animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
         super.applyRotations(animatable, poseStack, ageInTicks, rotationYaw, partialTick);
         if (animatable.deathTime > 0) {
             float f = ((float)animatable.deathTime + partialTick - 1.0F) / 20.0F * 1.6F;
@@ -115,5 +130,6 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
             }
             poseStack.mulPose(Axis.ZP.rotationDegrees(-f * 90.0F));
         }
+
     }
 }

@@ -16,6 +16,8 @@ import org.xszb.interlace_spellweaves.spell.evocation.NameLessTeleport;
 import org.xszb.interlace_spellweaves.spell.evocation.TotemRite;
 import org.xszb.interlace_spellweaves.spell.evocation.pro.GustProSpell;
 import org.xszb.interlace_spellweaves.spell.evocation.pro.LobCreeperChainSpell;
+import org.xszb.interlace_spellweaves.spell.fusion.ChaosStrike;
+import org.xszb.interlace_spellweaves.spell.fusion.ConjureRefreshment;
 import org.xszb.interlace_spellweaves.spell.fusion.SpellEmpowerment;
 import org.xszb.interlace_spellweaves.spell.ice.*;
 import org.xszb.interlace_spellweaves.spell.nature.FireflySeeker;
@@ -71,6 +73,10 @@ public class RegistrySpell {
     public static final RegistryObject<AbstractSpell> TP = registerSpell(new NameLessTeleport());
 
     public static final RegistryObject<AbstractSpell> MARK_SHOT = registerSpell(new MarkedShot());
+
+    public static final RegistryObject<AbstractSpell> COOKIES = registerSpell(new ConjureRefreshment());
+
+    public static final RegistryObject<AbstractSpell> CHAOS_STRIKE = registerSpell(new ChaosStrike());
 
     public static void register(IEventBus eventBus) {
         SPELLS.register(eventBus);

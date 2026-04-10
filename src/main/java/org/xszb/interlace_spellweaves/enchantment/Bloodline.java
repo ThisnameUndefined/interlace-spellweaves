@@ -37,11 +37,6 @@ public class Bloodline extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("6cfe0d92-593d-fa36-b51b-f5a17ced8103");
 
     @Override

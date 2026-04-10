@@ -12,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -29,12 +30,14 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -170,7 +173,7 @@ public class ServerEvents {
                 player.teleportTo(respawnLevel, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, player.getYRot(), player.getXRot());
 
                 player.displayClientMessage(
-                        Component.translatable("ui.iss_cws.nameless")
+                        Component.translatable("ui.iss_csw.nameless")
                                 .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC),
                         true
                 );
@@ -310,6 +313,19 @@ public class ServerEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        LevelAccessor level = event.getLevel();
+
+        if (level instanceof ServerLevel serverLevel) {
+            ResourceLocation dimensionLocation = serverLevel.dimension().location();
+            if (dimensionLocation.toString().equals(POCKET_DIM)) {
+                if (!(event.getPlayer() != null && event.getPlayer().isCreative())) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
 
 
 }

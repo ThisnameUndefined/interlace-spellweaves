@@ -1,0 +1,38 @@
+{
+  "type": "iss_csw:mix_spell_recipe",
+  "mainspell": {
+    "type": "iss_csw:spell_scroll",
+    "item": "irons_spellbooks:scroll",
+    "spell_id": "iss_csw:barrage_volley"
+  },
+  "addition1": [
+    {
+      "item": "irons_spellbooks:mana_upgrade_orb"
+    }
+  ],
+  "addition2": [
+    {
+      "item": "irons_spellbooks:eldritch_manuscript"
+    }
+  ],
+  "result": {
+    "type":"forge:nbt",
+    "item": "irons_spellbooks:scroll",
+    "nbt": {
+      "ISB_Spells": {
+        "spellWheel":false,
+        "maxSpells":1,
+        "mustEquip":false,
+        "data":[
+          {
+            "id": "iss_csw:chaos_strike",
+            "index":0,
+            "locked": true,
+            "level": 1
+          }
+        ]
+      }
+    },
+    "count": 1
+  }
+}

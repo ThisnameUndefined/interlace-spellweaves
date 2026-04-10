@@ -36,11 +36,6 @@ public class Endbreath extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("68154113-72af-15cf-0a5b-3906a70508b7");
 
     @Override

@@ -37,11 +37,6 @@ public class Flameburn extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("f4702100-3522-4a00-b570-000000000000");
 
     @Override

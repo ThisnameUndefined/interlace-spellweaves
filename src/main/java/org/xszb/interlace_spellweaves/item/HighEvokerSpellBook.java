@@ -46,8 +46,8 @@ public class HighEvokerSpellBook extends UniqueSpellBook {
     @Override
     public void appendHoverText(@NotNull ItemStack itemStack, @Nullable Level level, @NotNull List<Component> lines, @NotNull TooltipFlag flag) {
         super.appendHoverText(itemStack, level, lines, flag);
-        lines.add(Component.translatable("tooltip.iss_cws.nameless_set.name").withStyle(ChatFormatting.GREEN));
-        lines.add(Component.translatable("tooltip.iss_cws.nameless_set.desc").withStyle(ChatFormatting.WHITE));
+        lines.add(Component.translatable("tooltip.iss_csw.nameless_set.name").withStyle(ChatFormatting.GREEN));
+        lines.add(Component.translatable("tooltip.iss_csw.nameless_set.desc").withStyle(ChatFormatting.WHITE));
 
     }
 

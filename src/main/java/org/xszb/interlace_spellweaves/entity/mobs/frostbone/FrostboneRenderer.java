@@ -12,13 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class FrostboneRenderer extends AbstractSpellCastingMobRenderer {
-
     public FrostboneRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new FrostboneModel());
-    }
-
-    @Override
-    public RenderType getRenderType(AbstractSpellCastingMob animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
-        return animatable.isInvisible() ? RenderType.entityTranslucent(texture) : RenderType.entityCutoutNoCull(texture);
     }
 }

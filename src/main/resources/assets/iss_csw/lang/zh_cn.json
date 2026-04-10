@@ -23,6 +23,10 @@
   "spell.iss_csw.firefly_seeker.guide": "召唤一群萤火虫，它们会自动追踪并攻击目标敌人，造成持续伤害。",
   "spell.iss_csw.marked_shot": "标记射击",
   "spell.iss_csw.marked_shot.guide": "首次使用锁定敌人，持续时间内射箭会额外发射追踪魔法箭攻击敌人",
+  "spell.iss_csw.conjure_refreshment": "造餐术",
+  "spell.iss_csw.conjure_refreshment.guide": "创造一块魔法饼干,他的营养价值会根据你的法力提升!",
+  "spell.iss_csw.chaos_strike": "混沌射击",
+  "spell.iss_csw.chaos_strike.guide": "连续发射随机法术射弹",
 
 
   "spell.iss_csw.gust_pro": "呼啸之风·Pro",
@@ -48,13 +52,15 @@
   "item.iss_csw.nameless_chestplate": "无名长袍",
   "item.iss_csw.nameless_leggings": "无名护腿",
   "item.iss_csw.nameless_boots": "无名战靴",
+  "item.iss_csw.magic_cookies": "奥术饼干",
 
 
   "item.iss_csw.nameless_wizards_spawn_egg": "无名术士刷怪蛋",
+  "item.iss_csw.frost_bone_spawn_egg": "霜骸刷怪蛋",
 
 
   "item.iss_csw.high_evoker_spell_book": "唤魔原典",
-    "item.iss_csw.forsaken_grimoire": "受遗旧典",
+  "item.iss_csw.forsaken_grimoire": "受遗旧典",
 
   "block.iss_csw.spell_forge": "奥术交错台",
   "block.iss_csw.altar_of_nameless": "无名祭坛",
@@ -70,31 +76,37 @@
   "ui.iss_csw.arrow_damage": " + 箭矢伤害",
   "ui.iss_csw.altar_cooling": "祭坛没有反应",
   "ui.iss_csw.tp": "传送到未知空间",
-  "ui.iss_cws.nameless": "你被传送了回去",
+  "ui.iss_csw.nameless": "你被传送了回去",
   "ui.iss_csw.lose_health": "%d 体力流失",
+  "ui.iss_csw.nutrition": "提供的饱食度: %d",
+  "ui.iss_csw.chaos_strike": "发射随机法术射弹",
 
-  "attribute.iss_cws.extra_protect_level":"额外保护等级",
-  "attribute.iss_cws.extra_spell_level":"额外法术等级",
-  "attribute.iss_cws.reduce_armor": "护甲修正",
-  "attribute.iss_cws.heal_mul": "治疗修正",
-  "attribute.iss_cws.arrow_mul": "箭矢伤害修正",
+  "attribute.iss_csw.extra_protect_level":"额外保护等级",
+  "attribute.iss_csw.extra_spell_level":"额外法术等级",
+  "attribute.iss_csw.reduce_armor": "护甲修正",
+  "attribute.iss_csw.heal_mul": "治疗修正",
+  "attribute.iss_csw.arrow_mul": "箭矢伤害修正",
 
-  "tooltip.iss_cws.nameless_set.name": "套装效果:无名之人",
-  "tooltip.iss_cws.nameless_set.desc": "同时穿戴所有无名术士系列装备后,开启法术护盾",
+  "tooltip.iss_csw.nameless_set.name": "套装效果:无名之人",
+  "tooltip.iss_csw.nameless_set.desc": "同时穿戴所有无名术士系列装备后,开启法术护盾",
 
-  "tooltip.iss_cws.nameless_helmet_ability.name":"被动能力:固态法力",
-  "tooltip.iss_cws.nameless_helmet_ability":"破甲伤害依然受到护甲减免",
+  "tooltip.iss_csw.nameless_helmet_ability.name":"被动能力:固态法力",
+  "tooltip.iss_csw.nameless_helmet_ability":"破甲伤害依然受到护甲减免",
 
-  "tooltip.iss_cws.nameless_chestplate_ability.name":"被动能力:无名回响",
-  "tooltip.iss_cws.nameless_chestplate_ability":"施法有概率使其不进入冷却",
+  "tooltip.iss_csw.nameless_chestplate_ability.name":"被动能力:无名回响",
+  "tooltip.iss_csw.nameless_chestplate_ability":"施法有概率使其不进入冷却",
 
-  "tooltip.iss_cws.nameless_leggings_ability.name":"被动能力:引力偏离",
-  "tooltip.iss_cws.nameless_leggings_ability":"潜行时, 不受重力影响",
+  "tooltip.iss_csw.nameless_leggings_ability.name":"被动能力:引力偏离",
+  "tooltip.iss_csw.nameless_leggings_ability":"潜行时, 不受重力影响",
 
-  "tooltip.iss_cws.nameless_boots_ability.name":"被动能力:冲击赋能",
-  "tooltip.iss_cws.nameless_boots_ability":"受到的摔落或冲击伤害改为恢复法力值",
+  "tooltip.iss_csw.nameless_boots_ability.name":"被动能力:冲击赋能",
+  "tooltip.iss_csw.nameless_boots_ability":"受到的摔落或冲击伤害改为恢复法力值",
 
-  "msg.iss_cws.nameless": "一股神秘的力量阻止了你",
+  "tooltip.iss_csw.magic_cookies.nutrition": "饱食度: %s",
+  "tooltip.iss_csw.magic_cookies.saturation": "饱和度: %s",
+  "tooltip.iss_csw.magic_cookies.no_magic": "尚未注入魔力...",
+
+  "msg.iss_csw.nameless": "一股神秘的力量阻止了你",
 
 
   "death.attack.iss_csw.blizzard": "%1$s被%2$s用冰锥刺穿了身体。",

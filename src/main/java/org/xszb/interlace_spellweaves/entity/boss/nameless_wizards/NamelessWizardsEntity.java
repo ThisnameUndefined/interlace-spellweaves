@@ -9,6 +9,7 @@ import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.entity.mobs.AntiMagicSusceptible;
 import io.redspace.ironsspellbooks.entity.spells.EchoingStrikeEntity;
+import io.redspace.ironsspellbooks.entity.spells.ExtendedEvokerFang;
 import io.redspace.ironsspellbooks.entity.spells.eldritch_blast.EldritchBlastVisualEntity;
 import io.redspace.ironsspellbooks.network.ClientboundEntityEvent;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
@@ -52,6 +53,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
@@ -64,6 +66,7 @@ import org.xszb.interlace_spellweaves.entity.boss.UnRemoveBossEntity;
 import org.xszb.interlace_spellweaves.entity.spells.HailStone;
 import org.xszb.interlace_spellweaves.entity.spells.creeper_chain.CreeperChainEntiy;
 import org.xszb.interlace_spellweaves.entity.spells.evocation_strike.EvocationBurstEntity;
+import org.xszb.interlace_spellweaves.entity.spells.fang_waring.ExExtendedEvokerFang;
 import org.xszb.interlace_spellweaves.entity.spells.firework_warning.ExtendedFireworkRocket;
 import org.xszb.interlace_spellweaves.entity.spells.firework_warning.FireworkWarnEntity;
 import org.xszb.interlace_spellweaves.entity.spells.gust.DamageGustCollider;
@@ -115,7 +118,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     private int shootCoolDown;
     private int overHitCount;
     protected UUID BossIdentity;
-    public static double finalLimit;
+    private double finalLimit = 160.0;
 
     private static final EntityDataAccessor<Byte> SPELL = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Byte> PRESPELL = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BYTE);
@@ -149,6 +152,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         this.goalSelector.addGoal(5, new ComeBackSpellGoal(this, NameLessWizardConfig.comeBackInt));
         this.goalSelector.addGoal(5, new StartGeoGoal(this, NameLessWizardConfig.startGeoInt));
         this.goalSelector.addGoal(5, new BreakGeoGoal(this, NameLessWizardConfig.breakGeoInt));
+        this.goalSelector.addGoal(5,new FangGoal(this,0));
         this.goalSelector.addGoal(5,new CloneSpellGoal(this,0));
         this.goalSelector.addGoal(5,new BreakPhaseGoal(this,0));
         this.goalSelector.addGoal(5,new ChangePhaseGoal(this,0));
@@ -607,6 +611,10 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 }
             }
         }
+
+        if (this.getMaxHealth() > finalLimit ){
+            finalLimit = this.getMaxHealth();
+        }
     }
 
     @Override
@@ -672,10 +680,15 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     @Override
     public double getAttributeValue(@NotNull Attribute attribute) {
-        if (attribute == Attributes.MAX_HEALTH){
-            return Math.max(finalLimit,super.getAttributeValue(attribute));
+        double baseValue = super.getAttributeValue(attribute);
+        if (attribute == Attributes.MAX_HEALTH) {
+            if (finalLimit > 1.0) {
+                return Math.max(finalLimit, baseValue);
+            }
+            return baseValue;
         }
-        return super.getAttributeValue(attribute);
+
+        return baseValue;
     }
 
     @Override
@@ -1008,6 +1021,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     private final RawAnimation firework_animation = RawAnimation.begin().thenPlay("fireworks") ;
     private final RawAnimation break_animation = RawAnimation.begin().thenPlay("break_stance") ;
     private final RawAnimation swing_third_animation = RawAnimation.begin().thenPlay("swing_third") ;
+    private final RawAnimation fang_animation = RawAnimation.begin().thenPlay("fanging") ;
     private final RawAnimation clone_animation = RawAnimation.begin().thenPlay("charge_clone") ;
     private final RawAnimation break2_animation = RawAnimation.begin().thenPlay("break_phase2") ;
     private final RawAnimation phase2_animation = RawAnimation.begin().thenLoop("phase2_cast") ;
@@ -1017,7 +1031,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     RawAnimation animationToPlay = null;
 
-    private final AnimationController masterController = new AnimationController(this, "master", 1, this::masterPredicate);
+    private final AnimationController masterController = new AnimationController(this, "master", 2, this::masterPredicate);
 
     private PlayState masterPredicate(AnimationState event) {
         if (cancelCastAnimation != null) return PlayState.STOP;
@@ -1039,6 +1053,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             case BREAK2 -> break2_animation;
             case PHASE -> phase2_animation;
             case DEAD -> dead_animation;
+            case FANG -> fang_animation;
             default -> idle_animation;
         };
         if (this.getIsAntiCheatMode()) animation = phase2_animation;
@@ -1095,6 +1110,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         SHOT_M(8,true,ParticleTypes.SNOWFLAKE,0),
         CREEPER(9,true,ParticleTypes.ENCHANT,0),
         COMEBACK(10,true,ParticleTypes.PORTAL,0),
+        FANG(11,true,ParticleTypes.CRIT,0.4f),
         START(20,false,null,1),
         BREAK(21,false,null,0),
         BREAK2(22,false,null,1),
@@ -1146,6 +1162,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 new SpellWeight(ActType.CREEPER, 30, e -> true),
                 new SpellWeight(ActType.COMEBACK, 70, e -> !e.getIsIllusion() && e.getTarget() != null && e.getTarget().position().distanceTo(e.getHomePos().getCenter()) > 25),
                 new SpellWeight(ActType.SHOT_M, 50, e -> true),
+                new SpellWeight(ActType.FANG, 10, e ->!e.getAllIllusion().isEmpty() && e.getAllIllusion(true).stream().noneMatch(entity -> entity.getPreActType() == ActType.FANG || entity.getActType() == ActType.FANG)),
                 new SpellWeight(ActType.TP, 20, e -> true),
                 new SpellWeight(ActType.TP, 20, NamelessWizardsEntity::getIsIllusion),
                 new SpellWeight(ActType.WIND,  40, e -> e.getTarget() != null && e.distanceTo(e.getTarget()) < 8 ),
@@ -2042,6 +2059,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         illusion.setExistence(entity.getExistence());
                         illusion.setIsIllusion(true);
                         illusion.setAlphaPercent(100);
+                        illusion.finalLimit = entity.finalLimit;
                         EntList.add(illusion);
                         serverLevel.addFreshEntityWithPassengers(illusion);
 
@@ -2334,6 +2352,77 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         protected ActType getActType()
         {
             return ActType.PHASE;
+        }
+    }
+
+    class FangGoal extends GeoActGoal {
+
+        private FangGoal(NamelessWizardsEntity ent,double globalCoolDown) {
+            super(ent,globalCoolDown);
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return super.canContinueToUse() && !entity.getAllIllusion().isEmpty();
+        }
+
+
+        @Override
+        protected int getCastingTime()
+        {
+            return 230;
+        }
+
+        @Override
+        protected int getCastWarmupTime() {return 230;}
+
+
+        @Override
+        protected void castSpell() {
+        }
+
+        private float get2DAngle(Vec3 a, Vec3 b) {
+            return Utils.getAngle(new Vec2((float) a.x, (float) a.z), new Vec2((float) b.x, (float) b.z));
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            Level level = entity.level();
+            if (this.spellTick % 40 == 0){
+                List<BlockPos> positions = entity.getPositionsAroundHome();
+                positions.forEach(p -> {
+                    int rings = 4;
+                    int count = 6;
+                    Vec3 center = p.getCenter();
+
+                    for (int r = 0; r < rings; r++) {
+                        float fangs = count + r * r;
+                        for (int i = 0; i < fangs; i++) {
+                            Vec3 spawn = center.add(new Vec3(0, 0, 1.5 * (r + 1)).yRot(entity.getYRot() * Mth.DEG_TO_RAD + ((6.281f / fangs) * i)));
+                            spawn = Utils.moveToRelativeGroundLevel(level, spawn, 5);
+                            if (!level.getBlockState(BlockPos.containing(spawn).below()).isAir()) {
+                                ExExtendedEvokerFang fang = new ExExtendedEvokerFang(level, spawn.x, spawn.y, spawn.z, get2DAngle(center, spawn), r, entity, entity.getSpellDamage(12));
+                                level.addFreshEntity(fang);
+                            }
+                        }
+                    }
+                });
+
+            }
+
+        }
+
+
+
+        protected SoundEvent getSpellPrepareSound() {
+            return SoundEvents.EVOKER_PREPARE_ATTACK;
+        }
+
+        @Override
+        protected ActType getActType()
+        {
+            return ActType.FANG;
         }
     }
 

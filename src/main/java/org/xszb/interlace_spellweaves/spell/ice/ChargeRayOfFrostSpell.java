@@ -37,7 +37,7 @@ public class ChargeRayOfFrostSpell extends AbstractMixSpell {
             .setMinRarity(SpellRarity.EPIC)
             .setSchoolResource(SchoolRegistry.ICE_RESOURCE)
             .setMaxLevel(5)
-            .setCooldownSeconds(15)
+            .setCooldownSeconds(10)
             .build();
 
     @Override
@@ -58,8 +58,8 @@ public class ChargeRayOfFrostSpell extends AbstractMixSpell {
     public ChargeRayOfFrostSpell() {
         this.manaCostPerLevel = 8;
         this.baseSpellPower = 2;
-        this.spellPowerPerLevel = 2;
-        this.castTime = 60;
+        this.spellPowerPerLevel = 3;
+        this.castTime = 30;
         this.baseManaCost = 30;
     }
 

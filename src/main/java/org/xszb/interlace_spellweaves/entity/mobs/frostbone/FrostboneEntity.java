@@ -39,13 +39,16 @@ public class FrostboneEntity extends AbstractSpellCastingMob implements Enemy {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(4, new WizardAttackGoal(this, 1.25f, 120)
+        this.goalSelector.addGoal(4, new WizardAttackGoal(this, 1.25f, 25, 50)
                 .setSpells(
-                        List.of(RegistrySpell.CHARGE_RAY_OF_FROST_SPELL.get()),
-                        List.of(),
+                        List.of(SpellRegistry.MAGIC_ARROW_SPELL.get(),SpellRegistry.ICICLE_SPELL.get(),SpellRegistry.BLOOD_NEEDLES_SPELL.get()),
+                        List.of(SpellRegistry.FROSTWAVE_SPELL.get()),
                         List.of(SpellRegistry.FROST_STEP_SPELL.get()),
                         List.of()
-                ));
+                )
+                .setSingleUseSpell(RegistrySpell.CHARGE_RAY_OF_FROST_SPELL.get(), 80, 200, 4, 6)
+
+        );
 
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));

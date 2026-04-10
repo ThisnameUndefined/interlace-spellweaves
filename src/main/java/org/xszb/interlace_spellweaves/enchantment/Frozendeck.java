@@ -37,11 +37,6 @@ public class Frozendeck extends Enchantment implements IConflictsEnchantment {
         return false;
     }
 
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
     private static final UUID BASE_UUID = UUID.fromString("10356d44-b63e-42de-2f2e-8251dcf17512");
 
     @Override

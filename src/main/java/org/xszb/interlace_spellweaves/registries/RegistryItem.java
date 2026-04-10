@@ -20,6 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.item.EnchancedPearlItem;
 import org.xszb.interlace_spellweaves.item.HighEvokerSpellBook;
+import org.xszb.interlace_spellweaves.item.MagicCookiesItem;
 import org.xszb.interlace_spellweaves.item.ShrivingStone;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 
@@ -99,6 +100,11 @@ public class RegistryItem {
                 return builder.build();
             })
     );
+    //
+    public static final RegistryObject<Item> MAGIC_COOKIES = ITEMS.register("magic_cookies",
+            () -> new MagicCookiesItem(new Item.Properties()
+                    .rarity(Rarity.RARE)
+                    .food(MagicCookiesItem.DEFAULT_COOKIE)));
 
 
     public static Collection<RegistryObject<Item>> getItems() {

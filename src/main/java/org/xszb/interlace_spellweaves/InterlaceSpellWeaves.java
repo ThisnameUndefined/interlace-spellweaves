@@ -3,6 +3,12 @@ package org.xszb.interlace_spellweaves;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -73,6 +79,13 @@ public class InterlaceSpellWeaves {
             CraftingHelper.register(
                     ResourceLocation.fromNamespaceAndPath(InterlaceSpellWeaves.MODID, "spell_scroll"),
                     SpellScrollIngredient.Serializer.INSTANCE
+            );
+            SpawnPlacements.register(
+                    RegistryEntity.FROSTBONE.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    (entityType, level, spawnType, pos, random) ->
+                            level.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn((ServerLevelAccessor) level, pos, random) && Mob.checkMobSpawnRules(entityType, level, spawnType, pos, random) && level.getBlockState(pos.below()).isSolid()
             );
         });
     }
