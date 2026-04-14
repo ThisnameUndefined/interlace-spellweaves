@@ -25,6 +25,7 @@ import org.xszb.interlace_spellweaves.api.registry.RegistrySchool;
 import org.xszb.interlace_spellweaves.config.MainConfig;
 import org.xszb.interlace_spellweaves.config.NameLessWizardConfig;
 import org.xszb.interlace_spellweaves.gui.spell_forge.SpellForgeScreen;
+import org.xszb.interlace_spellweaves.network.NetworkHandler;
 import org.xszb.interlace_spellweaves.recipe.SpellScrollIngredient;
 import org.xszb.interlace_spellweaves.registries.*;
 
@@ -62,6 +63,7 @@ public class InterlaceSpellWeaves {
 
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::onCommonSetup);
+        NetworkHandler.register();
 
         MinecraftForge.EVENT_BUS.register(this);
 

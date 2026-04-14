@@ -10,10 +10,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.spell.blood.Hemovaporize;
-import org.xszb.interlace_spellweaves.spell.evocation.BarrageVolley;
-import org.xszb.interlace_spellweaves.spell.evocation.MarkedShot;
-import org.xszb.interlace_spellweaves.spell.evocation.NameLessTeleport;
-import org.xszb.interlace_spellweaves.spell.evocation.TotemRite;
+import org.xszb.interlace_spellweaves.spell.evocation.*;
 import org.xszb.interlace_spellweaves.spell.evocation.pro.GustProSpell;
 import org.xszb.interlace_spellweaves.spell.evocation.pro.LobCreeperChainSpell;
 import org.xszb.interlace_spellweaves.spell.fusion.ChaosStrike;
@@ -77,6 +74,8 @@ public class RegistrySpell {
     public static final RegistryObject<AbstractSpell> COOKIES = registerSpell(new ConjureRefreshment());
 
     public static final RegistryObject<AbstractSpell> CHAOS_STRIKE = registerSpell(new ChaosStrike());
+
+    public static final RegistryObject<AbstractSpell> SPELL_BREAKER = registerSpell(new SpellbreakBurst());
 
     public static void register(IEventBus eventBus) {
         SPELLS.register(eventBus);

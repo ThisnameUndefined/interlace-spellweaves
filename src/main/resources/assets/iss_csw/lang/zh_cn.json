@@ -27,6 +27,9 @@
   "spell.iss_csw.conjure_refreshment.guide": "创造一块魔法饼干,他的营养价值会根据你的法力提升!",
   "spell.iss_csw.chaos_strike": "混沌射击",
   "spell.iss_csw.chaos_strike.guide": "连续发射随机法术射弹",
+  "spell.iss_csw.spellbreak_burst": "破法震爆",
+  "spell.iss_csw.spellbreak_burst.guide": "蓄力后释放法术震荡，驱散周围法术并造成伤害，对亡灵造成额外伤害",
+
 
 
   "spell.iss_csw.gust_pro": "呼啸之风·Pro",
@@ -80,6 +83,7 @@
   "ui.iss_csw.lose_health": "%d 体力流失",
   "ui.iss_csw.nutrition": "提供的饱食度: %d",
   "ui.iss_csw.chaos_strike": "发射随机法术射弹",
+  "ui.iss_csw.undead_slayer": "对不死生物造成更高伤害",
 
   "attribute.iss_csw.extra_protect_level":"额外保护等级",
   "attribute.iss_csw.extra_spell_level":"额外法术等级",
@@ -116,6 +120,7 @@
   "death.attack.iss_csw.hemovaporize": "%1$s的生命枯竭了。",
   "death.attack.iss_csw.pinning_stake": "%1$s被木桩穿刺。",
   "death.attack.iss_csw.gust_pro": "%1$s被吹散了。",
+  "death.attack.iss_csw.spellbreak_burst": "%1$s被震碎了。",
 
   "advancements.iss_csw.root.title": "交错织法",
   "advancements.iss_csw.root.description": "法术之间的交织，从此开始",

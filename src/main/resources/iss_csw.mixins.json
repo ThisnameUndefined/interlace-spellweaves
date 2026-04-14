@@ -19,6 +19,7 @@
     "LivingEntityMixin",
     "MagicDataMixin",
     "MagicManagerMixin",
+    "NearestAttackableTargetGoalAccessor",
     "PlayerMixin",
     "ServerPlayerGameModeMixin",
     "TrackedEntityAccessor"

@@ -41,7 +41,7 @@ public class EvocationBurstRenderer extends GeoEntityRenderer<EvocationBurstEnti
 
         float scale = animatable.getRadius() * 3f;
         if (bone.getName().equals("sub")) {
-            float progress = (float) (animatable.tickCount + partialTick) / animatable.waitTime * 16 * scale;
+            float progress = (float) (animatable.tickCount + partialTick) / animatable.getWaitTime() * 16 * scale;
             bone.setScaleX(progress);
             bone.setScaleY(progress);
             bone.setScaleZ(progress);

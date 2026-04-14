@@ -912,7 +912,6 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         if (this.getCanKill() && !this.level().isClientSide()){
             this.setCanDie(true);
         }
-        super.actuallyHurt(source, damage);
         damage = net.minecraftforge.common.ForgeHooks.onLivingHurt(this, source, damage);
         if (damage <= 0) return;
         damage = this.getDamageAfterArmorAbsorb(source,damage);
@@ -1111,6 +1110,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         CREEPER(9,true,ParticleTypes.ENCHANT,0),
         COMEBACK(10,true,ParticleTypes.PORTAL,0),
         FANG(11,true,ParticleTypes.CRIT,0.4f),
+        FANG_TP(12,false,ParticleHelper.UNSTABLE_ENDER, 0.4F),
         START(20,false,null,1),
         BREAK(21,false,null,0),
         BREAK2(22,false,null,1),
@@ -2331,7 +2331,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             }
 
             if (this.spellTick == 30) {
-                EvocationBurstEntity echo = new EvocationBurstEntity(entity.level(), entity, entity.getSpellDamage(20), 13f);
+                EvocationBurstEntity echo = new EvocationBurstEntity(entity.level(), entity, entity.getSpellDamage(20), 13f,true,60);
                 echo.setPos(start.subtract(0, echo.getBbHeight() * .5f, 0));
                 level.addFreshEntity(echo);
             }
@@ -2362,19 +2362,28 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         }
 
         @Override
-        public boolean canContinueToUse() {
-            return super.canContinueToUse() && !entity.getAllIllusion().isEmpty();
+        public boolean canUse() {
+            return entity.getPreActType() == ActType.FANG;
         }
 
+        @Override
+        public boolean canContinueToUse() {
+            if (!entity.getIsIllusion()) {
+                boolean hasNoOtherIllusions = entity.getAllIllusion().isEmpty();
+                return !hasNoOtherIllusions;
+            }
+
+            return this.spellTick > 0 && cancelCastAnimation == null && entity.getActType() == getActType();
+        }
 
         @Override
         protected int getCastingTime()
         {
-            return 230;
+            return 200;
         }
 
         @Override
-        protected int getCastWarmupTime() {return 230;}
+        protected int getCastWarmupTime() {return 200;}
 
 
         @Override
@@ -2388,8 +2397,15 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         @Override
         public void tick() {
             super.tick();
-            Level level = entity.level();
-            if (this.spellTick % 40 == 0){
+            if (this.spellTick == 20){
+                Vec3 start = entity.position().add(0, entity.getEyeHeight(), 0);
+                EvocationBurstEntity echo = new EvocationBurstEntity(entity.level(), entity, entity.getSpellDamage(20), 7f , true, 60);
+                echo.setPos(start.subtract(0, echo.getBbHeight() * .5f, 0));
+                entity.level().addFreshEntity(echo);
+                entity.IllusionExplode();
+            }
+            if (this.spellTick % 20 == 0){
+                Level level = entity.level();
                 List<BlockPos> positions = entity.getPositionsAroundHome();
                 positions.forEach(p -> {
                     int rings = 4;
@@ -2401,19 +2417,48 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         for (int i = 0; i < fangs; i++) {
                             Vec3 spawn = center.add(new Vec3(0, 0, 1.5 * (r + 1)).yRot(entity.getYRot() * Mth.DEG_TO_RAD + ((6.281f / fangs) * i)));
                             spawn = Utils.moveToRelativeGroundLevel(level, spawn, 5);
-                            if (!level.getBlockState(BlockPos.containing(spawn).below()).isAir()) {
-                                ExExtendedEvokerFang fang = new ExExtendedEvokerFang(level, spawn.x, spawn.y, spawn.z, get2DAngle(center, spawn), r, entity, entity.getSpellDamage(12));
-                                level.addFreshEntity(fang);
-                            }
+                            ExExtendedEvokerFang fang = new ExExtendedEvokerFang(level, spawn.x, spawn.y, spawn.z, get2DAngle(center, spawn), r, entity, entity.getSpellDamage(12));
+                            level.addFreshEntity(fang);
                         }
                     }
+
                 });
 
             }
-
         }
 
+        @Override
+        public void stop() {
+            super.stop();
+            if (!entity.getIsIllusion()){
 
+                ServerLevel serverLevel = (ServerLevel)entity.level();
+                LivingEntity target = entity.getTarget();
+                BlockPos canUsePose = getRandomSpawnPositionWithoutSameType();
+                if (canUsePose != null) {
+                    NamelessWizardsEntity illusion = RegistryEntity.NAMELESS.get().create(entity.level());
+                    if (illusion != null) {
+                        illusion.setIsPhase2(entity.getIsPhase2());
+                        illusion.finalizeSpawn(serverLevel, entity.level().getCurrentDifficultyAt(illusion.getNowPos()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
+                        illusion.setNowPos(canUsePose);
+                        illusion.setHomePos(entity.getHomePos());
+                        if(target != null ) {
+                            illusion.setTarget(target);
+                        }
+                        illusion.setCustomBossIdentity(entity.getCustomBossIdentity());
+                        illusion.setPreActType(ActType.START);
+                        illusion.setExistence(entity.getExistence());
+                        illusion.setIsIllusion(true);
+                        illusion.setAlphaPercent(100);
+                        serverLevel.addFreshEntityWithPassengers(illusion);
+                        copyTeamToEntity(entity, illusion);
+                        entity.changeBody(illusion);
+                    }
+                }
+            }
+
+
+        }
 
         protected SoundEvent getSpellPrepareSound() {
             return SoundEvents.EVOKER_PREPARE_ATTACK;
@@ -2423,6 +2468,60 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         protected ActType getActType()
         {
             return ActType.FANG;
+        }
+    }
+
+    class FangTPSpellGoal extends GeoActGoal {
+
+        private FangTPSpellGoal(NamelessWizardsEntity ent,double globalCoolDown) {
+            super(ent,globalCoolDown);
+        }
+
+        public boolean canUse() {
+            return super.canUse();
+        }
+
+        @Override
+        protected int getCastingTime()
+        {
+            return 14;
+        }
+
+        @Override
+        protected int getCastWarmupTime() {return 14;}
+
+        @Override
+        public void tick() {
+            super.tick();
+            if (this.spellTick == 1) {
+                entity.setWhiteDown(5);
+            }
+        }
+
+        @Override
+        protected void castSpell() {
+            BlockPos spawnPos = entity.getHomePos();
+            if (spawnPos != null) {
+                var p = entity.getEyePosition();
+                MagicManager.spawnParticles(level(), ParticleHelper.UNSTABLE_ENDER, p.x, p.y, p.z, 25, 0.5, 0.5, 0.5, .18, true);
+                entity.setNowPos(spawnPos);
+                entity.playSound(SoundEvents.ENDERMAN_TELEPORT, 4.0F, 1.0F);
+            }
+        }
+        @Override
+        public void stop() {
+            super.stop();
+            cancelCastAnimation = ActType.FANG;
+        }
+
+        protected SoundEvent getSpellPrepareSound() {
+            return SoundEvents.EVOKER_CAST_SPELL;
+        }
+
+        @Override
+        protected ActType getActType()
+        {
+            return ActType.FANG_TP;
         }
     }
 
