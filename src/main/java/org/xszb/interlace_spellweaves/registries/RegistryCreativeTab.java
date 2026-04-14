@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 
 @Mod.EventBusSubscriber(modid = InterlaceSpellWeaves.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class RegistryCreativeTab {
+public class    RegistryCreativeTab {
     private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, InterlaceSpellWeaves.MODID);
 
     public static void register(IEventBus eventBus) {

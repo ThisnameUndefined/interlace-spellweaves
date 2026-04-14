@@ -64,8 +64,8 @@ public class ExExtendedEvokerFang extends EvokerFangs implements AntiMagicSuscep
         LivingEntity livingentity = this.getOwner();
         if (pTarget.isAlive() && !pTarget.isInvulnerable() && pTarget != livingentity) {
             var spell = SpellRegistry.FANG_STRIKE_SPELL.get();
-            if (getOwner() instanceof NamelessWizardsEntity ent && livingentity != this.getOwner()) {
-                ent.setHealthAttack(1f,livingentity);
+            if (livingentity instanceof NamelessWizardsEntity ent) {
+                ent.setHealthAttack(2f,pTarget);
             }
             DamageSources.applyDamage(pTarget, damage, spell.getDamageSource(this, getOwner()));
         }

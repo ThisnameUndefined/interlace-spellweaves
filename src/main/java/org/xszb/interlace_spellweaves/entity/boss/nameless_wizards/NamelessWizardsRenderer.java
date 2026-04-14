@@ -38,13 +38,13 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.SHOOT));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.TP));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.ILLUSION));
-        addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.FANG));
 
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.WIND));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.VEX));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.CREEPER));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.FIREWORK));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.SHOT_M));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.FANG));
 
 
         addRenderLayer(new NameLessWizardLayer.Shield(this,SHIELD_TEXTURE));

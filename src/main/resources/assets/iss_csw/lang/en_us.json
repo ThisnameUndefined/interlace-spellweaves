@@ -27,6 +27,8 @@
   "spell.iss_csw.conjure_refreshment.guide": "Creates a magical cookie whose nutritional value scales with your Spell Power!",
   "spell.iss_csw.chaos_strike": "Chaos Shooting",
   "spell.iss_csw.chaos_strike.guide": "Continuously launch random spell projectiles",
+  "spell.iss_csw.spellbreak_burst": "Spellbreak Burst",
+  "spell.iss_csw.spellbreak_burst.guide": "After a short charge, release a magical shockwave that dispels nearby spells and deals bonus damage , will deals more damage to undead enemies.",
 
   "spell.iss_csw.gust_pro": "Gust·Pro",
   "spell.iss_csw.gust_pro.guide": "Summons a powerful gust of wind that knocks back and damages entities in front of you. Entities that collide with blocks take additional damage.",
@@ -77,6 +79,7 @@
   "ui.iss_csw.lose_health": "%d LoseHp",
   "ui.iss_csw.nutrition": "Provided Nutrition: %d",
   "ui.iss_csw.chaos_strike": "Launch random spell projectiles",
+  "ui.iss_csw.undead_slayer": "Will deals more damage to undead enemies",
 
   "attribute.iss_csw.extra_protect_level":"Extra Protect Level",
   "attribute.iss_csw.extra_spell_level":"Extra Spell Level",
@@ -113,6 +116,7 @@
   "death.attack.iss_csw.hemovaporize": "%1$s's life essence has withered away.",
   "death.attack.iss_csw.pinning_stake": "%1$s was impaled by a wooden stake.",
   "death.attack.iss_csw.gust_pro": "%1$s got scattered by the wind",
+  "death.attack.iss_csw.spellbreak_burst": "%1$s was be shattered",
 
   "advancements.iss_csw.root.title": "Interlace SpellWeaves",
   "advancements.iss_csw.root.description": "Where the threads of magic intertwine",
