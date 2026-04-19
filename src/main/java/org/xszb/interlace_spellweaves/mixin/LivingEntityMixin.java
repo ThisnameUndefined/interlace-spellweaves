@@ -1,6 +1,5 @@
 package org.xszb.interlace_spellweaves.mixin;
 
-import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -22,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.xszb.interlace_spellweaves.api.magic.IMagicDataExtension;
 import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;

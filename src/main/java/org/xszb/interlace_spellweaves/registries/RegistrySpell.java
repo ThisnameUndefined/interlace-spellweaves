@@ -2,11 +2,8 @@ package org.xszb.interlace_spellweaves.registries;
 
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
-import io.redspace.ironsspellbooks.spells.NoneSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.spell.blood.Hemovaporize;
@@ -21,7 +18,6 @@ import org.xszb.interlace_spellweaves.spell.nature.FireflySeeker;
 import org.xszb.interlace_spellweaves.spell.nature.PinningStake;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class RegistrySpell {
 
@@ -69,6 +65,9 @@ public class RegistrySpell {
     public static final RegistryObject<AbstractSpell> CHAOS_STRIKE = registerSpell(new ChaosStrike());
 
     public static final RegistryObject<AbstractSpell> SPELL_BREAKER = registerSpell(new SpellbreakBurst());
+
+    public static final RegistryObject<AbstractSpell> ICE_PLATE = registerSpell(new IcePlate());
+
 
     public static List<AbstractSpell> getEnabledSpells() {
         return RegistrySpell.SPELLS.getEntries()

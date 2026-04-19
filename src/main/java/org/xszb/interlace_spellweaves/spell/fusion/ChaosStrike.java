@@ -9,7 +9,6 @@ import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
-import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.entity.spells.fireball.SmallMagicFireball;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.network.chat.Component;
@@ -119,13 +118,14 @@ public class ChaosStrike extends AbstractMixSpell {
     public float getSpellPower(int spellLevel, @Nullable Entity sourceEntity) {
 
         double entitySpellPowerModifier = 1;
-
+        double entitySchoolPowerModifier = (double)1.0F;
         float configPowerModifier = ((Double) SpellConfigManager.getSpellConfigValue(this, IronConfigParameters.POWER_MULTIPLIER)).floatValue();
         if (sourceEntity instanceof LivingEntity livingEntity) {
             entitySpellPowerModifier = (float) livingEntity.getAttributeValue(AttributeRegistry.SPELL_POWER.get());
+            entitySchoolPowerModifier = this.getSchoolType().getPowerFor(livingEntity);
         }
 
-        return (float) ((baseSpellPower + spellPowerPerLevel * (spellLevel - 1)) * entitySpellPowerModifier * configPowerModifier);
+        return (float) ((baseSpellPower + spellPowerPerLevel * (spellLevel - 1)) * entitySpellPowerModifier * entitySchoolPowerModifier * configPowerModifier);
     }
     //
     public void shootFireball(Level world, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {

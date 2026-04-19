@@ -29,6 +29,8 @@
   "spell.iss_csw.chaos_strike.guide": "连续发射随机法术射弹",
   "spell.iss_csw.spellbreak_burst": "破法震爆",
   "spell.iss_csw.spellbreak_burst.guide": "蓄力后释放法术震荡，驱散周围法术并造成伤害，对亡灵造成额外伤害",
+  "spell.iss_csw.ice_plate": "凝冰护甲",
+  "spell.iss_csw.ice_plate.guide": "提升护甲修正,受击会损失一部分",
 
 
   "spell.iss_csw.gust_pro": "呼啸之风·Pro",
@@ -43,6 +45,8 @@
   "effect.iss_csw.rime_veil.description": "期间隐身，下次攻击必定暴击",
   "effect.iss_csw.spell_improve": "法术迸发",
   "effect.iss_csw.spell_improve.description": "提升下一次释放的部分法术强度",
+  "effect.iss_csw.ice_plate": "凝冰护甲",
+  "effect.iss_csw.ice_plate.description": "提升护甲修正,受击会损失一部分",
 
   "entity.iss_csw.summoned_polar_bear": "召唤出的鞍座北极熊",
   "entity.iss_csw.frost_remains": "霜骸",
@@ -83,12 +87,16 @@
   "ui.iss_csw.nutrition": "提供的饱食度: %d",
   "ui.iss_csw.chaos_strike": "发射随机法术射弹",
   "ui.iss_csw.undead_slayer": "对不死生物造成更高伤害",
+  "ui.iss_csw.add_armor": "提升护甲:%d",
+  "ui.iss_csw.lose_armor": "受到攻击后减少",
 
   "attribute.iss_csw.extra_protect_level":"额外保护等级",
   "attribute.iss_csw.extra_spell_level":"额外法术等级",
   "attribute.iss_csw.reduce_armor": "护甲修正",
   "attribute.iss_csw.heal_mul": "治疗修正",
   "attribute.iss_csw.arrow_mul": "箭矢伤害修正",
+  "attribute.iss_csw.fusion_spell_power": "混合法术强度",
+  "attribute.iss_csw.fusion_magic_resist": "混合法术抗性",
 
   "tooltip.iss_csw.nameless_set.name": "套装效果:无名之人",
   "tooltip.iss_csw.nameless_set.desc": "同时穿戴所有无名术士系列装备后,开启法术护盾",

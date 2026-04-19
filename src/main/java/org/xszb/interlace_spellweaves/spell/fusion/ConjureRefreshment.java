@@ -9,7 +9,6 @@ import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.api.util.Utils;
-import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -100,16 +99,17 @@ public class ConjureRefreshment extends AbstractMixSpell {
 
         double entitySpellPowerModifier = 1;
         double additionalSpellPowerModifier = 1;
-
+        double entitySchoolPowerModifier = (double)1.0F;
         float configPowerModifier = ((Double) SpellConfigManager.getSpellConfigValue(this, IronConfigParameters.POWER_MULTIPLIER)).floatValue();
         if (sourceEntity instanceof LivingEntity livingEntity) {
             double entitySpellPower = livingEntity.getAttributeValue(AttributeRegistry.SPELL_POWER.get());
             entitySpellPowerModifier = (float) entitySpellPower;
             additionalSpellPowerModifier = (float) (entitySpellPower - 1) * 10 + 1;
+            entitySchoolPowerModifier = this.getSchoolType().getPowerFor(livingEntity);
         }
 
 
-        return (float) ((baseSpellPower + spellPowerPerLevel ) * entitySpellPowerModifier *  configPowerModifier * additionalSpellPowerModifier);
+        return (float) ((baseSpellPower + spellPowerPerLevel ) * entitySchoolPowerModifier * entitySpellPowerModifier *  configPowerModifier * additionalSpellPowerModifier);
     }
 
 }

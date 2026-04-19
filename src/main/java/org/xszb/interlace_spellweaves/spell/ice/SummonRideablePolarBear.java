@@ -8,8 +8,6 @@ import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.ICastDataSerializable;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.capabilities.magic.*;
-import io.redspace.ironsspellbooks.config.ServerConfigs;
-import io.redspace.ironsspellbooks.entity.mobs.SummonedPolarBear;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;

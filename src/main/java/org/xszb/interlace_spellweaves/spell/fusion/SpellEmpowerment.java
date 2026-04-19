@@ -95,15 +95,15 @@ public class SpellEmpowerment extends AbstractMixSpell {
     }
     @Override
     public float getSpellPower(int spellLevel, @Nullable Entity sourceEntity) {
-
         double entitySpellPowerModifier = 1;
-
+        double entitySchoolPowerModifier = (double)1.0F;
         float configPowerModifier = ((Double)SpellConfigManager.getSpellConfigValue(this, IronConfigParameters.POWER_MULTIPLIER)).floatValue();
         if (sourceEntity instanceof LivingEntity livingEntity) {
+            entitySchoolPowerModifier = this.getSchoolType().getPowerFor(livingEntity);
             entitySpellPowerModifier = (float) livingEntity.getAttributeValue(AttributeRegistry.SPELL_POWER.get()) / 2;
         }
 
-        return (float) ((baseSpellPower + spellPowerPerLevel * (spellLevel )) * entitySpellPowerModifier *  configPowerModifier);
+        return (float) ((baseSpellPower + spellPowerPerLevel * (spellLevel )) * entitySchoolPowerModifier * entitySpellPowerModifier *  configPowerModifier);
     }
 
 }

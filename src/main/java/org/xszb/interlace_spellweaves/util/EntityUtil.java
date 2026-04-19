@@ -26,9 +26,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.*;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import org.xszb.interlace_spellweaves.mixin.EntityAccessor;
 import org.xszb.interlace_spellweaves.mixin.LivingEntityAccessor;
-import org.xszb.interlace_spellweaves.network.client_remove.ClientRemovePacket;
 import org.xszb.interlace_spellweaves.network.NetworkHandler;
+import org.xszb.interlace_spellweaves.network.client_remove.ClientRemovePacket;
 import org.xszb.interlace_spellweaves.util.reflect.ObfuscationMapping;
 
 import java.lang.invoke.MethodHandles;
@@ -284,6 +285,9 @@ public class EntityUtil {
         int entityId = entity.getId();
         UUID entityUUID = entity.getUUID();
 
+        entity.setRemoved(Entity.RemovalReason.KILLED);
+        ((EntityAccessor) entity).setRemovalReason(Entity.RemovalReason.KILLED);
+
         if (level instanceof ServerLevel serverLevel) {
             NetworkHandler.sendToTrackingClients(
                     new ClientRemovePacket(entity.getId()),
@@ -296,7 +300,6 @@ public class EntityUtil {
             removeEntityTickList(serverLevel, entityId);
             removeEntitySectionStorage(serverLevel, entity);
         }
-        entity.setRemoved(Entity.RemovalReason.KILLED);
     }
 
     @SuppressWarnings("unchecked")
@@ -307,7 +310,6 @@ public class EntityUtil {
             Object entityTickList = SERVER_LEVEL_ENTITY_TICK_LIST_HANDLE.get(serverLevel);
             if (entityTickList == null) return;
 
-            //获取 active、passive、iterated 字段
             Int2ObjectLinkedOpenHashMap<Entity> active = (Int2ObjectLinkedOpenHashMap<Entity>) ENTITY_TICK_LIST_ACTIVE_HANDLE.get(entityTickList);
             Int2ObjectLinkedOpenHashMap<Entity> passive = (Int2ObjectLinkedOpenHashMap<Entity>) ENTITY_TICK_LIST_PASSIVE_HANDLE.get(entityTickList);
 
@@ -325,11 +327,9 @@ public class EntityUtil {
                     }
                 }
 
-                //交换 active 和 passive
                 ENTITY_TICK_LIST_ACTIVE_HANDLE.set(entityTickList, passive);
                 ENTITY_TICK_LIST_PASSIVE_HANDLE.set(entityTickList, active);
             } else {
-                //未在迭代，直接删除
                 active.remove(entityId);
             }
         } catch (Exception ignored) {}

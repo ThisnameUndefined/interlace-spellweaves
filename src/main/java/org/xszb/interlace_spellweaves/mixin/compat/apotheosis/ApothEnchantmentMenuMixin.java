@@ -1,4 +1,4 @@
-package org.xszb.interlace_spellweaves.mixin;
+package org.xszb.interlace_spellweaves.mixin.compat.apotheosis;
 
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import net.minecraft.world.inventory.EnchantmentMenu;
@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.xszb.interlace_spellweaves.item.EnchancedPearlItem;
+import org.xszb.interlace_spellweaves.mixin.EnchantmentMenuAccessor;
 
 import java.util.*;
 

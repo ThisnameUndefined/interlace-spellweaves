@@ -3,15 +3,16 @@ package org.xszb.interlace_spellweaves.entity.boss;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBossEventPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.BossEvent;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundBossEventPacket;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.BossEvent;
 
 public class ExtendedServerBossEvent extends BossEvent {
     private final Set<ServerPlayer> players = Sets.newHashSet();
