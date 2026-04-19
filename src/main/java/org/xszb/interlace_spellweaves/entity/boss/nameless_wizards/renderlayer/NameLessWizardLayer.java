@@ -13,9 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
-import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsRenderer;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.core.object.Color;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 

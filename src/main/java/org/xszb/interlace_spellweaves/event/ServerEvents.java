@@ -10,13 +10,17 @@ import io.redspace.ironsspellbooks.network.ClientboundSyncMana;
 import io.redspace.ironsspellbooks.setup.Messages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,9 +35,12 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -48,6 +55,7 @@ import org.xszb.interlace_spellweaves.api.registry.RegistryAttribute;
 import org.xszb.interlace_spellweaves.config.MainConfig;
 import org.xszb.interlace_spellweaves.dimension.PocketDimGenerator;
 import org.xszb.interlace_spellweaves.dimension.PocketDimSavedData;
+import org.xszb.interlace_spellweaves.effect.IMobEffectSetgrade;
 import org.xszb.interlace_spellweaves.enchantment.IConflictsEnchantment;
 import org.xszb.interlace_spellweaves.item.EnchancedPearlItem;
 import org.xszb.interlace_spellweaves.item.ShrivingStone;
@@ -137,6 +145,46 @@ public class ServerEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onDamage(LivingDamageEvent event) {
+        LivingEntity entity = event.getEntity();
+        MobEffect ice_plate = RegistryEffect.ICE_PLATE.get();
+        Level level = entity.level();
+        if (!level.isClientSide && entity.hasEffect(ice_plate)) {
+            MobEffectInstance instance = entity.getEffect(ice_plate);
+            if (instance != null) {
+                int currentLevel = instance.getAmplifier() + 1;
+                int decrease = Math.max(1, (int) (currentLevel * 0.10));
+                int newLevel = currentLevel - decrease - 1;
+
+                if (newLevel > 0) {
+                    ((IMobEffectSetgrade) instance).interlace_spellweaves$setNewAmplifier(entity, newLevel);
+                } else {
+                    entity.removeEffect(ice_plate);
+                }
+
+                level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                        SoundType.GLASS.getBreakSound(),
+                        SoundSource.NEUTRAL,
+                        1.0F, 1.2F);
+
+                if (level instanceof ServerLevel serverLevel) {
+                    BlockParticleOption particleData = new BlockParticleOption(
+                            ParticleTypes.BLOCK,
+                            Blocks.ICE.defaultBlockState()
+                    );
+
+                    serverLevel.sendParticles(
+                            particleData,
+                            entity.getX(), entity.getY() + entity.getBbHeight() * 0.5, entity.getZ(), // 在实体中心生成
+                            15,
+                            0.3, 0.5, 0.3,
+                            0.1
+                    );
+                }
+            }
+        }
+    }
     //套装效果
     @SubscribeEvent
     public static void onArmorChange(LivingEquipmentChangeEvent event) {

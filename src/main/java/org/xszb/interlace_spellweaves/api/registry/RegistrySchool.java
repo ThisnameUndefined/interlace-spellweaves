@@ -10,6 +10,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
+import org.xszb.interlace_spellweaves.damage.CSWDamageType;
 import org.xszb.interlace_spellweaves.util.ModTags;
 
 import static io.redspace.ironsspellbooks.api.registry.SchoolRegistry.SCHOOL_REGISTRY_KEY;
@@ -32,9 +33,9 @@ public class RegistrySchool {
             FUSION_RESOURCE,
             ModTags.FUSION_FOCUS,
             Component.translatable("school.iss_csw.fusion").withStyle(ChatFormatting.GOLD),
-            null,
-            null,
+            LazyOptional.of(RegistryAttribute.F_SPELL_POWER::get),
+            LazyOptional.of(RegistryAttribute.F_MAGIC_RESIST::get),
             LazyOptional.of(SoundRegistry.EVOCATION_CAST::get),
-            null
+            CSWDamageType.FUSION_MAGIC
     ));
 }

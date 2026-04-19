@@ -20,10 +20,6 @@ import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 public class RegistryCreativeTab {
     private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, InterlaceSpellWeaves.MODID);
 
-    public static void register(IEventBus eventBus) {
-        TABS.register(eventBus);
-    }
-
     public static final RegistryObject<CreativeModeTab> ITEM_TAB = TABS.register("spellweaves_item", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup." + InterlaceSpellWeaves.MODID + ".spellweaves_item_tab"))
             .displayItems((enabledFeatures, entries) -> {
@@ -88,4 +84,9 @@ public class RegistryCreativeTab {
                     });
         }
     }
+
+    public static void register(IEventBus eventBus) {
+        TABS.register(eventBus);
+    }
+
 }

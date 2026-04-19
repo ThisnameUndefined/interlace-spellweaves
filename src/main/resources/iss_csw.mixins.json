@@ -2,10 +2,10 @@
   "required": true,
   "minVersion": "0.8",
   "package": "org.xszb.interlace_spellweaves.mixin",
+  "plugin": "org.xszb.interlace_spellweaves.mixin.plugin.ModCompatMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "iss_csw.refmap.json",
   "mixins": [
-    "ApothEnchantmentMenuMixin",
     "BlockItemMixin",
     "ChunkMapAccessor",
     "EnchantmentMenuAccessor",
@@ -19,10 +19,12 @@
     "LivingEntityMixin",
     "MagicDataMixin",
     "MagicManagerMixin",
+    "MobEffectInstanceMixin",
     "NearestAttackableTargetGoalAccessor",
     "PlayerMixin",
     "ServerPlayerGameModeMixin",
-    "TrackedEntityAccessor"
+    "TrackedEntityAccessor",
+    "compat.apotheosis.ApothEnchantmentMenuMixin"
   ],
   "client": [
   ],

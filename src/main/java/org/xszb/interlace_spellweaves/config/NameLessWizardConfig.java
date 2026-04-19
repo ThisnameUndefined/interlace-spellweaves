@@ -5,7 +5,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
-import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 
 @Mod.EventBusSubscriber(modid = InterlaceSpellWeaves.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class NameLessWizardConfig {

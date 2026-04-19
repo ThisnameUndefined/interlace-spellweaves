@@ -36,6 +36,9 @@ public class RegistryAttribute {
     public static final RegistryObject<Attribute> HEAL_MUL = ATTRIBUTES.register("heal_mul", () -> (new MagicRangedAttribute("attribute.iss_csw.heal_mul", 1.0D, -1024.0D, 1000000.0D).setSyncable(true)));
     public static final RegistryObject<Attribute> ARROW_MUL = ATTRIBUTES.register("arrow_mul", () -> (new MagicRangedAttribute("attribute.iss_csw.arrow_mul", 1.0D, -1024.0D, 1000000.0D).setSyncable(true)));
 
+    public static final RegistryObject<Attribute> F_SPELL_POWER = ATTRIBUTES.register("fusion_spell_power", () -> (new MagicRangedAttribute("attribute.iss_csw.fusion_spell_power", 1.0D, 0.0D, 1000000.0D).setSyncable(true)));
+    public static final RegistryObject<Attribute> F_MAGIC_RESIST = ATTRIBUTES.register("fusion_magic_resist", () -> (new MagicRangedAttribute("attribute.iss_csw.fusion_magic_resist", 1.0D, 0.0D, 1000000.0D).setSyncable(true)));
+
 
 
     @SubscribeEvent

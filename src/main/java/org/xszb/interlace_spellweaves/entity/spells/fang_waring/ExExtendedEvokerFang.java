@@ -5,15 +5,10 @@ import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.mobs.AntiMagicSusceptible;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.EvokerFangs;
 import net.minecraft.world.level.Level;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
-import org.xszb.interlace_spellweaves.mixin.LivingEntityAccessor;
-
-import java.util.Map;
 
 public class ExExtendedEvokerFang extends EvokerFangs implements AntiMagicSusceptible {
 

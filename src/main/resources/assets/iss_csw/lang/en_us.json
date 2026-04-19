@@ -29,7 +29,8 @@
   "spell.iss_csw.chaos_strike.guide": "Continuously launch random spell projectiles",
   "spell.iss_csw.spellbreak_burst": "Spellbreak Burst",
   "spell.iss_csw.spellbreak_burst.guide": "After a short charge, release a magical shockwave that dispels nearby spells and deals bonus damage , will deals more damage to undead enemies.",
-
+  "spell.iss_csw.ice_plate": "Ice Plate",
+  "spell.iss_csw.ice_plate.guide": "Increases Armor Modifier, but some is lost when attacked.",
 
   "spell.iss_csw.gust_pro": "Gust·Pro",
   "spell.iss_csw.gust_pro.guide": "Summons a powerful gust of wind that knocks back and damages entities in front of you. Entities that collide with blocks take additional damage.",
@@ -43,6 +44,8 @@
   "effect.iss_csw.rime_veil.description": "Conjure a dense mist that grants true invisibility. Your first melee attack after breaking invisibility is a guaranteed critical hit",
   "effect.iss_csw.spell_improve": "Spell Empowerment",
   "effect.iss_csw.spell_improve.description": "improve you cast next spell's level",
+  "effect.iss_csw.ice_plate": "Ice Plate",
+  "effect.iss_csw.ice_plate.description": "Increases Armor Modifier, but some is lost when attacked.",
 
   "entity.iss_csw.summoned_polar_bear": "Summoned Saddle Polar Bear",
   "entity.iss_csw.frost_remains": "Frost remains",
@@ -81,12 +84,16 @@
   "ui.iss_csw.nutrition": "Provided Nutrition: %d",
   "ui.iss_csw.chaos_strike": "Launch random spell projectiles",
   "ui.iss_csw.undead_slayer": "Will deals more damage to undead enemies",
+  "ui.iss_csw.add_armor": "Improved Armor:%d",
+  "ui.iss_csw.lose_armor": "Will decrease after attacked",
 
   "attribute.iss_csw.extra_protect_level":"Extra Protect Level",
   "attribute.iss_csw.extra_spell_level":"Extra Spell Level",
   "attribute.iss_csw.reduce_armor": "Armor Modifier",
   "attribute.iss_csw.heal_mul": "Healing Multiplier",
   "attribute.iss_csw.arrow_mul": "Arrow Damage Multiplier",
+  "attribute.iss_csw.fusion_spell_power": "Fusion Spell Power",
+  "attribute.iss_csw.fusion_magic_resist": "Fusion Magic Resist",
 
   "tooltip.iss_csw.nameless_set.name": "Set effect:The Nameless",
   "tooltip.iss_csw.nameless_set.desc": "Equip all Nameless gear to activate a Mana Shield",

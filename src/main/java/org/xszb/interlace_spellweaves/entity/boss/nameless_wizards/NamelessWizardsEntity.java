@@ -9,7 +9,6 @@ import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.entity.mobs.AntiMagicSusceptible;
 import io.redspace.ironsspellbooks.entity.spells.EchoingStrikeEntity;
-import io.redspace.ironsspellbooks.entity.spells.ExtendedEvokerFang;
 import io.redspace.ironsspellbooks.entity.spells.eldritch_blast.EldritchBlastVisualEntity;
 import io.redspace.ironsspellbooks.network.ClientboundEntityEvent;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
@@ -101,6 +100,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
     private static final EntityDataAccessor<BlockPos> NOW_POS = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<Boolean> IS_ILLUSION = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_PHASE_2 = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> CAN_BE_LOCK = SynchedEntityData.defineId(NamelessWizardsEntity.class, EntityDataSerializers.BOOLEAN);
 
     private static final BossbarManager.BossbarSprite BOSSBAR_SPRITE = new BossbarManager.BossbarSprite(InterlaceSpellWeaves.id("boss_bars/nameless_bossbar1"), 210, 29, 17, -8);
 
@@ -152,7 +152,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         this.goalSelector.addGoal(5, new ComeBackSpellGoal(this, NameLessWizardConfig.comeBackInt));
         this.goalSelector.addGoal(5, new StartGeoGoal(this, NameLessWizardConfig.startGeoInt));
         this.goalSelector.addGoal(5, new BreakGeoGoal(this, NameLessWizardConfig.breakGeoInt));
-        this.goalSelector.addGoal(5,new FangGoal(this,0));
+        this.goalSelector.addGoal(5,new FangTPSpellGoal(this,0));
         this.goalSelector.addGoal(5,new CloneSpellGoal(this,0));
         this.goalSelector.addGoal(5,new BreakPhaseGoal(this,0));
         this.goalSelector.addGoal(5,new ChangePhaseGoal(this,0));
@@ -175,6 +175,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         this.entityData.define(NOW_POS, BlockPos.ZERO);
         this.entityData.define(IS_ILLUSION, false);
         this.entityData.define(IS_PHASE_2, false);
+        this.entityData.define(CAN_BE_LOCK, false);
         this.entityData.define(DATA_EXISTENCE,0f);;
     }
 
@@ -319,12 +320,9 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             this.level().addFreshEntity(firework);
             firework.shoot(0, 0, 0, 0, 0);
             tar.die(SpellRegistry.FIRECRACKER_SPELL.get().getDamageSource(this, this));
-
         }
         if (this.getIsAntiCheatMode() && !tar.isDeadOrDying() && !(tar instanceof Player)){
-            EntityAccessor entityAccessor = (EntityAccessor)tar;
-            entityAccessor.setRemovalReason(RemovalReason.KILLED);
-            entityAccessor.getLevelCallback().onRemove(RemovalReason.KILLED);
+            EntityUtil.forceRemoveEntity(tar.level(),tar);
         }
     }
 
@@ -341,12 +339,9 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
             this.level().addFreshEntity(firework);
             firework.shoot(0, 0, 0, 0, 0);
             tar.die(SpellRegistry.FIRECRACKER_SPELL.get().getDamageSource(this, this));
-
         }
         if (this.getIsAntiCheatMode() && !tar.isDeadOrDying() && !(tar instanceof Player)){
-            EntityAccessor entityAccessor = (EntityAccessor)tar;
-            entityAccessor.setRemovalReason(RemovalReason.KILLED);
-            entityAccessor.getLevelCallback().onRemove(RemovalReason.KILLED);
+            EntityUtil.forceRemoveEntity(tar.level(),tar);
         }
     }
 
@@ -440,6 +435,21 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         return available;
     }
 
+    public boolean IsHomePosCanUse() {
+        boolean result = true;
+        BlockPos pos = this.getHomePos();
+        AABB checkArea = new AABB(pos).inflate(2);
+        List<NamelessWizardsEntity> others = this.level().getEntitiesOfClass(
+                NamelessWizardsEntity.class,
+                checkArea,
+                e -> true
+        );
+        if (!others.isEmpty()) {
+            result = false;
+        }
+        return  result;
+    }
+
     public List<NamelessWizardsEntity> getAllIllusion(boolean isAll) {
         AABB checkArea = new AABB(this.getHomePos()).inflate(30);
         return this.level().getEntitiesOfClass(
@@ -485,12 +495,11 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
         compound.putBoolean("is_Illusion", getIsIllusion());
         compound.putBoolean("is_phase2", getIsPhase2());
+        compound.putBoolean("can_be_no_lock", canBeNoLock());
         if (this.getActType() != ActType.DEAD) {
             compound.putFloat("Health", this.getMaxHealth());
         }
-        if (this.BossIdentity != null) {
-            compound.putUUID("CustomBossIdentity", this.BossIdentity);
-        }
+        compound.putUUID("CustomBossIdentity", this.BossIdentity);
     }
 
     @Override
@@ -507,9 +516,8 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
         this.setIsIllusion(compound.getBoolean("is_Illusion"));
         this.setIsPhase2(compound.getBoolean("is_phase2"));
-        if (this.BossIdentity == null) {
-            this.setCustomBossIdentity(compound.getUUID("CustomBossIdentity"));
-        }
+        this.setCanBeNoLock(compound.getBoolean("can_be_no_lock"));
+        this.setCustomBossIdentity(compound.getUUID("CustomBossIdentity"));
 
         super.readAdditionalSaveData(compound);
 
@@ -645,7 +653,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
 
     @Override
     public void die(DamageSource damageSource) {
-        if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, damageSource)) return;
+        net.minecraftforge.common.ForgeHooks.onLivingDeath(this, damageSource);
         if (!this.isRemoved() && !this.dead && !this.getIsAntiCheatMode()) {
             Entity entity = damageSource.getEntity();
             LivingEntity livingentity = this.getKillCredit();
@@ -794,15 +802,28 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         return this.getIsPhase2()?Component.literal("???"):this.getDisplayName();
     }
 
+    public boolean canBeNoLock() {
+        return this.entityData.get(CAN_BE_LOCK) ;
+    }
+
+    public void setCanBeNoLock(boolean pCanBeLock) {
+        this.entityData.set(CAN_BE_LOCK, pCanBeLock);
+    }
+
+
+    @Override
+    public boolean isAlive() {
+        if (this.getIsIllusion()) return this.canBeNoLock();
+        return !this.getCanKill();
+    }
+
     @Override
     public @NotNull Vec3 position() {
-        if (this.getCanKill()) return super.position();
         return this.getNowPos().getCenter().add(0,-0.5,0);
     }
 
     @Override
     public @NotNull ChunkPos chunkPosition() {
-        if (this.getCanKill()) return super.chunkPosition();
         return new ChunkPos(this.getNowPos());
     }
 
@@ -1000,9 +1021,9 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.FOLLOW_RANGE, 50.0D)
                 .add(Attributes.MAX_HEALTH, 160)
-                .add(Attributes.ARMOR, 7)
-                .add(Attributes.ARMOR_TOUGHNESS, 7)
-                .add(RegistryAttribute.EX_PROTECT_LEVEL.get(), 7)
+                .add(Attributes.ARMOR, 9)
+                .add(Attributes.ARMOR_TOUGHNESS, 9)
+                .add(RegistryAttribute.EX_PROTECT_LEVEL.get(), 9)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
 
@@ -1162,7 +1183,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                 new SpellWeight(ActType.CREEPER, 30, e -> true),
                 new SpellWeight(ActType.COMEBACK, 70, e -> !e.getIsIllusion() && e.getTarget() != null && e.getTarget().position().distanceTo(e.getHomePos().getCenter()) > 25),
                 new SpellWeight(ActType.SHOT_M, 50, e -> true),
-                new SpellWeight(ActType.FANG, 10, e ->!e.getAllIllusion().isEmpty() && e.getAllIllusion(true).stream().noneMatch(entity -> entity.getPreActType() == ActType.FANG || entity.getActType() == ActType.FANG)),
+                new SpellWeight(ActType.FANG_TP, 5, e ->!e.getAllIllusion().isEmpty() && !e.getIsIllusion() && e.IsHomePosCanUse()),
                 new SpellWeight(ActType.TP, 20, e -> true),
                 new SpellWeight(ActType.TP, 20, NamelessWizardsEntity::getIsIllusion),
                 new SpellWeight(ActType.WIND,  40, e -> e.getTarget() != null && e.distanceTo(e.getTarget()) < 8 ),
@@ -2058,6 +2079,7 @@ public class NamelessWizardsEntity extends UnRemoveBossEntity implements Enemy, 
                         illusion.setPreActType(ActType.START);
                         illusion.setExistence(entity.getExistence());
                         illusion.setIsIllusion(true);
+                        illusion.setCanBeNoLock(illusion.getRandom().nextBoolean());
                         illusion.setAlphaPercent(100);
                         illusion.finalLimit = entity.finalLimit;
                         EntList.add(illusion);

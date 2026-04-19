@@ -2,7 +2,6 @@ package org.xszb.interlace_spellweaves.registries;
 
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
-import io.redspace.ironsspellbooks.spells.NoneSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -76,6 +75,8 @@ public class RegistrySpell {
     public static final RegistryObject<AbstractSpell> CHAOS_STRIKE = registerSpell(new ChaosStrike());
 
     public static final RegistryObject<AbstractSpell> SPELL_BREAKER = registerSpell(new SpellbreakBurst());
+
+    public static final RegistryObject<AbstractSpell> ICE_PLATE = registerSpell(new IcePlate());
 
     public static void register(IEventBus eventBus) {
         SPELLS.register(eventBus);

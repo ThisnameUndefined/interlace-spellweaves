@@ -18,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.renderlayer.NameLessWizardLayer;
-import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.core.object.Color;
 
 import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.EVASION_TEXTURE;
