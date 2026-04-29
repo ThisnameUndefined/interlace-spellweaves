@@ -17,6 +17,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
+import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import org.xszb.interlace_spellweaves.registries.RegistrySpell;
 
@@ -67,6 +68,9 @@ public class IceBurstEntity extends AoeEntity {
                     if (distanceSqr < explosionRadiusSqr && canHitEntity(entity) && Utils.hasLineOfSight(level(), losCenter, entity.getBoundingBox().getCenter(), true)) {
                         double p = Mth.clamp((1 - distanceSqr / explosionRadiusSqr) + .4f, 0, 1);
                         float damage = (float) (this.damage * p);
+                        if (this.getOwner() instanceof NamelessWizardsEntity ent && entity instanceof LivingEntity entity1){
+                            ent.setHealthAttack(3f,entity1);
+                        }
                         DamageSources.applyDamage(entity, damage, RegistrySpell.CHARGE_RAY_OF_FROST_SPELL.get().getDamageSource(this, getOwner()));
                     }
                 }

@@ -99,6 +99,7 @@ public class SummonNamelessWizards extends Entity {
         if (illusion != null) {
             illusion.setNowPos(this.blockPosition());
             illusion.setHomePos(this.blockPosition());
+            illusion.setNeedIllusion(true);
             illusion.setPreActType(NamelessWizardsEntity.ActType.START);
             illusion.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(this.blockPosition()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
             illusion.setAlphaPercent(100);

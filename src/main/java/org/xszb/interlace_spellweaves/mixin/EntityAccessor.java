@@ -19,9 +19,6 @@ public interface EntityAccessor {
     @Accessor("chunkPosition")
     void setChunkPos(ChunkPos chunkPos);
 
-    @Invoker("setLevelCallback")
-    void setLevelCallback(EntityInLevelCallback levelCallback);
-
     @Accessor(value = "isAddedToWorld",remap = false)
     void setIsAddedToWorld(boolean added);
 }

@@ -52,10 +52,12 @@ import org.xszb.interlace_spellweaves.dimension.PocketDimGenerator;
 import org.xszb.interlace_spellweaves.dimension.PocketDimSavedData;
 import org.xszb.interlace_spellweaves.effect.IMobEffectSetgrade;
 import org.xszb.interlace_spellweaves.enchantment.IConflictsEnchantment;
+import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.NamelessWizardsEntity;
 import org.xszb.interlace_spellweaves.item.EnchancedPearlItem;
 import org.xszb.interlace_spellweaves.item.ShrivingStone;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 import org.xszb.interlace_spellweaves.registries.RegistryEffect;
+import org.xszb.interlace_spellweaves.registries.RegistryEntity;
 import org.xszb.interlace_spellweaves.registries.RegistrySpell;
 import org.xszb.interlace_spellweaves.spell.evocation.MarkedShot;
 
@@ -181,8 +183,19 @@ public class ServerEvents {
     public static void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             ResourceKey<Level> currentDim = player.level().dimension();
+            ServerLevel level = player.serverLevel();
             if (currentDim.equals(POCKET_DIMENSION)) {
                 event.setCanceled(true);
+
+                PocketDimSavedData data = PocketDimSavedData.get(level);
+                if (isBossPresent(level)) data.addDeath();
+
+                boolean wizardleave = data.getDeathCount() >= 3 && level.players().size() <= 1;
+
+                if (wizardleave) {
+                    clearBossInDimension(level);
+                    data.resetDeathCount();
+                }
 
                 player.setHealth(player.getMaxHealth());
                 player.getFoodData().setFoodLevel(20);
@@ -198,15 +211,30 @@ public class ServerEvents {
                 }
 
                 player.teleportTo(respawnLevel, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, player.getYRot(), player.getXRot());
+                player.resetFallDistance();
 
                 player.displayClientMessage(
-                        Component.translatable("ui.iss_csw.nameless")
+                        Component.translatable(wizardleave?"ui.iss_csw.nameless_leave":"ui.iss_csw.nameless")
                                 .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC),
                         true
                 );
 
             }
         }
+    }
+
+    private static boolean isBossPresent(ServerLevel level) {
+        return !level.getEntities(RegistryEntity.NAMELESS.get(), Entity::isAlive).isEmpty();
+    }
+
+    private static void clearBossInDimension(ServerLevel level) {
+        level.getEntities().getAll().forEach(entity -> {
+            if (entity instanceof NamelessWizardsEntity ent) {
+                ent.setCanDie(true);
+                ent.setCanKill(true);
+                ent.remove(Entity.RemovalReason.DISCARDED);
+            }
+        });
     }
 
     //附魔这块

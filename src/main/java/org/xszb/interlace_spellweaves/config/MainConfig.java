@@ -25,7 +25,20 @@ public class MainConfig {
             .comment("spell empowerment will not effect these spells")
             .defineList(
                     "no_spell_empowerment",
-                    Arrays.asList("irons_spellbooks:haste","irons_spellbooks:oakskin","irons_spellbooks:heartstop","irons_spellbooks:fortify","traveloptics:shadowed_miasma","traveloptics:vigor_siphon","traveloptics:lingering_strain","traveloptics:floodgate","irons_spellbooks:blight","irons_spellbooks:spider_aspect","iss_csw:spell_empowerment"),
+                    Arrays.asList(
+                            "irons_spellbooks:charge",
+                            "irons_spellbooks:haste",
+                            "irons_spellbooks:oakskin",
+                            "irons_spellbooks:heartstop",
+                            "irons_spellbooks:fortify",
+                            "traveloptics:shadowed_miasma",
+                            "traveloptics:vigor_siphon",
+                            "traveloptics:lingering_strain",
+                            "traveloptics:floodgate",
+                            "irons_spellbooks:blight",
+                            "irons_spellbooks:spider_aspect",
+                            "iss_csw:spell_empowerment"
+                    ),
                     element -> element instanceof String && !((String) element).isEmpty()
             );
 

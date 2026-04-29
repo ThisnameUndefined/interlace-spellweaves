@@ -21,7 +21,7 @@ public enum ArmorMaterials implements IronsExtendedArmorMaterial {
 
     NAMELESS("nameless", 325, makeArmorMap(4, 7, 6, 2), 35, SoundEvents.ARMOR_EQUIP_LEATHER, 4.0F, 0.15F, () -> Ingredient.of(Items.EMERALD), Map.of(
             AttributeRegistry.MAX_MANA.get(), new AttributeModifier("Max Mana", 150, AttributeModifier.Operation.ADDITION),
-            AttributeRegistry.EVOCATION_SPELL_POWER.get(), new AttributeModifier("Evoke Spell", .16, AttributeModifier.Operation.MULTIPLY_TOTAL),
+            AttributeRegistry.EVOCATION_SPELL_POWER.get(), new AttributeModifier("Evoke Spell", .13, AttributeModifier.Operation.MULTIPLY_TOTAL),
             AttributeRegistry.ICE_SPELL_POWER.get(), new AttributeModifier("Ice Spell", .09, AttributeModifier.Operation.MULTIPLY_TOTAL)
 
     ));

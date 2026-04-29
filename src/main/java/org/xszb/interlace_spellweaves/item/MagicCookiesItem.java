@@ -53,6 +53,7 @@ public class MagicCookiesItem extends Item {
             tooltip.add(Component.translatable("tooltip.iss_csw.magic_cookies.no_magic")
                     .withStyle(ChatFormatting.GRAY));
         }
+        tooltip.add(Component.translatable("ui.iss_csw.can_eat").withStyle(ChatFormatting.AQUA));
         super.appendHoverText(stack, level, tooltip, flag);
     }
 

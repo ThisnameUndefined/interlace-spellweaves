@@ -16,10 +16,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
-import org.xszb.interlace_spellweaves.item.EnchancedPearlItem;
-import org.xszb.interlace_spellweaves.item.HighEvokerSpellBook;
-import org.xszb.interlace_spellweaves.item.MagicCookiesItem;
-import org.xszb.interlace_spellweaves.item.ShrivingStone;
+import org.xszb.interlace_spellweaves.item.*;
 import org.xszb.interlace_spellweaves.item.armor.NamelessArmorItem;
 
 import java.util.Collection;
@@ -98,6 +95,9 @@ public class RegistryItem {
             () -> new MagicCookiesItem(new Item.Properties()
                     .rarity(Rarity.RARE)
                     .food(MagicCookiesItem.DEFAULT_COOKIE)));
+
+    public static final RegistryObject<Item> GUDIN_DAO = ITEMS.register("gu_ding_saber",() -> new GuDingDao(new Item.Properties().rarity(Rarity.RARE)));
+
 
     public static Collection<RegistryObject<Item>> getItems() {
         return ITEMS.getEntries();

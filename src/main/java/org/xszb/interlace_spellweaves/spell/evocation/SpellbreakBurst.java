@@ -54,7 +54,7 @@ public class SpellbreakBurst  extends AbstractMixSpell {
     public SpellbreakBurst() {
         this.manaCostPerLevel = 8;
         this.baseSpellPower = 5;
-        this.spellPowerPerLevel = 2;
+        this.spellPowerPerLevel = 1;
         this.castTime = 30;
         this.baseManaCost = 30;
     }

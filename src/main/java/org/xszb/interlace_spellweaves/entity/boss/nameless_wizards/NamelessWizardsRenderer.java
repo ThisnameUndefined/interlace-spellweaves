@@ -10,14 +10,17 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.xszb.interlace_spellweaves.InterlaceSpellWeaves;
 import org.xszb.interlace_spellweaves.entity.boss.nameless_wizards.renderlayer.NameLessWizardLayer;
+import org.xszb.interlace_spellweaves.registries.RegistryEffect;
 import software.bernie.geckolib.core.object.Color;
 
 import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.EVASION_TEXTURE;
@@ -38,6 +41,7 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.SHOOT));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.TP));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.ILLUSION));
+        addRenderLayer(new NameLessWizardLayer.Geo(this,EVASION_TEXTURE, NamelessWizardsEntity.ActType.ARMOR));
 
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.WIND));
         addRenderLayer(new NameLessWizardLayer.Geo(this,EVOKE_TEXTURE, NamelessWizardsEntity.ActType.VEX));
@@ -95,27 +99,28 @@ public class NamelessWizardsRenderer extends AbstractSpellCastingMobRenderer {
     @Override
     public void render(AbstractSpellCastingMob entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-        if (entity instanceof NamelessWizardsEntity ent && ent.getActType().handparticle != null) {
+        if (partialTick < 0.4f){
+            if (entity instanceof NamelessWizardsEntity ent && ent.getActType().handparticle != null) {
 
-            this.getGeoModel().getBone("body").ifPresent((rootBone) -> {
-                rootBone.getChildBones().forEach(bone -> {
-                    if (bone.getName().equals("right_arm") || bone.getName().equals("left_arm")) {
-                        if ((Math.abs(bone.getRotationVector().x) + Math.abs(bone.getRotationVector().y) + Math.abs(bone.getRotationVector().z)) < 0.5) return;
-                        bone.getChildBones().forEach(bone2->{
-                            if (bone2.getName().equals("rightItem") || bone2.getName().equals("bipedHandLeft")) {
-                                Vector3d pos = bone2.getWorldPosition();
-                                double d0 = ent.getRandom().nextGaussian() * 0.07D;
-                                double d1 = ent.getRandom().nextGaussian() * 0.07D;
-                                double d2 = ent.getRandom().nextGaussian() * 0.07D;
+                this.getGeoModel().getBone("body").ifPresent((rootBone) -> {
+                    rootBone.getChildBones().forEach(bone -> {
+                        if (bone.getName().equals("right_arm") || bone.getName().equals("left_arm")) {
+                            if ((Math.abs(bone.getRotationVector().x) + Math.abs(bone.getRotationVector().y) + Math.abs(bone.getRotationVector().z)) < 0.5) return;
+                            bone.getChildBones().forEach(bone2->{
+                                if (bone2.getName().equals("rightItem") || bone2.getName().equals("bipedHandLeft")) {
+                                    Vector3d pos = bone2.getWorldPosition();
+                                    double d0 = ent.getRandom().nextGaussian() * 0.07D;
+                                    double d1 = ent.getRandom().nextGaussian() * 0.07D;
+                                    double d2 = ent.getRandom().nextGaussian() * 0.07D;
 
-                                entity.level().addParticle(ent.getActType().handparticle,true, pos.x ,pos.y ,pos.z,  d0, d1, d2);
-                            }
-                        });
-                    }
+                                    entity.level().addParticle(ent.getActType().handparticle,true, pos.x ,pos.y ,pos.z,  d0, d1, d2);
+                                }
+                            });
+                        }
+                    });
                 });
-            });
+            }
         }
-
     }
 
     @Override

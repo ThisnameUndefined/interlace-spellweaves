@@ -33,18 +33,18 @@ public class FireflySeeker extends AbstractMixSpell {
     }
 
     private final DefaultConfig defaultConfig = new DefaultConfig()
-            .setMinRarity(SpellRarity.RARE)
+            .setMinRarity(SpellRarity.EPIC)
             .setSchoolResource(SchoolRegistry.NATURE_RESOURCE)
             .setMaxLevel(8)
-            .setCooldownSeconds(12)
+            .setCooldownSeconds(18)
             .build();
 
     public FireflySeeker() {
-        this.manaCostPerLevel = 2;
+        this.manaCostPerLevel = 9;
         this.baseSpellPower = 3;
-        this.spellPowerPerLevel = 2;
+        this.spellPowerPerLevel = 1;
         this.castTime = 30;
-        this.baseManaCost = 15;
+        this.baseManaCost = 25;
     }
 
     @Override

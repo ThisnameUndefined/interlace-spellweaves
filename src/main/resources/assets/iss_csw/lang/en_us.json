@@ -69,6 +69,8 @@
   "block.iss_csw.spell_forge": "Spell Amalgamator",
   "block.iss_csw.altar_of_nameless": "Altar Of Nameless",
 
+  "item.iss_csw.gu_ding_saber": "Gu Ding Saber",
+
   "itemGroup.iss_csw.spellweaves_item_tab":"Interlace SpellWeaves",
   "itemGroup.iss_csw.spellbook_scrolls_tab":"Interlace SpellWeaves·Spell",
 
@@ -80,6 +82,7 @@
   "ui.iss_csw.altar_cooling": "altar remains silent",
   "ui.iss_csw.tp": "Teleport to an unknown space",
   "ui.iss_csw.nameless": "You have been teleported back",
+  "ui.iss_csw.nameless_leave": "The Nameless Wizard has departed in disappointment.",
   "ui.iss_csw.arrow_damage": " + Arrow Damage",
   "ui.iss_csw.lose_health": "%d LoseHp",
   "ui.iss_csw.nutrition": "Provided Nutrition: %d",
@@ -87,6 +90,7 @@
   "ui.iss_csw.undead_slayer": "Will deals more damage to undead enemies",
   "ui.iss_csw.add_armor": "Improved Armor:%d",
   "ui.iss_csw.lose_armor": "Will decrease after attacked",
+  "ui.iss_csw.can_eat": "Edible even when hunger is full",
 
   "attribute.iss_csw.extra_protect_level":"Extra Protect Level",
   "attribute.iss_csw.extra_spell_level":"Extra Spell Level",
@@ -115,6 +119,8 @@
   "tooltip.iss_csw.magic_cookies.nutrition": "Nutrition: %s",
   "tooltip.iss_csw.magic_cookies.saturation": "Saturation: %s",
   "tooltip.iss_csw.magic_cookies.no_magic": "yet to be infused with magic...",
+
+  "tooltip.iss_csw.clearentity": "remove the attacked entity",
 
 
   "msg.iss_csw.nameless": "A mysterious force prevents you.",

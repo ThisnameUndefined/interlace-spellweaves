@@ -47,7 +47,7 @@ public class BarrageVolley extends AbstractMixSpell {
 
     public BarrageVolley() {
         this.manaCostPerLevel = 1;
-        this.baseSpellPower = 6;
+        this.baseSpellPower = 4;
         this.spellPowerPerLevel = 1;
         this.castTime = 60;
         this.baseManaCost = 5;

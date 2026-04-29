@@ -26,9 +26,10 @@ public class HighEvokerSpellBook extends UniqueSpellBook {
                 new SpellDataRegistryHolder(RegistrySpell.CREPER_CHAIN,10)
         ), 7);
         this.withSpellbookAttributes(new AttributeContainer[]{
-                new AttributeContainer(AttributeRegistry.SPELL_POWER, (double).15F, AttributeModifier.Operation.MULTIPLY_TOTAL),
+                new AttributeContainer(AttributeRegistry.SPELL_POWER, (double).09F, AttributeModifier.Operation.MULTIPLY_TOTAL),
+                new AttributeContainer(AttributeRegistry.EVOCATION_SPELL_POWER, (double).09F, AttributeModifier.Operation.MULTIPLY_TOTAL),
                 new AttributeContainer(AttributeRegistry.MAX_MANA, (double)200.0F, AttributeModifier.Operation.ADDITION),
-                new AttributeContainer(RegistryAttribute.EX_SPELL_LEVEL, (double)3.0F, AttributeModifier.Operation.ADDITION)
+                new AttributeContainer(RegistryAttribute.EX_SPELL_LEVEL, (double)2.0F, AttributeModifier.Operation.ADDITION)
         });
     }
 

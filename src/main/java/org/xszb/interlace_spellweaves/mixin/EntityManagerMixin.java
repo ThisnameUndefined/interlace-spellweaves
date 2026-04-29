@@ -18,7 +18,6 @@ public abstract class EntityManagerMixin<T extends EntityAccess> {
     @Inject(method = "stopTracking", at = @At("HEAD"), cancellable = true)
     private void preventStopTracking(T entity, CallbackInfo ci) {
         if (entity instanceof UnRemoveBossEntity ent && !ent.getCanKill()) {
-            Entity.RemovalReason reason = ent.getRemovalReason();
             if (canDiscard(ent)){
                 return;
             }
@@ -31,8 +30,6 @@ public abstract class EntityManagerMixin<T extends EntityAccess> {
     @Inject(method = "stopTicking", at = @At("HEAD"), cancellable = true)
     private void preventStopTicking(T entity, CallbackInfo ci) {
         if (entity instanceof UnRemoveBossEntity ent && !ent.getCanKill()) {
-            Entity.RemovalReason reason = ent.getRemovalReason();
-
             if (canDiscard(ent)){
                 return;
             }

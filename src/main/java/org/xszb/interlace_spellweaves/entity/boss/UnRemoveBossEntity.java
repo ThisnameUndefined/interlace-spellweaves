@@ -38,8 +38,4 @@ public class UnRemoveBossEntity extends BossEntity {
 
     public boolean getIsAntiCheatMode(){return this.entityData.get(YOU_CHEAT);}
 
-    @Override
-    public boolean isAlive() {
-        return !this.getCanKill();
-    }
 }

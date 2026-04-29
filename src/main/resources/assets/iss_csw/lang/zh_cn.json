@@ -68,6 +68,9 @@
   "item.iss_csw.high_evoker_spell_book": "唤魔原典",
   "item.iss_csw.forsaken_grimoire": "受遗旧典",
 
+
+  "item.iss_csw.gu_ding_saber": "古锭刀",
+
   "block.iss_csw.spell_forge": "奥术交错台",
   "block.iss_csw.altar_of_nameless": "无名祭坛",
 
@@ -83,12 +86,14 @@
   "ui.iss_csw.altar_cooling": "祭坛没有反应",
   "ui.iss_csw.tp": "传送到未知空间",
   "ui.iss_csw.nameless": "你被传送了回去",
+  "ui.iss_csw.nameless_leave": "无名术士失望的离开了",
   "ui.iss_csw.lose_health": "%d 体力流失",
   "ui.iss_csw.nutrition": "提供的饱食度: %d",
   "ui.iss_csw.chaos_strike": "发射随机法术射弹",
   "ui.iss_csw.undead_slayer": "对不死生物造成更高伤害",
   "ui.iss_csw.add_armor": "提升护甲:%d",
   "ui.iss_csw.lose_armor": "受到攻击后减少",
+  "ui.iss_csw.can_eat": "饱食度满也可食用",
 
   "attribute.iss_csw.extra_protect_level":"额外保护等级",
   "attribute.iss_csw.extra_spell_level":"额外法术等级",
@@ -116,6 +121,8 @@
   "tooltip.iss_csw.magic_cookies.nutrition": "饱食度: %s",
   "tooltip.iss_csw.magic_cookies.saturation": "饱和度: %s",
   "tooltip.iss_csw.magic_cookies.no_magic": "尚未注入魔力...",
+
+  "tooltip.iss_csw.clearentity": "清除被攻击的实体",
 
   "msg.iss_csw.nameless": "一股神秘的力量阻止了你",
 

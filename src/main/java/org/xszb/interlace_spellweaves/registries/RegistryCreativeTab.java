@@ -51,6 +51,7 @@ public class    RegistryCreativeTab {
                 entries.accept(RegistryItem.END_PEARL.get());
 
                 entries.accept(RegistryItem.CHARGE_SHRIVING_STONE.get());
+                entries.accept(RegistryItem.GUDIN_DAO.get());
             })
             .icon(() -> new ItemStack(RegistryItem.SPELL_FORGE_BLOCK.get()))
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)

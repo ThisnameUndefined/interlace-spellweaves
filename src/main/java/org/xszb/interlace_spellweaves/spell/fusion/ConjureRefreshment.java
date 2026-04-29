@@ -50,7 +50,8 @@ public class ConjureRefreshment extends AbstractMixSpell {
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
-                Component.translatable("ui.iss_csw.nutrition", Utils.stringTruncation(Math.floor(getSpellPower(spellLevel, caster) * 2)+ spellLevel, 0))
+                Component.translatable("ui.iss_csw.nutrition", Utils.stringTruncation(Math.floor(getSpellPower(spellLevel, caster) * 2)+ spellLevel, 0)),
+                Component.translatable("ui.iss_csw.can_eat")
         );
     }
 
